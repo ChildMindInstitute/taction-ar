@@ -59,7 +59,7 @@
   
 
   <!-- We must add the tap-place component to the scene so it has an effect -->
-  <a-scene loading-screen gesture-detector tap-place camera-orientation req-camera-permissions shadow="type: pcfsoft"
+  <a-scene loading-screen game-loop gesture-detector tap-place camera-orientation req-camera-permissions shadow="type: pcfsoft"
   devicemotion-checker>
 
 
@@ -112,6 +112,8 @@
     <a-entity id="thefear" score="0" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#snake1;" look-at="#camera" pinch-scale-destroy>
       <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
       <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
+
+      <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode;" look-at="#camera"></a-entity>
     </a-entity>
 
     
