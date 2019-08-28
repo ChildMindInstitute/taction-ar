@@ -50,9 +50,10 @@
   </div>
 
   <div id="dialogue">TESTING</div>
+  <div id="scoredisplay">SCORE: 0</div>
 
   <div class="gfxButton" id="extLinkButton">
-    <a href="http://igniteie.com/">
+    <a href="http://matter.childmind.org/">
     <img src="graphics/extLinkButton.jpg" height="25px" ></a>
   </div>
 
@@ -109,11 +110,14 @@
    <!-- <a-image position="4.5 2 0"  width="10" height="10" src="#snake1" look-at="#camera"></a-image> -->
 
 
-    <a-entity id="thefear" score="0" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#snake1;" look-at="#camera" pinch-scale-destroy>
+    <a-entity id="thefear" score="0" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#snake1;" visible="true" look-at="#camera" pinch-scale-destroy>
       <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
-      <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
+      
 
-      <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode;" look-at="#camera"></a-entity>
+      <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode;" visible="false" look-at="#camera">
+        <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
+      </a-entity>
+
     </a-entity>
 
     
