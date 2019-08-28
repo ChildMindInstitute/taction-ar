@@ -1,14 +1,14 @@
 let demo = null;
 
 
-AFRAME.registerComponent('text-debug', {
+AFRAME.registerComponent('game-loop', {
     init: function() {
-      const thetarget = document.getElementById('ground');
+      const thetarget = document.getElementById('thefear');
       const textcont = document.getElementById('debug-text');
       const camera = document.getElementById('camera'); 
     },
     tick: function() {
-      let thetarget = document.getElementById('ground');
+      let thetarget = document.getElementById('thefear');
       let textcont = document.getElementById('debug-text');
       let camera = document.getElementById('camera');
       let camPos = camera.object3D.position;

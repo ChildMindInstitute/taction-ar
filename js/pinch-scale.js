@@ -48,13 +48,24 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     if(this.scaleFactor < 0.5){
       //load explosion graphic
       const thefear = document.getElementById('thefear');
-      thefear.setAttribute('material', 'src: #explode');
+      const explodegraphic = document.getElementById('explodegraphic');
+      thefear.setAttribute('visible', false);
+      explodegraphic.setAttribute('visible', true);
 
       //stop scary music and play explosion sound effect
       const themusic = document.getElementById('scarymusic');
       const explodesound = document.getElementById('explodesound');
       themusic.pause();
       explodesound.play();
+
+      //hide evrything after a couple seconds
+      setTimeout(()=> {
+          explodegraphic.setAttribute('visible', false);
+          explodesound.pause();
+      }, 5000);
+
+
+
     }
   }
 });
