@@ -64,13 +64,14 @@
   z-index: 999; 
 }
 
-#ctaImage {
+#fearsearch {
   visibility: hidden;
   position: absolute;
   width: 100%;
   height: auto;
   display: block;
   text-align: center;
+  margin: 1vh;
   top: 1vh;
   z-index: 999; 
 }
