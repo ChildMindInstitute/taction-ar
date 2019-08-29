@@ -67,7 +67,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
           let score = parseInt( thefear.getAttribute('score') );
           console.log("current score: " + score);
 
-          thefear.setAttribute('score', (score + 1);
+          thefear.setAttribute('score', (score + 1));
           document.getElementById('scoredisplay').innerHTML = "SCORE: " + score;
 
           thefear.setAttribute('active', false);
@@ -91,6 +91,27 @@ AFRAME.registerComponent('pinch-scale-destroy', {
           document.getElementById("dialogue").innerHTML = "<p>LOOK AROUND TO FACE MORE FEAR...</p>";
 
       }, 8000);
+
+      //RESET FOR NEXT FEAR ENTITY
+      setTimeout(()=> {
+          
+          thefear.setAttribute('active', true);
+          thefear.setAttribute('material', 'src:#snake2');
+          themusic.components.sound.playSound();
+
+          //set new position
+          const camera = document.getElementById('camera'); 
+         // let camPos = camera.object3D.position;
+          thefear.object3D.position.x = camera.object3D.position.x + Math.random()*5;
+          thefear.object3D.position.y = camera.object3D.position.y + Math.random()*2;
+          thefear.object3D.position.z = camera.object3D.position.z + 0;
+
+          //reset scale
+          this.scaleFactor = 1;
+
+          thefear.setAttribute('visible', true);
+
+      }, 16000);
 
 
 

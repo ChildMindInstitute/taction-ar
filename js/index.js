@@ -21,8 +21,8 @@ AFRAME.registerComponent('game-loop', {
   //    textcont.setAttribute("value", camPos.distanceTo(targetPos));
 
   //is the player close enough to the fear entitity to face it?
-  if((currentdistance / initialdistance) < 0.25 && ){
-  	if((currentdistance / initialdistance) > 0.85 && ){
+  if( (currentdistance / initialdistance) > 0.25 ){
+  	if((currentdistance / initialdistance) > 0.85 ){
 	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
 	} 
 	else {
