@@ -60,7 +60,7 @@
   
 
   <!-- We must add the tap-place component to the scene so it has an effect -->
-  <a-scene loading-screen game-loop gesture-detector tap-place camera-orientation req-camera-permissions shadow="type: pcfsoft"
+  <a-scene loading-screen game-loop gesture-detector  camera-orientation req-camera-permissions shadow="type: pcfsoft"
   devicemotion-checker>
 
 
@@ -68,11 +68,11 @@
 
     <!-- We can define assets here to be loaded when A-Frame initializes -->
     <a-assets>
-      <a-asset-item id="demoModel" src="glb/Moxy08e.glb"></a-asset-item>
+   <!--   <a-asset-item id="demoModel" src="glb/Moxy08e.glb"></a-asset-item> -->
 
       <!-- audio -->
-      <a-asset-item id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes.mp3" preload="auto" response-type="arraybuffer"></a-asset-item>
-      <a-asset-item id="explodesoundclip" src="audio/cinematic_hit_explosion_wind.mp3" preload="auto" response-type="arraybuffer"></a-asset-item>
+      <audio id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes.mp3" preload="auto">
+      <audio id="explodesoundclip" src="audio/explosion_backdraft.mp3" preload="auto">
 
       <!-- images -->
       <img id="explode" src="graphics/explode.gif">
@@ -110,14 +110,21 @@
    <!-- <a-image position="4.5 2 0"  width="10" height="10" src="#snake1" look-at="#camera"></a-image> -->
 
 
-    <a-entity id="thefear" score="0" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#snake1;" visible="true" look-at="#camera" pinch-scale-destroy>
+    <a-entity id="thefear" 
+              active="true"
+              score="0" 
+              initdistance="0"
+              geometry="primitive:plane;width:12;height:12;"  
+              material="shader:gif; alphaTest:0.5; src:#snake1;" 
+              visible="true" 
+              look-at="#camera" 
+              pinch-scale-destroy>
       <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
-      
 
-      <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode;" visible="false" look-at="#camera">
-        <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
-      </a-entity>
+    </a-entity>
 
+    <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode;" visible="false" look-at="#camera">
+      <a-sound id="explodesound" src="#explodesoundclip" autoplay="true" loop="false" crossorigin="anonymous" preload="auto" ></a-sound>
     </a-entity>
 
     

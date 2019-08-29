@@ -50,19 +50,47 @@ AFRAME.registerComponent('pinch-scale-destroy', {
       const thefear = document.getElementById('thefear');
       const explodegraphic = document.getElementById('explodegraphic');
       thefear.setAttribute('visible', false);
+
+      //set explosion graphic position at fear position
+      let theposition = thefear.getAttribute('position');
+      explodegraphic.setAttribute('position', theposition);
       explodegraphic.setAttribute('visible', true);
+
+      //set fear entitity distance really high for game loop dialogue
+      thefear.setAttribute('initdistance', 999);
+      document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
+
+      //increase score and set fear entitity as not active
+      let isactive = thefear.getAttribute('active');
+      if(isactive){
+          //increase score
+          let score = parseInt( thefear.getAttribute('score') );
+          console.log("current score: " + score);
+
+          thefear.setAttribute('score', (score + 1);
+          document.getElementById('scoredisplay').innerHTML = "SCORE: " + score;
+
+          thefear.setAttribute('active', false);
+          console.log("set active to false");
+      }
+
+
 
       //stop scary music and play explosion sound effect
       const themusic = document.getElementById('scarymusic');
       const explodesound = document.getElementById('explodesound');
-      themusic.pause();
-      explodesound.play();
+      themusic.components.sound.stopSound();
+      explodesound.components.sound.playSound();
+
 
       //hide evrything after a couple seconds
       setTimeout(()=> {
           explodegraphic.setAttribute('visible', false);
-          explodesound.pause();
-      }, 5000);
+          explodesound.components.sound.stopSound();
+
+          document.getElementById("dialogue").innerHTML = "<p>LOOK AROUND TO FACE MORE FEAR...</p>";
+
+      }, 8000);
 
 
 

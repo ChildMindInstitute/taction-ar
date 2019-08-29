@@ -88,27 +88,27 @@
 }
 
 #dialogue {
-
+  visibility: hidden;
   position: absolute;
   width: 100%;
   height: auto;
   display: block;
   text-align: center;
-  bottom: 12vh;
+  bottom: 15vh;
   pointer-events: auto;
 
   color: white;
-  text-shadow: 0.2rem 0.2rem black;
+  text-shadow: 0.2rem 0.2rem 0.3rem black;
   font-weight: bold;
   font-family: Arial, sans-serif;
   text-rendering: optimizeLegibility;
 
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   z-index: 999;
 }
 
 #scoredisplay {
-
+  visibility: hidden;
   position: absolute;
   width: 100%;
   height: auto;
@@ -118,12 +118,12 @@
   pointer-events: auto;
 
   color: white;
-  text-shadow: 0.2rem 0.2rem black;
+  text-shadow: 0.2rem 0.2rem 0.3rem black;
   font-weight: bold;
   font-family: Arial, sans-serif;
   text-rendering: optimizeLegibility;
 
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   z-index: 999;
 }
 

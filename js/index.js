@@ -4,17 +4,37 @@ let demo = null;
 AFRAME.registerComponent('game-loop', {
     init: function() {
       const thetarget = document.getElementById('thefear');
-      const textcont = document.getElementById('debug-text');
       const camera = document.getElementById('camera'); 
+      let camPos = camera.object3D.position;
+      let targetPos = thetarget.object3D.position;
+      const initialdistance = camPos.distanceTo(targetPos);
+      thetarget.setAttribute('initdistance', initialdistance);
     },
     tick: function() {
       let thetarget = document.getElementById('thefear');
-      let textcont = document.getElementById('debug-text');
+  //    let textcont = document.getElementById('debug-text');
       let camera = document.getElementById('camera');
       let camPos = camera.object3D.position;
       let targetPos = thetarget.object3D.position;
-      textcont.setAttribute("value", camPos.distanceTo(targetPos));
-      document.getElementById("dialogue").innerHTML = "<p>" + camPos.distanceTo(targetPos) + "</p>";
+      let initialdistance = Number(thetarget.getAttribute("initdistance"));
+      let currentdistance = camPos.distanceTo(targetPos);
+  //    textcont.setAttribute("value", camPos.distanceTo(targetPos));
+
+  //is the player close enough to the fear entitity to face it?
+  if((currentdistance / initialdistance) < 0.25 && ){
+  	if((currentdistance / initialdistance) > 0.85 && ){
+	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
+	} 
+	else {
+		document.getElementById("dialogue").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
+	}
+  }
+      
+
+      //increase init distance value if current distance is greater ie init distance -> max distance
+      if(currentdistance > initialdistance){
+      	thetarget.setAttribute('initdistance', currentdistance);
+      }
     }
 });
 
@@ -38,9 +58,14 @@ AFRAME.registerComponent('loading-screen', {
     const device = XR.XrDevice.deviceEstimate();
     const loadingImg = document.getElementById('loadingImg');
 
+    //display UI components when loaded
     scene.addEventListener('realityready', () => {
       loadingScreen.style.display = 'none';
-      promptImage.style.visibility = 'visible';      
+   //   promptImage.style.visibility = 'visible';      
+	   const dialogue = document.getElementById('dialogue');
+	   const displayscore = document.getElementById('scoredisplay'); 
+	   dialogue.style.visibility = 'visible';
+	   displayscore.style.visibility = 'visible';
     })
 
     scene.addEventListener('realityerror', () => {
@@ -119,7 +144,8 @@ AFRAME.registerComponent('req-camera-permissions', {
           console.log("in req-camera-permissions requesting")
           // loadingImg.src = "graphics/CameraPrompt.jpg";
         } else if (status == 'hasStream') {
-          loadingImg.src = "graphics/LoadingScreen.jpg"
+       //   loadingImg.src = "graphics/LoadingScreen.jpg"
+          loadingImg.src = "graphics/shark.gif"
         } else if (status == 'failed') {
           loadingImg.src = "graphics/CancelCamera.jpg"
         }
@@ -132,6 +158,7 @@ AFRAME.registerComponent('req-camera-permissions', {
       console.log(window.orientation)
     } else {
       loadingImg.src = "graphics/LoadingScreen.jpg";
+      loadingImg.src = "graphics/shark.gif";
       scene.setAttribute('xrweb', '');
 
     }
