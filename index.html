@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
 
+<!-- 
+This Augmented Reality (AR) mobile web experience is an exploration in the use of augmented 
+reality to help people over come fear and anxiety - a sort of AR exposure therapy. The idea is to 
+invoke, confront and overcome symbols or representations on fear and anxiety in a real world 
+'daily life' setting.
+
+Designed and developed by Curt White (curtpw@gmail.com) at the Child Mind Institute MATTER Lab: https://matter.childmind.org
+Code is open source and available here: https://github.com/ChildMindInstitute/taction-ar
+Started from 8th Wall A-Frame Product Boilerplate.
+-->
+
 <head>
   <meta charset="utf-8">
-  <title>8thWallAFrameTemplate</title>
+  <title>Taction AR</title>
 
   <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -121,7 +132,7 @@
               active="true"
               score="0" 
               initdistance="0"
-              geometry="primitive:plane;width:12;height:12;"  
+              geometry="primitive:circle;radius:12;"  
               material="shader:gif; alphaTest:0.5; src:#snake1;" 
               visible="true" 
               look-at="#camera" 
