@@ -65,9 +65,12 @@
 }
 
 #fearsearch {
-  visibility: hidden;
+  visibility: visible;
   position: absolute;
-  width: 100%;
+  width: 90%;
+  height: 50%;
+  border-radius: 25px;
+  background: black;
   height: auto;
   display: block;
   text-align: center;
@@ -75,6 +78,29 @@
   top: 1vh;
   z-index: 999; 
 }
+
+#fearsearch h2{
+  color: white;
+  text-shadow: 0.2rem 0.2rem 0.3rem black;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+
+  font-size: 1.8rem;
+}
+#fearsearch input{
+  font-size: 1.2rem;
+    font-weight: bold;
+  font-family: Arial, sans-serif;
+  padding: 3px;
+  }
+  #fearsearch button{
+    font-size: 1.2rem;
+    font-weight: bold;
+  font-family: Arial, sans-serif;
+  border-radius: 5px;
+  }
+
 
 .gfxButton {
   visibility: hidden;

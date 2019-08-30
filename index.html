@@ -60,11 +60,11 @@ Started from 8th Wall A-Frame Product Boilerplate.
   </div>
 
   <div id="fearsearch">
-    NAME YOUR FEAR
-    <form id="search_form">
-      <input type="text" id="search_txt" placeholder="Keyword" value="snakes" />
-      <input type="submit" value="ENTER">
-    </form>
+    <H2>NAME YOUR FEAR</H2>
+    <div id="search_form">
+      <input type="text" id="search_txt" placeholder="lions, tigers, and bears oh my" />
+      <button id="submitsearch">ENTER</button>
+    </div>
   </div>
 
   <div id="dialogue">TESTING</div>
@@ -94,8 +94,11 @@ Started from 8th Wall A-Frame Product Boilerplate.
 
       <!-- images -->
       <img id="explode" src="graphics/explode.gif">
-      <img id="snake1" src="graphics/snake1.gif">
-      <img id="snake2" src="graphics/snake2.gif">
+      <img id="feargraphic1" src="graphics/snake1.gif">
+      <img id="feargraphic2" src="graphics/snake2.gif">
+      <img id="feargraphic3" src="graphics/snake1.gif">
+      <img id="feargraphic4" src="graphics/snake2.gif">
+      <img id="feargraphic5" src="graphics/snake1.gif">
 
     </a-assets>
 
@@ -133,7 +136,7 @@ Started from 8th Wall A-Frame Product Boilerplate.
               score="0" 
               initdistance="0"
               geometry="primitive:circle;radius:12;"  
-              material="shader:gif; alphaTest:0.5; src:#snake1;" 
+              material="shader:gif; alphaTest:0.5; src:#feargraphic1;" 
               visible="true" 
               look-at="#camera" 
               pinch-scale-destroy>

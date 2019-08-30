@@ -56,6 +56,10 @@ AFRAME.registerComponent('pinch-scale-destroy', {
       explodegraphic.setAttribute('position', theposition);
       explodegraphic.setAttribute('visible', true);
 
+      //start loading next fear graphic into fear entity in background
+      console.log("change material");
+      thefear.setAttribute('material', 'src', '#feargraphic2');
+
       //set fear entitity distance really high for game loop dialogue
       thefear.setAttribute('initdistance', 999);
       document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
@@ -96,7 +100,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
       setTimeout(()=> {
           
           thefear.setAttribute('active', true);
-          thefear.setAttribute('material', 'src:#snake2');
+          
           themusic.components.sound.playSound();
 
           //set new position

@@ -1,8 +1,10 @@
 let demo = null;
 
 /***************** GOOGLE IMAGE SEARCH API CALL ********************/
-
+/*
 $("#search_form").submit(function(e) {
+  console.log("image search button pressed");
+
   e.preventDefault();
   var searchQuery = $("#search_txt").val() + "gif";
   $.ajax({
@@ -23,7 +25,57 @@ $("#search_form").submit(function(e) {
      //   $('body').append("<img src='" + data.items[4].link + "' />");
         const thefear = document.getElementById('thefear');
         thefear.material.src = data.items[0].link;
+
+        console.log("image search results: " + data.items + "specific" + data.items[0].link);
   });
+
+  $("#fearsearch").hide();
+
+});
+*/
+
+/***************** GIPHY IMAGE SEARCH API CALL ********************/
+  function getGif(searchTerm) {
+    console.log('searchTerm is: ', searchTerm)
+    $.ajax({
+      url: "//api.giphy.com/v1/gifs/search?q=" + searchTerm + "&api_key=dc6zaTOxFJmzC",
+      type: "GET",
+      success: function(response) {
+        console.log(response)
+        var max = response.data.length - 1 //length of response, minus 1 (cuz array starts at index 0)
+        console.log('response.data.length is ', max)
+        //var randomNumber = Math.round(Math.random() * max) //random number between 0 and max -1
+        if(max > 0){
+        var gifUrl = "https://media.giphy.com/media/" + response.data[0].id + "/giphy.gif"
+        console.log(gifUrl);
+
+        //update image assets
+        document.querySelector('#feargraphic1').setAttribute('src', 'https://media.giphy.com/media/' + response.data[0].id + '/giphy.gif');
+        document.querySelector('#feargraphic2').setAttribute('src', 'https://media.giphy.com/media/' + response.data[1].id + '/giphy.gif');
+        document.querySelector('#feargraphic3').setAttribute('src', 'https://media.giphy.com/media/' + response.data[2].id + '/giphy.gif');
+        document.querySelector('#feargraphic4').setAttribute('src', 'https://media.giphy.com/media/' + response.data[3].id + '/giphy.gif');
+        document.querySelector('#feargraphic5').setAttribute('src', 'https://media.giphy.com/media/' + response.data[4].id + '/giphy.gif');
+      }
+       // var body = document.getElementsByTagName('body')[0];
+       // body.style.backgroundImage = `url(${gifUrl})`;
+      },
+      error: function(e) {
+        alert(e);
+      }
+    });
+  }
+
+$( document ).ready(function() {
+    console.log( "stupid jquery!" );
+
+  $("#submitsearch").click(function(e) {
+    e.preventDefault();
+    var searchQuery = $("#search_txt").val();
+    
+    console.log("searching giphy for " + searchQuery);
+    getGif(searchQuery);
+  });
+
 });
 
 
