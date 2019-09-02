@@ -1,4 +1,45 @@
-let demo = null;
+
+//run on doc load
+$( document ).ready(function() {
+    console.log( "stupid jquery!" );
+
+  $("#submitsearch").click(function(e) {
+    e.preventDefault();
+    var searchQuery = $("#search_txt").val();
+    
+    console.log("searching giphy for " + searchQuery);
+    getGif(searchQuery);
+  });
+
+});
+
+
+//virtual mesh sphere around player is used to place materials infront of player without markers or camera image processing
+
+AFRAME.registerComponent ('positionfear', {
+  init: function () {
+    var scene = this.el.sceneEl.object3D;  // THREE.Scene
+    var camera = document.querySelector("[camera]").getObject3D('camera');
+    var el = this.el;  // Entity.
+    
+    //add player bubble sphere for raycast/gaze intersection calculation
+    var sphereGeom = new THREE.IcosahedronGeometry(sphereRadius, 3);
+    var sphereMat = new THREE.MeshBasicMaterial({color: 'yellow', wireframe: true});
+    var sphere = new THREE.Mesh(sphereGeom, sphereMat);
+    scene.add(sphere);
+  }
+  var scene = document.querySelector('a-scene').object3D;  // THREE.Scene
+
+  //add player bubble sphere for raycast/gaze intersection calculation
+  var sphereGeom = new THREE.IcosahedronGeometry(sphereRadius, 3);
+  var sphereMat = new THREE.MeshBasicMaterial({color: 'yellow', wireframe: true});
+  var sphere = new THREE.Mesh(sphereGeom, sphereMat);
+  scene.add(sphere);
+
+  //get intersection position
+  var pos = camera.position.clone().negate().normalize().multiplyScalar(sphereRadius);
+});
+
 
 /***************** GOOGLE IMAGE SEARCH API CALL ********************/
 /*
@@ -65,18 +106,6 @@ $("#search_form").submit(function(e) {
     });
   }
 
-$( document ).ready(function() {
-    console.log( "stupid jquery!" );
-
-  $("#submitsearch").click(function(e) {
-    e.preventDefault();
-    var searchQuery = $("#search_txt").val();
-    
-    console.log("searching giphy for " + searchQuery);
-    getGif(searchQuery);
-  });
-
-});
 
 
 /***************** AFRAME COMPONENT REGISTRATION *********************/
@@ -167,6 +196,7 @@ AFRAME.registerComponent('loading-screen', {
 
 
 // Component that places model where the ground is clicked
+/*
 AFRAME.registerComponent('tap-place', {
   init: function () {
     const ground = document.getElementById('ground');
@@ -210,6 +240,7 @@ AFRAME.registerComponent('tap-place', {
     });
   }
 });
+*/
 
 
 AFRAME.registerComponent('req-camera-permissions', {

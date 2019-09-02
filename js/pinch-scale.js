@@ -32,6 +32,12 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     this.scaleFactor = 1
     this.handleEvent = this.handleEvent.bind(this)
     this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
+
+    //initial position
+    var sphereRadius = 10;
+    var camera = document.querySelector("[camera]").getObject3D('camera');
+    var pos = camera.position.clone().negate().normalize().multiplyScalar(sphereRadius);
+    this.el.object3D.position.copy(pos);
   },
   remove: function () {
     this.el.sceneEl.removeEventListener('twofingermove', this.handleEvent)
