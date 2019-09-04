@@ -96,8 +96,10 @@ AFRAME.registerComponent('pinch-scale-destroy', {
       //start loading next fear graphic into fear entity in background
       console.log("change material");
       thefear.setAttribute('material', 'src', '#feargraphic2');
+      thefear.setAttribute('material', 'src', '#feargraphic2');
 
-      console.log("current position of fear element: " + theposition);
+      console.log("current position of fear element: "); 
+      console.log(theposition);
 
       //set fear entitity distance really high for game loop dialogue
       thefear.setAttribute('initdistance', 999);
@@ -145,9 +147,19 @@ AFRAME.registerComponent('pinch-scale-destroy', {
           //set new position
           const camera = document.getElementById('camera'); 
          // let camPos = camera.object3D.position;
-          thefear.object3D.position.x = camera.object3D.position.x + Math.random()*5;
-          thefear.object3D.position.y = camera.object3D.position.y + Math.random()*2;
-          thefear.object3D.position.z = camera.object3D.position.z + 0;
+        //  thefear.object3D.position.x = camera.object3D.position.x + Math.random()*5;
+        //  thefear.object3D.position.y = camera.object3D.position.y + Math.random()*2;
+        //  thefear.object3D.position.z = camera.object3D.position.z + 0;
+
+          var angle = camera.getAttribute("rotation");
+          var x = 1 * Math.cos(angle.y * Math.PI / 180);
+          var y = 1 * Math.sin(angle.y * Math.PI / 180);
+          var pos = camera.getAttribute("position");
+          pos.x -= y*5;
+          pos.z -= x*5;
+          this.el.setAttribute("position", pos);
+          console.log("change position: ");
+          console.log(pos);
 
           //reset scale
           this.scaleFactor = 1;
