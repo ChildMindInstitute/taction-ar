@@ -36,8 +36,17 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     //initial position
     var sphereRadius = 10;
     var camera = document.querySelector("[camera]").getObject3D('camera');
+
     var pos = camera.position.clone().negate().normalize().multiplyScalar(sphereRadius);
+    console.log("raycast calculated position:");
+    console.log(pos);
+
     this.el.object3D.position.copy(pos);
+
+    //reload image material
+   this.el.setAttribute('material', 'src', '#feargraphic');
+   console.log("reload fear entity image src");
+
   },
   remove: function () {
     this.el.sceneEl.removeEventListener('twofingermove', this.handleEvent)

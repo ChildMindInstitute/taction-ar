@@ -14,32 +14,6 @@ $( document ).ready(function() {
 });
 
 
-//virtual mesh sphere around player is used to place materials infront of player without markers or camera image processing
-
-AFRAME.registerComponent ('positionfear', {
-  init: function () {
-    var scene = this.el.sceneEl.object3D;  // THREE.Scene
-    var camera = document.querySelector("[camera]").getObject3D('camera');
-    var el = this.el;  // Entity.
-    
-    //add player bubble sphere for raycast/gaze intersection calculation
-    var sphereGeom = new THREE.IcosahedronGeometry(sphereRadius, 3);
-    var sphereMat = new THREE.MeshBasicMaterial({color: 'yellow', wireframe: true});
-    var sphere = new THREE.Mesh(sphereGeom, sphereMat);
-    scene.add(sphere);
-  }
-  var scene = document.querySelector('a-scene').object3D;  // THREE.Scene
-
-  //add player bubble sphere for raycast/gaze intersection calculation
-  var sphereGeom = new THREE.IcosahedronGeometry(sphereRadius, 3);
-  var sphereMat = new THREE.MeshBasicMaterial({color: 'yellow', wireframe: true});
-  var sphere = new THREE.Mesh(sphereGeom, sphereMat);
-  scene.add(sphere);
-
-  //get intersection position
-  var pos = camera.position.clone().negate().normalize().multiplyScalar(sphereRadius);
-});
-
 
 /***************** GOOGLE IMAGE SEARCH API CALL ********************/
 /*
@@ -96,6 +70,7 @@ $("#search_form").submit(function(e) {
         document.querySelector('#feargraphic3').setAttribute('src', 'https://media.giphy.com/media/' + response.data[2].id + '/giphy.gif');
         document.querySelector('#feargraphic4').setAttribute('src', 'https://media.giphy.com/media/' + response.data[3].id + '/giphy.gif');
         document.querySelector('#feargraphic5').setAttribute('src', 'https://media.giphy.com/media/' + response.data[4].id + '/giphy.gif');
+        console.log("load search result images into graphics asset elements");
       }
        // var body = document.getElementsByTagName('body')[0];
        // body.style.backgroundImage = `url(${gifUrl})`;
@@ -170,11 +145,15 @@ AFRAME.registerComponent('loading-screen', {
     //display UI components when loaded
     scene.addEventListener('realityready', () => {
       loadingScreen.style.display = 'none';
-   //   promptImage.style.visibility = 'visible';      
+     //   promptImage.style.visibility = 'visible';      
+     const fearsearch = document.getElementById('fearsearch');
 	   const dialogue = document.getElementById('dialogue');
 	   const displayscore = document.getElementById('scoredisplay'); 
+
+     //show in game UI elements and hide load screen UI elements
 	   dialogue.style.visibility = 'visible';
 	   displayscore.style.visibility = 'visible';
+     fearsearch.style.visibility = 'hidden';
     })
 
     scene.addEventListener('realityerror', () => {
