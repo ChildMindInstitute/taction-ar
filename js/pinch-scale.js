@@ -33,19 +33,41 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     this.handleEvent = this.handleEvent.bind(this)
     this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
 
+  //make sure everything is in order after load
+  const scene = this.el.sceneEl;
+  scene.addEventListener('realityready', () => {
     //initial position
     var sphereRadius = 10;
-    var camera = document.querySelector("[camera]").getObject3D('camera');
+    var cameraobject = document.querySelector("[camera]").getObject3D('camera');
+    var camera = document.getElementById('camera'); 
 
-    var pos = camera.position.clone().negate().normalize().multiplyScalar(sphereRadius);
+    var pos = cameraobject.position.clone().negate().normalize().multiplyScalar(sphereRadius);
     console.log("raycast calculated position:");
     console.log(pos);
 
     this.el.object3D.position.copy(pos);
 
+    //second way to do position
+    console.log("calculate position with rar camera angle and position: ");
+    var angle = camera.getAttribute("rotation");
+    var x = 1 * Math.cos(angle.y * Math.PI / 180);
+    var y = 1 * Math.sin(angle.y * Math.PI / 180);
+    var pos2 = camera.getAttribute("position");
+    pos2.x -= y*5;
+    pos2.z -= x*5;
+    this.el.setAttribute("position", pos2);
+    console.log(pos2);
+
+
     //reload image material
-   this.el.setAttribute('material', 'src', '#feargraphic');
-   console.log("reload fear entity image src");
+     this.el.setAttribute('material', 'src', '#feargraphic1');
+     document.getElementById('thefear').setAttribute('material', 'src', '#feargraphic1'); //again
+
+     console.log("reload fear entity image src");
+
+     var fearquery = $("#search_txt").val();
+     console.log("the search query was: " + fearquery);
+    })
 
   },
   remove: function () {
@@ -74,6 +96,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
       //start loading next fear graphic into fear entity in background
       console.log("change material");
       thefear.setAttribute('material', 'src', '#feargraphic2');
+
+      console.log("current position of fear element: " + theposition);
 
       //set fear entitity distance really high for game loop dialogue
       thefear.setAttribute('initdistance', 999);

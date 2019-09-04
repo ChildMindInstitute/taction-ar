@@ -89,8 +89,8 @@ Started from 8th Wall A-Frame Product Boilerplate.
    <!--   <a-asset-item id="demoModel" src="glb/Moxy08e.glb"></a-asset-item> -->
 
       <!-- audio -->
-      <audio id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes.mp3" preload="auto">
-      <audio id="explodesoundclip" src="audio/explosion_backdraft.mp3" preload="auto">
+      <audio id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes.mp3">
+      <audio id="explodesoundclip" src="audio/explosion_backdraft.mp3">
 
       <!-- images -->
       <img id="explode" src="graphics/explode.gif">
@@ -115,9 +115,6 @@ Started from 8th Wall A-Frame Product Boilerplate.
     <a-entity id="fill" light="type:directional;intensity:0.5;color:#ffffff" position="4.0 3.6 6.0"></a-entity>
     <a-entity id="key" light="type: directional; castShadow:true; shadowCameraTop:20; shadowCameraRight:20;
       color:#ffffff; intensity:1.0" position="5.0 10.0 5.0"></a-entity>
-
-
-
     
 
 
@@ -136,7 +133,7 @@ Started from 8th Wall A-Frame Product Boilerplate.
               score="0" 
               initdistance="0"
               geometry="primitive:circle;radius:12;"  
-              material="shader:gif; alphaTest:0.5; src:#feargraphic1;" 
+              material="shader:gif; alphaTest:0.5;" 
               visible="true" 
               look-at="#camera" 
               pinch-scale-destroy>
