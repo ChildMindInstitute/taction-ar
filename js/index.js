@@ -3,6 +3,10 @@
 $( document ).ready(function() {
     console.log( "stupid jquery!" );
 
+  //fade in image search form after delay
+  $(".search-ui").delay(2000).fadeIn(1000);
+
+  //event handler for image search form submit button
   $("#submitsearch").click(function(e) {
     e.preventDefault();
     var searchQuery = $("#search_txt").val();

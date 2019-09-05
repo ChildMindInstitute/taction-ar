@@ -65,7 +65,7 @@
 }
 
 #fearsearch {
-  visibility: visible;
+  
   position: absolute;
   width: 90%;
   height: 50%;
@@ -104,7 +104,9 @@
   border-radius: 5px;
   margin: 5%;
   }
-
+.search-ui{
+  visibility: hidden;
+}
 
 .gfxButton {
   visibility: hidden;
