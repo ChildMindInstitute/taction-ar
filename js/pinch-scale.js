@@ -166,7 +166,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
           thefear.setAttribute('visible', true);
 
-      }, 16000);
+      }, 10000);
 
 
 
