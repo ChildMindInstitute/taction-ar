@@ -20,11 +20,14 @@ $( document ).ready(function() {
       opacity: 0
     }, 1000, function(){
 
+      //display none so it doesn't take up space
+      $("#submitsearch").hide();
+
       //fade in loading progress bar elements
       $("#bar-wrapper").fadeIn(500);
 
       $( ".bar" ).delay(500).animate({
-        width: "344px",
+        width: "324px",
         }, 15000, "swing",
         function() {
             console.log("progress bar complete");
