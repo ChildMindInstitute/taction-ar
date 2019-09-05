@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
+
 * {
   font-family: inherit;
   box-sizing: inherit;
@@ -65,7 +67,7 @@
 }
 
 #fearsearch {
-  
+  display:none;
   position: absolute;
   width: 90%;
   height: 50%;
@@ -86,26 +88,29 @@
   color: white;
   text-shadow: 0.2rem 0.2rem 0.3rem black;
   font-weight: bold;
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   text-rendering: optimizeLegibility;
 
   font-size: 1.8rem;
 }
+
 #fearsearch input{
   font-size: 1.2rem;
     font-weight: bold;
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   padding: 3px;
   }
+
   #fearsearch button{
     font-size: 1.2rem;
     font-weight: bold;
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   border-radius: 5px;
   margin: 5%;
   }
+
 .search-ui{
-  visibility: hidden;
+
 }
 
 .gfxButton {
@@ -190,5 +195,42 @@
     background-image: url('tt2.png');
     z-index: 999;
   } */
+
+
+  /* loading progress bar styles */
+  #bar-wrapper {
+      display:none;
+  position: relative;
+}
+
+#bar-wrapper p {
+  cursor: default;
+  position: relative;
+  top: calc(50% - 64px);
+  width: 100%;
+  text-align: center;
+  font-family: "Open Sans";
+  font-size: 22px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  color: #eee;
+}
+
+#bar-wrapper .container {
+  position: absolute;
+  left: calc(50vw - 4px - 350px / 2);
+  top: calc(50vh - 4px - 10px / 2);
+  border-radius: 14px;
+  border: 4px solid #eee;
+  height: 10px;
+  width: 350px;
+  background-color: #3a3a3a;
+}
+#bar-wrapper .container .bar {
+  background-color: #eee;
+  margin: 3px 0 0 3px;
+  height: 4px;
+  width: 4px;
+  border-radius: 4px;
+}
 
   

@@ -53,8 +53,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     var x = 1 * Math.cos(angle.y * Math.PI / 180);
     var y = 1 * Math.sin(angle.y * Math.PI / 180);
     var pos2 = camera.getAttribute("position");
-    pos2.x -= y*5;
-    pos2.z -= x*5;
+    pos2.x -= y*15;
+    pos2.z -= x*15;
     this.el.setAttribute("position", pos2);
     console.log(pos2);
 
@@ -155,8 +155,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
           var x = 1 * Math.cos(angle.y * Math.PI / 180);
           var y = 1 * Math.sin(angle.y * Math.PI / 180);
           var pos = camera.getAttribute("position");
-          pos.x -= y*5;
-          pos.z -= x*5;
+          pos.x -= y*15;
+          pos.z -= x*15;
           this.el.setAttribute("position", pos);
           console.log("change position: ");
           console.log(pos);

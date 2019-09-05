@@ -4,18 +4,37 @@ $( document ).ready(function() {
     console.log( "stupid jquery!" );
 
   //fade in image search form after delay
-  $(".search-ui").delay(2000).fadeIn(1000);
+  $("#fearsearch").delay(2000).fadeIn(1500);
 
   //event handler for image search form submit button
   $("#submitsearch").click(function(e) {
     e.preventDefault();
     var searchQuery = $("#search_txt").val();
     
+    //call giphy API to get image URLs
     console.log("searching giphy for " + searchQuery);
     getGif(searchQuery);
-  });
 
+    //hide submit button and show loading progress bar
+    $("#submitsearch").animate({
+      opacity: 0
+    }, 1000, function(){
+
+      //fade in loading progress bar elements
+      $("#bar-wrapper").fadeIn(500);
+
+      $( ".bar" ).delay(500).animate({
+        width: "344px",
+        }, 15000, "swing",
+        function() {
+            console.log("progress bar complete");
+        });
+
+      });
+
+  });
 });
+
 
 
 
