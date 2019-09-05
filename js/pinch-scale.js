@@ -74,102 +74,111 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     this.el.sceneEl.removeEventListener('twofingermove', this.handleEvent)
   },
   handleEvent: function (event) {
-    this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
-    this.scaleFactor = Math.min(Math.max(this.scaleFactor, this.data.min), this.data.max)
 
-    this.el.object3D.scale.x = this.scaleFactor * this.initialScale.x
-    this.el.object3D.scale.y = this.scaleFactor * this.initialScale.y
-    this.el.object3D.scale.z = this.scaleFactor * this.initialScale.z
+    let isactive = thefear.getAttribute('active');
+    console.log("active status inside pinch event: " + isactive);
 
-    //if scale is below threshold display explosion animation 
-    if(this.scaleFactor < 0.5){
-      //load explosion graphic
-      const thefear = document.getElementById('thefear');
-      const explodegraphic = document.getElementById('explodegraphic');
-      thefear.setAttribute('visible', false);
-
-      //set explosion graphic position at fear position
-      let theposition = thefear.getAttribute('position');
-      explodegraphic.setAttribute('position', theposition);
-      explodegraphic.setAttribute('visible', true);
-
-      //start loading next fear graphic into fear entity in background
-      console.log("change material");
-      thefear.setAttribute('material', 'src', '#feargraphic2');
-      thefear.setAttribute('material', 'src', '#feargraphic2');
-
-      console.log("current position of fear element: "); 
-      console.log(theposition);
-
-      //set fear entitity distance really high for game loop dialogue
-      thefear.setAttribute('initdistance', 999);
-      document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
-
-      //increase score and set fear entitity as not active
-      let isactive = thefear.getAttribute('active');
-      if(isactive){
-          //increase score
-          let score = parseInt( thefear.getAttribute('score') );
-          console.log("current score: " + score);
-
-          thefear.setAttribute('score', (score + 1));
-          document.getElementById('scoredisplay').innerHTML = "SCORE: " + score;
-
-          thefear.setAttribute('active', false);
-          console.log("set active to false");
-      }
+    //don't allow for user interaction when fear entity is not active
+    if(isactive){
 
 
+      this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
+      this.scaleFactor = Math.min(Math.max(this.scaleFactor, this.data.min), this.data.max)
 
-      //stop scary music and play explosion sound effect
-      const themusic = document.getElementById('scarymusic');
-      const explodesound = document.getElementById('explodesound');
-      themusic.components.sound.stopSound();
-      explodesound.components.sound.playSound();
+      this.el.object3D.scale.x = this.scaleFactor * this.initialScale.x
+      this.el.object3D.scale.y = this.scaleFactor * this.initialScale.y
+      this.el.object3D.scale.z = this.scaleFactor * this.initialScale.z
 
+      //if scale is below threshold display explosion animation 
+      if(this.scaleFactor < 0.5){
+        //load explosion graphic
+        const thefear = document.getElementById('thefear');
+        const explodegraphic = document.getElementById('explodegraphic');
+        thefear.setAttribute('visible', false);
 
-      //hide evrything after a couple seconds
-      setTimeout(()=> {
-          explodegraphic.setAttribute('visible', false);
-          explodesound.components.sound.stopSound();
+        //set explosion graphic position at fear position
+        let theposition = thefear.getAttribute('position');
+        explodegraphic.setAttribute('position', theposition);
+        explodegraphic.setAttribute('visible', true);
 
-          document.getElementById("dialogue").innerHTML = "<p>LOOK AROUND TO FACE MORE FEAR...</p>";
+        //start loading next fear graphic into fear entity in background
+        console.log("change material");
+        thefear.setAttribute('material', 'src', '#feargraphic2');
+        thefear.setAttribute('material', 'src', '#feargraphic2');
 
-      }, 8000);
+        console.log("current position of fear element: "); 
+        console.log(theposition);
 
-      //RESET FOR NEXT FEAR ENTITY
-      setTimeout(()=> {
-          
-          thefear.setAttribute('active', true);
-          
-          themusic.components.sound.playSound();
+        //set fear entitity distance really high for game loop dialogue
+        thefear.setAttribute('initdistance', 999);
+        document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
 
-          //set new position
-          const camera = document.getElementById('camera'); 
-         // let camPos = camera.object3D.position;
-        //  thefear.object3D.position.x = camera.object3D.position.x + Math.random()*5;
-        //  thefear.object3D.position.y = camera.object3D.position.y + Math.random()*2;
-        //  thefear.object3D.position.z = camera.object3D.position.z + 0;
+        //increase score and set fear entitity as not active
+      //  let isactive = thefear.getAttribute('active');
+      //  if(isactive){
+            //increase score
+            let score = parseInt( thefear.getAttribute('score') );
+            console.log("current score: " + score);
 
-          var angle = camera.getAttribute("rotation");
-          var x = 1 * Math.cos(angle.y * Math.PI / 180);
-          var y = 1 * Math.sin(angle.y * Math.PI / 180);
-          var pos = camera.getAttribute("position");
-          pos.x -= y*15;
-          pos.z -= x*15;
-          this.el.setAttribute("position", pos);
-          console.log("change position: ");
-          console.log(pos);
+            thefear.setAttribute('score', (score + 1));
+            document.getElementById('scoredisplay').innerHTML = "SCORE: " + score;
 
-          //reset scale
-          this.scaleFactor = 1;
-
-          thefear.setAttribute('visible', true);
-
-      }, 10000);
+            thefear.setAttribute('active', false);
+            thefear.setAttribute('active', false);
+            console.log("set active to false");
+      //  }
 
 
 
-    }
+        //stop scary music and play explosion sound effect
+        const themusic = document.getElementById('scarymusic');
+        const explodesound = document.getElementById('explodesound');
+        themusic.components.sound.stopSound();
+        explodesound.components.sound.playSound();
+
+
+        //stop explosion graphics and hide everything after a few seconds
+        setTimeout(()=> {
+            explodegraphic.setAttribute('visible', false);
+            explodesound.components.sound.stopSound();
+
+            document.getElementById("dialogue").innerHTML = "<p>LOOK AROUND TO FACE MORE FEAR...</p>";
+
+            //RESET FOR NEXT FEAR ENTITY
+            setTimeout(()=> {
+                themusic.components.sound.playSound();
+
+                //set new position
+                const camera = document.getElementById('camera'); 
+
+                var angle = camera.getAttribute("rotation");
+                var x = 1 * Math.cos(angle.y * Math.PI / 180);
+                var y = 1 * Math.sin(angle.y * Math.PI / 180);
+                var pos = camera.getAttribute("position");
+                pos.x -= y*15;
+                pos.z -= x*15;
+                this.el.setAttribute("position", pos);
+                console.log("change position: ");
+                console.log(pos);
+
+                //reset scale
+                this.scaleFactor = 1;
+
+                //make fear entity visible again
+                thefear.setAttribute('visible', true);
+
+                //allow user interaction with fear entity
+                thefear.setAttribute('active', true);
+                thefear.setAttribute('active', true);
+
+            }, 6000);
+
+        }, 5000);
+
+
+
+      } //end is destroy fear proximity conditional
+
+    } //end isactive conditional
   }
 });

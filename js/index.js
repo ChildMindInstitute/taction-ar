@@ -4,7 +4,7 @@ $( document ).ready(function() {
     console.log( "stupid jquery!" );
 
   //fade in image search form after delay
-  $("#fearsearch").delay(2000).fadeIn(1500);
+  $("#fearsearch").delay(2500).fadeIn(1000);
 
   //event handler for image search form submit button
   $("#submitsearch").click(function(e) {
