@@ -79,7 +79,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     console.log("active status inside pinch event: " + isactive);
 
     //don't allow for user interaction when fear entity is not active
-    if(isactive){
+    if(isactive == "true"){
 
 
       this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
@@ -91,6 +91,18 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
       //if scale is below threshold display explosion animation 
       if(this.scaleFactor < 0.5){
+
+        //increase score and set fear entitity as not active
+        let newscore = parseInt( thefear.getAttribute('score') ) + 1;
+        console.log("new score: " + newscore);
+
+        thefear.setAttribute('score', newscore);
+        document.getElementById('scoredisplay').innerHTML = "SCORE: " + newscore;
+
+        thefear.setAttribute('active', false);
+        thefear.setAttribute('active', false);
+        console.log("set active to false");
+
         //load explosion graphic
         const thefear = document.getElementById('thefear');
         const explodegraphic = document.getElementById('explodegraphic');
@@ -98,35 +110,54 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
         //set explosion graphic position at fear position
         let theposition = thefear.getAttribute('position');
+        console.log("current position of fear element: "); 
+        console.log(theposition);
         explodegraphic.setAttribute('position', theposition);
         explodegraphic.setAttribute('visible', true);
 
         //start loading next fear graphic into fear entity in background
         console.log("change material");
-        thefear.setAttribute('material', 'src', '#feargraphic2');
-        thefear.setAttribute('material', 'src', '#feargraphic2');
+        let scorelastdigit = Math.Abs(newscore) % 10;
+        switch (scorelastdigit % 10)
+        {
+            case 0:
+                thefear.setAttribute('material', 'src', '#feargraphic1');
+                break;
+            case 1:
+                thefear.setAttribute('material', 'src', '#feargraphic2');
+                break;
+            case 2:
+                thefear.setAttribute('material', 'src', '#feargraphic3');
+                break;
+            case 3:
+                thefear.setAttribute('material', 'src', '#feargraphic4');
+                break;
+            case 4:
+                thefear.setAttribute('material', 'src', '#feargraphic5');
+                break;
+            case 5:
+                thefear.setAttribute('material', 'src', '#feargraphic1');
+                break;
+            case 6:
+                thefear.setAttribute('material', 'src', '#feargraphic2');
+                break;
+            case 7:
+                thefear.setAttribute('material', 'src', '#feargraphic3');
+                break;
+            case 8:
+                thefear.setAttribute('material', 'src', '#feargraphic4');
+                break;
+            case 9:
+                thefear.setAttribute('material', 'src', '#feargraphic5');
+                break;
+            default:
+                thefear.setAttribute('material', 'src', '#feargraphic2');
+        }
 
-        console.log("current position of fear element: "); 
-        console.log(theposition);
 
         //set fear entitity distance really high for game loop dialogue
         thefear.setAttribute('initdistance', 999);
         document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
-
-        //increase score and set fear entitity as not active
-      //  let isactive = thefear.getAttribute('active');
-      //  if(isactive){
-            //increase score
-            let score = parseInt( thefear.getAttribute('score') );
-            console.log("current score: " + score);
-
-            thefear.setAttribute('score', (score + 1));
-            document.getElementById('scoredisplay').innerHTML = "SCORE: " + score;
-
-            thefear.setAttribute('active', false);
-            thefear.setAttribute('active', false);
-            console.log("set active to false");
-      //  }
 
 
 
