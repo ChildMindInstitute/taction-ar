@@ -1,10 +1,21 @@
 
+//game state global
+
+window.AFPS = {
+  gamestate: {
+    score: 0,
+    type: 'search',       //search, dog or bee - search is default
+    fearisactive: false,  //can player interact with/destroy the fear entity
+    feardistance: 0      //distance of player/camera from fear entity
+  }
+};
+
 //run on doc load
 $( document ).ready(function() {
     console.log( "stupid jquery!" );
 
   //fade in image search form after delay
-  $("#fearsearch").delay(2500).fadeIn(1000);
+  $("#fearsearch").delay(2000).fadeIn(500);
 
   //event handler for image search form submit button
   $("#submitsearch").click(function(e) {
@@ -13,7 +24,13 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("searching giphy for " + searchQuery);
-    getGif(searchQuery);
+    if(searchQuery != ""){
+      getGif(searchQuery);
+    }
+
+    //set fear element to active so we know we are ready to play
+    document.querySelector('#thefear').setAttribute('active', 'true');
+    document.querySelector('#thefear').setAttribute('init', 'true');
 
     //hide submit button and show loading progress bar
     $("#submitsearch").animate({
@@ -27,8 +44,8 @@ $( document ).ready(function() {
       $("#bar-wrapper").fadeIn(500);
 
       $( ".bar" ).delay(500).animate({
-        width: "324px",
-        }, 15000, "swing",
+        width: "284px",
+        }, 25000, "swing",
         function() {
             console.log("progress bar complete");
         });
