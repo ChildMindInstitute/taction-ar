@@ -36,17 +36,33 @@ AFRAME.registerComponent('pinch-scale-destroy', {
   //make sure everything is in order after load
   const scene = this.el.sceneEl;
   scene.addEventListener('realityready', () => {
+
+    if(AFPS.gamestate.type == 'bee'){
+      document.getElementById('scarymusicclip').setAttribute('src', 'audio/bee-or-wasp-in-flight-fast.mp3');
+      document.getElementById('feargraphic1').setAttribute('src', 'graphics/bee1.gif');
+      document.getElementById('feargraphic2').setAttribute('src', 'graphics/bee2.gif');
+      document.getElementById('feargraphic3').setAttribute('src', 'graphics/bee3.gif');
+      document.getElementById('feargraphic4').setAttribute('src', 'graphics/bee4.gif');
+      document.getElementById('feargraphic5').setAttribute('src', 'graphics/bee5.gif');
+    } else if (AFPS.gamestate.type == 'dog'){
+      document.getElementById('scarymusicclip').setAttribute('src', 'audio/DogGrowling.mp3');
+      document.getElementById('feargraphic1').setAttribute('src', 'graphics/bee1.gif');
+      document.getElementById('feargraphic2').setAttribute('src', 'graphics/bee2.gif');
+      document.getElementById('feargraphic3').setAttribute('src', 'graphics/bee3.gif');
+      document.getElementById('feargraphic4').setAttribute('src', 'graphics/bee4.gif');
+      document.getElementById('feargraphic5').setAttribute('src', 'graphics/bee5.gif');
+    } else if (AFPS.gamestate.type == 'search'){
+      document.getElementById('scarymusicclip').setAttribute('src', 'audio/Le-grand-cahier-Les-alertes.mp3');
+      document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.searchurls[0]);
+      document.getElementById('feargraphic2').setAttribute('src', AFPS.gamestate.searchurls[1]);
+      document.getElementById('feargraphic3').setAttribute('src', AFPS.gamestate.searchurls[2]);
+      document.getElementById('feargraphic4').setAttribute('src', AFPS.gamestate.searchurls[3]);
+      document.getElementById('feargraphic5').setAttribute('src', AFPS.gamestate.searchurls[4]);
+    }
+
+
     //initial position
- //   var sphereRadius = 10;
- //   var cameraobject = document.querySelector("[camera]").getObject3D('camera');
     const camera = document.getElementById('camera'); 
-
-  //  var pos = cameraobject.position.clone().negate().normalize().multiplyScalar(sphereRadius);
-  //  console.log("raycast calculated position:");
-  //  console.log(pos);
-
-  //  this.el.object3D.position.copy(pos);
-
     //second way to do position
     console.log("calculate position with rar camera angle and position: ");
     var angle = camera.getAttribute("rotation");
@@ -65,8 +81,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
      console.log("reload fear entity image src");
 
-     var fearquery = $("#search_txt").val();
-     console.log("the search query was: " + fearquery);
+    // var fearquery = $("#search_txt").val();
+    // console.log("the search query was: " + fearquery);
     })
 
   },
@@ -132,7 +148,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
         //start loading next fear graphic into fear entity in background
         console.log("change material");
-        let scorelastdigit = Math.Abs(newscore) % 10;
+        let scorelastdigit = Math.abs(newscore) % 10;
         switch (scorelastdigit % 10)
         {
             case 0:

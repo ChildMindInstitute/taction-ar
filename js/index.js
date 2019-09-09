@@ -8,7 +8,8 @@ window.AFPS = {
     fearisactive: false,  //can player interact with/destroy the fear entity
     startgame: false,
     initialdistance: 0,
-    feardistance: 0      //distance of player/camera from fear entity
+    feardistance: 0,      //distance of player/camera from fear entity
+    searchurls: ["", "", "", "", ""]
   }
 };
 
@@ -205,12 +206,18 @@ $("#search_form").submit(function(e) {
         var gifUrl = "https://media.giphy.com/media/" + response.data[0].id + "/giphy.gif"
         console.log(gifUrl);
 
+        AFPS.gamestate.searchurls[0] = 'https://media.giphy.com/media/' + response.data[0].id + '/giphy.gif';
+        AFPS.gamestate.searchurls[1] = 'https://media.giphy.com/media/' + response.data[1].id + '/giphy.gif';
+        AFPS.gamestate.searchurls[2] = 'https://media.giphy.com/media/' + response.data[2].id + '/giphy.gif';
+        AFPS.gamestate.searchurls[3] = 'https://media.giphy.com/media/' + response.data[3].id + '/giphy.gif';
+        AFPS.gamestate.searchurls[4] = 'https://media.giphy.com/media/' + response.data[4].id + '/giphy.gif';
+
         //update image assets
-        document.querySelector('#feargraphic1').setAttribute('src', 'https://media.giphy.com/media/' + response.data[0].id + '/giphy.gif');
-        document.querySelector('#feargraphic2').setAttribute('src', 'https://media.giphy.com/media/' + response.data[1].id + '/giphy.gif');
-        document.querySelector('#feargraphic3').setAttribute('src', 'https://media.giphy.com/media/' + response.data[2].id + '/giphy.gif');
-        document.querySelector('#feargraphic4').setAttribute('src', 'https://media.giphy.com/media/' + response.data[3].id + '/giphy.gif');
-        document.querySelector('#feargraphic5').setAttribute('src', 'https://media.giphy.com/media/' + response.data[4].id + '/giphy.gif');
+        document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.searchurls[0]);
+        document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.searchurls[1]);
+        document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.searchurls[2]);
+        document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.searchurls[3]);
+        document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.searchurls[4]);
         console.log("load search result images into graphics asset elements");
       }
        // var body = document.getElementsByTagName('body')[0];

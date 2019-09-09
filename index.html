@@ -66,7 +66,7 @@ Started from 8th Wall A-Frame Product Boilerplate.
     <div id="search_form" class="search-ui">
       <input type="text" id="search_txt" class="search-ui" placeholder="lions, tigers, and bears oh my" />
       <button id="submitsearch" class="search-ui">ENTER</button>
-      <h2>or</h2>
+    <!--  <h2>or</h2> -->
       <button id="selectdogs" class="search-ui">DOGS</button>
       <button id="selectbees" class="search-ui">BEES</button>
     </div>
@@ -102,16 +102,16 @@ Started from 8th Wall A-Frame Product Boilerplate.
    <!--   <a-asset-item id="demoModel" src="glb/Moxy08e.glb"></a-asset-item> -->
 
       <!-- audio -->
-      <audio id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes.mp3">
+      <audio id="scarymusicclip" src="audio/DogGrowling.mp3">
       <audio id="explodesoundclip" src="audio/explosion_backdraft.mp3">
 
       <!-- images -->
       <img id="explode" src="graphics/explode.gif">
-      <img id="feargraphic1" src="graphics/snake1.gif">
-      <img id="feargraphic2" src="graphics/snake2.gif">
-      <img id="feargraphic3" src="graphics/snake1.gif">
-      <img id="feargraphic4" src="graphics/snake2.gif">
-      <img id="feargraphic5" src="graphics/snake1.gif">
+      <img id="feargraphic1" src="graphics/dog1.gif">
+      <img id="feargraphic2" src="graphics/dog2.gif">
+      <img id="feargraphic3" src="graphics/dog3.gif">
+      <img id="feargraphic4" src="graphics/dog4.gif">
+      <img id="feargraphic5" src="graphics/dog5.gif">
 
     </a-assets>
 
@@ -142,9 +142,6 @@ Started from 8th Wall A-Frame Product Boilerplate.
 
 
     <a-entity id="thefear" 
-              active="false"
-              init="false"
-              score="0" 
               initdistance="0"
               geometry="primitive:circle;radius:7;"  
               material="shader:gif; alphaTest:0.5;" 
