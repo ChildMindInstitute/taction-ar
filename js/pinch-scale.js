@@ -182,7 +182,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
             //RESET FOR NEXT FEAR ENTITY
             setTimeout(()=> {
-                themusic.components.sound.playSound();
+                fearsound.components.sound.playSound();
 
                 //set new position
                 const camera = document.getElementById('camera'); 
@@ -203,9 +203,12 @@ AFRAME.registerComponent('pinch-scale-destroy', {
                 //make fear entity visible again
                 thefear.setAttribute('visible', true);
 
+                //get new initial distance of camera/player from fear entity
+                let camPos = camera.object3D.position;
+                let targetPos = thefear.object3D.position;
+                AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
+
                 //allow user interaction with fear entity
-              //  thefear.setAttribute('active', true);
-               // thefear.setAttribute('active', true);
                 AFPS.gamestate.fearisactive = true;
 
             }, 6000);
@@ -218,14 +221,11 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
     } //end isactive conditional
   }
-});ible', false);
-            explodesound.components.sound.stopSound();
-
-            document.getElementById("dialogue").innerHTML = "<p>LOOK AROUND TO FACE MORE FEAR...</p>";
+});FEAR...</p>";
 
             //RESET FOR NEXT FEAR ENTITY
             setTimeout(()=> {
-                themusic.components.sound.playSound();
+                fearsound.components.sound.playSound();
 
                 //set new position
                 const camera = document.getElementById('camera'); 
@@ -246,9 +246,12 @@ AFRAME.registerComponent('pinch-scale-destroy', {
                 //make fear entity visible again
                 thefear.setAttribute('visible', true);
 
+                //get new initial distance of camera/player from fear entity
+                let camPos = camera.object3D.position;
+                let targetPos = thefear.object3D.position;
+                AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
+
                 //allow user interaction with fear entity
-              //  thefear.setAttribute('active', true);
-               // thefear.setAttribute('active', true);
                 AFPS.gamestate.fearisactive = true;
 
             }, 6000);
