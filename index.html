@@ -66,6 +66,9 @@ Started from 8th Wall A-Frame Product Boilerplate.
     <div id="search_form" class="search-ui">
       <input type="text" id="search_txt" class="search-ui" placeholder="lions, tigers, and bears oh my" />
       <button id="submitsearch" class="search-ui">ENTER</button>
+      <h2>or</h2>
+      <button id="selectdogs" class="search-ui">DOGS</button>
+      <button id="selectbees" class="search-ui">BEES</button>
     </div>
 
     <div id="bar-wrapper">
@@ -139,7 +142,8 @@ Started from 8th Wall A-Frame Product Boilerplate.
 
 
     <a-entity id="thefear" 
-              active="true"
+              active="false"
+              init="false"
               score="0" 
               initdistance="0"
               geometry="primitive:circle;radius:7;"  
