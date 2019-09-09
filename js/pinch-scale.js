@@ -221,47 +221,4 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
     } //end isactive conditional
   }
-});FEAR...</p>";
-
-            //RESET FOR NEXT FEAR ENTITY
-            setTimeout(()=> {
-                fearsound.components.sound.playSound();
-
-                //set new position
-                const camera = document.getElementById('camera'); 
-
-                var angle = camera.getAttribute("rotation");
-                var x = 1 * Math.cos(angle.y * Math.PI / 180);
-                var y = 1 * Math.sin(angle.y * Math.PI / 180);
-                var pos = camera.getAttribute("position");
-                pos.x -= y*15;
-                pos.z -= x*15;
-                this.el.setAttribute("position", pos);
-                console.log("change position: ");
-                console.log(pos);
-
-                //reset scale
-                this.scaleFactor = 1;
-
-                //make fear entity visible again
-                thefear.setAttribute('visible', true);
-
-                //get new initial distance of camera/player from fear entity
-                let camPos = camera.object3D.position;
-                let targetPos = thefear.object3D.position;
-                AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
-
-                //allow user interaction with fear entity
-                AFPS.gamestate.fearisactive = true;
-
-            }, 6000);
-
-        }, 5000);
-
-
-
-      } //end is destroy fear proximity conditional
-
-    } //end isactive conditional
-  }
 });

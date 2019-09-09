@@ -25,6 +25,9 @@ $( document ).ready(function() {
     e.preventDefault();
     var searchQuery = $("#search_txt").val();
     AFPS.gamestate.type = 'search';
+
+    //load generic scary music for fear entity sound
+    document.querySelector('#scarymusicclip').setAttribute('src', 'audio/Le-grand-cahier-Les-alertes.mp3');
     
     //call giphy API to get image URLs
     console.log("searching giphy for " + searchQuery);
@@ -284,16 +287,28 @@ AFRAME.registerComponent('loading-screen', {
 
     //display UI components when loaded
     scene.addEventListener('realityready', () => {
-      loadingScreen.style.display = 'none';
+      
      //   promptImage.style.visibility = 'visible';      
      const fearsearch = document.getElementById('fearsearch');
 	   const dialogue = document.getElementById('dialogue');
 	   const displayscore = document.getElementById('scoredisplay'); 
 
-     //show in game UI elements and hide load screen UI elements
-	   dialogue.style.visibility = 'visible';
-	   displayscore.style.visibility = 'visible';
-     fearsearch.style.visibility = 'hidden';
+     //show in game UI elements and hide load screen UI elements -- 6 second delay before default content loaded if no
+     if(AFPS.gamestate.startgame){
+       loadingScreen.style.display = 'none';
+  	   dialogue.style.visibility = 'visible';
+  	   displayscore.style.visibility = 'visible';
+       fearsearch.style.visibility = 'hidden';
+     } else {
+      setTimeout(()=> {
+            loadingScreen.style.display = 'none';
+           dialogue.style.visibility = 'visible';
+           displayscore.style.visibility = 'visible';
+           fearsearch.style.visibility = 'hidden';
+        }, 6000);
+     }
+
+
     })
 
     scene.addEventListener('realityerror', () => {
