@@ -1,11 +1,13 @@
 
-//game state global
+//game state global 
 
 window.AFPS = {
   gamestate: {
     score: 0,
-    type: 'search',       //search, dog or bee - search is default
+    type: 'dog',       //search, dog or bee - search is default
     fearisactive: false,  //can player interact with/destroy the fear entity
+    startgame: false,
+    initialdistance: 0,
     feardistance: 0      //distance of player/camera from fear entity
   }
 };
@@ -17,10 +19,12 @@ $( document ).ready(function() {
   //fade in image search form after delay
   $("#fearsearch").delay(2000).fadeIn(500);
 
+  /***** IMAGE SEARCH SUBMIT BUTTON *****/
   //event handler for image search form submit button
   $("#submitsearch").click(function(e) {
     e.preventDefault();
     var searchQuery = $("#search_txt").val();
+    AFPS.gamestate.type = 'search';
     
     //call giphy API to get image URLs
     console.log("searching giphy for " + searchQuery);
@@ -29,8 +33,8 @@ $( document ).ready(function() {
     }
 
     //set fear element to active so we know we are ready to play
-    document.querySelector('#thefear').setAttribute('active', 'true');
-    document.querySelector('#thefear').setAttribute('init', 'true');
+    AFPS.gamestate.fearisactive = true;
+    AFPS.gamestate.startgame = true;
 
     //hide submit button and show loading progress bar
     $("#submitsearch").animate({
@@ -39,6 +43,8 @@ $( document ).ready(function() {
 
       //display none so it doesn't take up space
       $("#submitsearch").hide();
+      $("#selectdogs").hide();
+      $("#selectbees").hide();
 
       //fade in loading progress bar elements
       $("#bar-wrapper").fadeIn(500);
@@ -53,6 +59,95 @@ $( document ).ready(function() {
       });
 
   });
+
+  /***** DOG SELECT BUTTON *****/
+  //event handler for image search form submit button
+  $("#selectdogs").click(function(e) {
+    e.preventDefault();
+    var searchQuery = $("#search_txt").val();
+    AFPS.gamestate.type = 'dog';
+    
+    //call giphy API to get image URLs
+    console.log("loading dog assetts");
+    document.querySelector('#feargraphic1').setAttribute('src', 'graphics/dog1.gif');
+
+    document.querySelector('#scarymusicclip').setAttribute('src', 'audio/DogGrowling.mp3');
+
+    document.querySelector('#feargraphic2').setAttribute('src', 'graphics/dog2.gif');
+    document.querySelector('#feargraphic3').setAttribute('src', 'graphics/dog3.gif');
+    document.querySelector('#feargraphic4').setAttribute('src', 'graphics/dog4.gif');
+    document.querySelector('#feargraphic5').setAttribute('src', 'graphics/dog5.gif');
+
+    //set fear element to active so we know we are ready to play
+    AFPS.gamestate.fearisactive = true;
+    AFPS.gamestate.startgame = true;
+
+    //hide submit button and show loading progress bar
+    $("#submitsearch").animate({
+      opacity: 0
+    }, 1000, function(){
+
+      //display none so it doesn't take up space
+      $("#submitsearch").hide();
+      $("#selectdogs").hide();
+      $("#selectbees").hide();
+
+      //fade in loading progress bar elements
+      $("#bar-wrapper").fadeIn(500);
+
+      $( ".bar" ).delay(500).animate({
+        width: "284px",
+        }, 25000, "swing",
+        function() {
+            console.log("progress bar complete");
+        });
+      });
+  });
+
+  /***** BEE SELECT BUTTON *****/
+  //event handler for image search form submit button
+  $("#selectdogs").click(function(e) {
+    e.preventDefault();
+    var searchQuery = $("#search_txt").val();
+    AFPS.gamestate.type = 'bee';
+    
+    //call giphy API to get image URLs
+    console.log("loading bee assetts");
+    document.querySelector('#feargraphic1').setAttribute('src', 'graphics/bee1.gif');
+
+    document.querySelector('#scarymusicclip').setAttribute('src', 'audio/bee-or-wasp-in-flight-fast.mp3');
+
+    document.querySelector('#feargraphic2').setAttribute('src', 'graphics/bee2.gif');
+    document.querySelector('#feargraphic3').setAttribute('src', 'graphics/bee3.gif');
+    document.querySelector('#feargraphic4').setAttribute('src', 'graphics/bee4.gif');
+    document.querySelector('#feargraphic5').setAttribute('src', 'graphics/bee5.gif');
+
+    //set fear element to active so we know we are ready to play
+    AFPS.gamestate.fearisactive = true;
+    AFPS.gamestate.startgame = true;
+
+    //hide submit button and show loading progress bar
+    $("#submitsearch").animate({
+      opacity: 0
+    }, 1000, function(){
+
+      //display none so it doesn't take up space
+      $("#submitsearch").hide();
+      $("#selectdogs").hide();
+      $("#selectbees").hide();
+
+      //fade in loading progress bar elements
+      $("#bar-wrapper").fadeIn(500);
+
+      $( ".bar" ).delay(500).animate({
+        width: "284px",
+        }, 25000, "swing",
+        function() {
+            console.log("progress bar complete");
+        });
+      });
+  });
+
 });
 
 
@@ -134,8 +229,9 @@ AFRAME.registerComponent('game-loop', {
       const camera = document.getElementById('camera'); 
       let camPos = camera.object3D.position;
       let targetPos = thetarget.object3D.position;
-      const initialdistance = camPos.distanceTo(targetPos);
-      thetarget.setAttribute('initdistance', initialdistance);
+    //  const initialdistance = camPos.distanceTo(targetPos);
+   //   thetarget.setAttribute('initdistance', initialdistance);
+      AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
     },
     tick: function() {
       let thetarget = document.getElementById('thefear');
@@ -143,25 +239,26 @@ AFRAME.registerComponent('game-loop', {
       let camera = document.getElementById('camera');
       let camPos = camera.object3D.position;
       let targetPos = thetarget.object3D.position;
-      let initialdistance = Number(thetarget.getAttribute("initdistance"));
+      let initialdistance = AFPS.gamestate.initialdistance;// Number(thetarget.getAttribute("initdistance"));
       let currentdistance = camPos.distanceTo(targetPos);
-  //    textcont.setAttribute("value", camPos.distanceTo(targetPos));
 
   //is the player close enough to the fear entitity to face it?
-  if( (currentdistance / initialdistance) > 0.25 ){
+  if( AFPS.gamestate.fearisactive ){
   	if((currentdistance / initialdistance) > 0.85 ){
 	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
-	} 
-	else {
-		document.getElementById("dialogue").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
-	}
+  	} 
+  	else {
+  		document.getElementById("dialogue").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
+  	}
+
+    //increase init distance value if current distance is greater ie init distance -> max distance
+    if(currentdistance > initialdistance){
+      thetarget.setAttribute('initdistance', currentdistance);
+    }
   }
       
 
-      //increase init distance value if current distance is greater ie init distance -> max distance
-      if(currentdistance > initialdistance){
-      	thetarget.setAttribute('initdistance', currentdistance);
-      }
+
     }
 });
 
