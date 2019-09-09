@@ -37,15 +37,15 @@ AFRAME.registerComponent('pinch-scale-destroy', {
   const scene = this.el.sceneEl;
   scene.addEventListener('realityready', () => {
     //initial position
-    var sphereRadius = 10;
-    var cameraobject = document.querySelector("[camera]").getObject3D('camera');
-    var camera = document.getElementById('camera'); 
+ //   var sphereRadius = 10;
+ //   var cameraobject = document.querySelector("[camera]").getObject3D('camera');
+    const camera = document.getElementById('camera'); 
 
-    var pos = cameraobject.position.clone().negate().normalize().multiplyScalar(sphereRadius);
-    console.log("raycast calculated position:");
-    console.log(pos);
+  //  var pos = cameraobject.position.clone().negate().normalize().multiplyScalar(sphereRadius);
+  //  console.log("raycast calculated position:");
+  //  console.log(pos);
 
-    this.el.object3D.position.copy(pos);
+  //  this.el.object3D.position.copy(pos);
 
     //second way to do position
     console.log("calculate position with rar camera angle and position: ");
@@ -75,6 +75,9 @@ AFRAME.registerComponent('pinch-scale-destroy', {
   },
   handleEvent: function (event) {
 
+    const thefear = document.getElementById('thefear');
+    const explodegraphic = document.getElementById('explodegraphic');
+
     let isactive = thefear.getAttribute('active');
     console.log("active status inside pinch event: " + isactive);
 
@@ -103,9 +106,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         thefear.setAttribute('active', false);
         console.log("set active to false");
 
-        //load explosion graphic
-        const thefear = document.getElementById('thefear');
-        const explodegraphic = document.getElementById('explodegraphic');
+        //show explosion graphic
         thefear.setAttribute('visible', false);
 
         //set explosion graphic position at fear position
