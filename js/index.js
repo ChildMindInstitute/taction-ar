@@ -9,7 +9,8 @@ window.AFPS = {
     startgame: false,
     initialdistance: 0,
     feardistance: 0,      //distance of player/camera from fear entity
-    imageurls: ["", "", "", "", ""]
+    imageurls: ["", "", "", "", ""],
+    fearmusicurl: ""
   }
 };
 
@@ -28,6 +29,7 @@ $( document ).ready(function() {
     AFPS.gamestate.type = 'search';
 
     //load generic scary music for fear entity sound
+    AFPS.gamestate.fearmusicurl = 'audio/Le-grand-cahier-Les-alertes.mp3';
     document.querySelector('#scarymusicclip').setAttribute('src', 'audio/Le-grand-cahier-Les-alertes.mp3');
     
     //call giphy API to get image URLs
@@ -72,6 +74,7 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("loading dog assetts");
+    AFPS.gamestate.fearmusicurl = 'audio/DogGrowling.mp3';
     document.querySelector('#scarymusicclip').setAttribute('src', 'audio/DogGrowling.mp3');
 
     AFPS.gamestate.imageurls[0] = 'graphics/dog1.gif';
@@ -118,6 +121,7 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("loading bee assetts");
+    AFPS.gamestate.fearmusicurl = 'audio/bee-or-wasp-in-flight-fast.mp3';
     document.querySelector('#scarymusicclip').setAttribute('src', 'audio/bee-or-wasp-in-flight-fast.mp3');
 
     AFPS.gamestate.imageurls[0] = 'graphics/bee1.gif';

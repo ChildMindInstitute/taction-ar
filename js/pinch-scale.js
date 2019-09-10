@@ -38,21 +38,13 @@ AFRAME.registerComponent('pinch-scale-destroy', {
   scene.addEventListener('realityready', () => {
   if(AFPS.gamestate.fearisactive != true){
     
-    if(AFPS.gamestate.type == 'bee'){
-      document.getElementById('scarymusicclip').setAttribute('src', 'audio/bee-or-wasp-in-flight-fast.mp3');
-      document.getElementById('feargraphic1').setAttribute('src', 'graphics/bee1.gif');
-
-    } else if (AFPS.gamestate.type == 'dog'){
-      document.getElementById('scarymusicclip').setAttribute('src', 'audio/DogGrowling.mp3');
-      document.getElementById('feargraphic1').setAttribute('src', 'graphics/dog1.gif');
-
-    } else if (AFPS.gamestate.type == 'search'){
-      document.getElementById('scarymusicclip').setAttribute('src', 'audio/Le-grand-cahier-Les-alertes.mp3');
-      document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.searchurls[0]);
-    }
+    document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearmusicurl);
+    document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
 
     let fearmusic = document.getElementById('scarymusic');
+    fearmusic.components.sound.stopSound();
     fearmusic.setAttribute('src', '#scarymusicclip');
+    fearmusic.components.sound.playSound();
 
     let thefear = document.getElementById('thefear');
     thefear.setAttribute('material', 'src', '#feargraphic1');
