@@ -67,12 +67,13 @@
 }
 
 #fearsearch {
-  display:none;
+  /*display:none;*/
+  opacity: 0;
   position: absolute;
   width: 90%;
   border-radius: 25px;
   background-color: black;
-  background: url('../graphics/snake_skin_back.jpg');
+  background: url('../graphics/snake_skin_back_comp.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   height: auto;
@@ -104,8 +105,13 @@
     font-weight: bold;
   font-family: "Open Sans", Arial, sans-serif;
   border-radius: 5px;
-  margin: 5%;
-  padding: 1%;
+  display: block;
+  margin-top: 5%;
+   margin-bottom: 5%;
+   width: 33.3%;
+   margin-left: 33.3%;
+
+  padding: 2%;
   }
 
 .gfxButton {
@@ -127,13 +133,13 @@
   height: auto;
   display: block;
   text-align: center;
-  bottom: 15vh;
+  bottom: 12vh;
   pointer-events: auto;
 
   color: white;
   text-shadow: 0.2rem 0.2rem 0.3rem black;
   font-weight: bold;
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   text-rendering: optimizeLegibility;
 
   font-size: 1.8rem;
@@ -147,13 +153,13 @@
   height: auto;
   display: block;
   text-align: center;
-  bottom: 9vh;
+  bottom: 4vh;
   pointer-events: auto;
 
   color: white;
   text-shadow: 0.2rem 0.2rem 0.3rem black;
   font-weight: bold;
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   text-rendering: optimizeLegibility;
 
   font-size: 1.8rem;
@@ -174,7 +180,7 @@
   /* top: calc(50% - 64px); */
   width: 100%;
   text-align: center;
-  font-family: "Open Sans";
+  font-family: "Open Sans", Arial, sans-serif;
   font-size: 18px;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   color: #eee;
@@ -182,12 +188,13 @@
 
 #bar-wrapper .container {
 /*  position: absolute; */
-  left: calc(50vw - 4px - 290px / 2);
+  /*left: calc(50vw - 4px - 290px / 2);*/
+  margin-left: 4%;
   top: calc(50vh - 4px - 10px / 2);
   border-radius: 14px;
   border: 4px solid #eee;
   height: 10px;
-  width: 290px;
+  width: 89%;
   background-color: #3a3a3a;
   margin-bottom: 20px;
 }

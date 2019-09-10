@@ -36,30 +36,28 @@ AFRAME.registerComponent('pinch-scale-destroy', {
   //make sure everything is in order after load
   const scene = this.el.sceneEl;
   scene.addEventListener('realityready', () => {
-
+  if(AFPS.gamestate.fearisactive != true){
+    
     if(AFPS.gamestate.type == 'bee'){
       document.getElementById('scarymusicclip').setAttribute('src', 'audio/bee-or-wasp-in-flight-fast.mp3');
       document.getElementById('feargraphic1').setAttribute('src', 'graphics/bee1.gif');
-      document.getElementById('feargraphic2').setAttribute('src', 'graphics/bee2.gif');
-      document.getElementById('feargraphic3').setAttribute('src', 'graphics/bee3.gif');
-      document.getElementById('feargraphic4').setAttribute('src', 'graphics/bee4.gif');
-      document.getElementById('feargraphic5').setAttribute('src', 'graphics/bee5.gif');
+
     } else if (AFPS.gamestate.type == 'dog'){
       document.getElementById('scarymusicclip').setAttribute('src', 'audio/DogGrowling.mp3');
-      document.getElementById('feargraphic1').setAttribute('src', 'graphics/bee1.gif');
-      document.getElementById('feargraphic2').setAttribute('src', 'graphics/bee2.gif');
-      document.getElementById('feargraphic3').setAttribute('src', 'graphics/bee3.gif');
-      document.getElementById('feargraphic4').setAttribute('src', 'graphics/bee4.gif');
-      document.getElementById('feargraphic5').setAttribute('src', 'graphics/bee5.gif');
+      document.getElementById('feargraphic1').setAttribute('src', 'graphics/dog1.gif');
+
     } else if (AFPS.gamestate.type == 'search'){
       document.getElementById('scarymusicclip').setAttribute('src', 'audio/Le-grand-cahier-Les-alertes.mp3');
       document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.searchurls[0]);
-      document.getElementById('feargraphic2').setAttribute('src', AFPS.gamestate.searchurls[1]);
-      document.getElementById('feargraphic3').setAttribute('src', AFPS.gamestate.searchurls[2]);
-      document.getElementById('feargraphic4').setAttribute('src', AFPS.gamestate.searchurls[3]);
-      document.getElementById('feargraphic5').setAttribute('src', AFPS.gamestate.searchurls[4]);
     }
 
+    let fearmusic = document.getElementById('scarymusic');
+    fearmusic.setAttribute('src', '#scarymusicclip');
+
+    let thefear = document.getElementById('thefear');
+    thefear.setAttribute('material', 'src', '#feargraphic1');
+    AFPS.gamestate.fearisactive = true;
+  }
 
     //initial position
     const camera = document.getElementById('camera'); 
@@ -74,15 +72,6 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     this.el.setAttribute("position", pos2);
     console.log(pos2);
 
-
-    //reload image material
-     this.el.setAttribute('material', 'src', '#feargraphic1');
-     document.getElementById('thefear').setAttribute('material', 'src', '#feargraphic1'); //again
-
-     console.log("reload fear entity image src");
-
-    // var fearquery = $("#search_txt").val();
-    // console.log("the search query was: " + fearquery);
     })
 
   },
@@ -137,7 +126,6 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         explodegraphic.setAttribute('visible', true);
 
         //set fear entitity distance really high for game loop dialogue
-        thefear.setAttribute('initdistance', 999);
         document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
 
         //stop scary music and play explosion sound effect
@@ -153,15 +141,19 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         {
             case 0:
                 thefear.setAttribute('material', 'src', '#feargraphic1');
+                document.getElementById('feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]); //load next image into asset element
                 break;
             case 1:
                 thefear.setAttribute('material', 'src', '#feargraphic2');
+                document.getElementById('feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]); //load next image into asset element
                 break;
             case 2:
                 thefear.setAttribute('material', 'src', '#feargraphic3');
+                document.getElementById('feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]); //load next image into asset element
                 break;
             case 3:
                 thefear.setAttribute('material', 'src', '#feargraphic4');
+                document.getElementById('feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]); //load next image into asset element
                 break;
             case 4:
                 thefear.setAttribute('material', 'src', '#feargraphic5');
@@ -224,12 +216,14 @@ AFRAME.registerComponent('pinch-scale-destroy', {
                 let targetPos = thefear.object3D.position;
                 AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
 
+                console.log("recaclulated initial distance:" + AFPS.gamestate.initialdistance);
+
                 //allow user interaction with fear entity
                 AFPS.gamestate.fearisactive = true;
 
-            }, 6000);
+            }, 5000);
 
-        }, 5000);
+        }, 4000);
 
 
 

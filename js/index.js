@@ -9,7 +9,7 @@ window.AFPS = {
     startgame: false,
     initialdistance: 0,
     feardistance: 0,      //distance of player/camera from fear entity
-    searchurls: ["", "", "", "", ""]
+    imageurls: ["", "", "", "", ""]
   }
 };
 
@@ -18,7 +18,7 @@ $( document ).ready(function() {
     console.log( "stupid jquery!" );
 
   //fade in image search form after delay
-  $("#fearsearch").delay(2000).fadeIn(500);
+  $("#fearsearch").delay(2000).animate({ opacity: 1 }, 300, function(){ });
 
   /***** IMAGE SEARCH SUBMIT BUTTON *****/
   //event handler for image search form submit button
@@ -37,7 +37,7 @@ $( document ).ready(function() {
     }
 
     //set fear element to active so we know we are ready to play
-    AFPS.gamestate.fearisactive = true;
+ //   AFPS.gamestate.fearisactive = true;
     AFPS.gamestate.startgame = true;
 
     //hide submit button and show loading progress bar
@@ -45,16 +45,15 @@ $( document ).ready(function() {
       opacity: 0
     }, 1000, function(){
 
-      //display none so it doesn't take up space
-      $("#submitsearch").hide();
-      $("#selectdogs").hide();
-      $("#selectbees").hide();
+      //display none for search and select buttons so it doesn't take up space
+      $(".select-button").hide();
+
 
       //fade in loading progress bar elements
       $("#bar-wrapper").fadeIn(500);
 
       $( ".bar" ).delay(500).animate({
-        width: "284px",
+        width: "88%",
         }, 25000, "swing",
         function() {
             console.log("progress bar complete");
@@ -73,17 +72,21 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("loading dog assetts");
-    document.querySelector('#feargraphic1').setAttribute('src', 'graphics/dog1.gif');
-
     document.querySelector('#scarymusicclip').setAttribute('src', 'audio/DogGrowling.mp3');
 
-    document.querySelector('#feargraphic2').setAttribute('src', 'graphics/dog2.gif');
-    document.querySelector('#feargraphic3').setAttribute('src', 'graphics/dog3.gif');
-    document.querySelector('#feargraphic4').setAttribute('src', 'graphics/dog4.gif');
-    document.querySelector('#feargraphic5').setAttribute('src', 'graphics/dog5.gif');
+    AFPS.gamestate.imageurls[0] = 'graphics/dog1.gif';
+    AFPS.gamestate.imageurls[1] = 'graphics/dog2.gif';
+    AFPS.gamestate.imageurls[2] = 'graphics/dog3.gif';
+    AFPS.gamestate.imageurls[3] = 'graphics/dog4.gif';
+    AFPS.gamestate.imageurls[4] = 'graphics/dog5.gif';
+
+    document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+    document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
+    document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+
 
     //set fear element to active so we know we are ready to play
-    AFPS.gamestate.fearisactive = true;
+  //  AFPS.gamestate.fearisactive = true;
     AFPS.gamestate.startgame = true;
 
     //hide submit button and show loading progress bar
@@ -91,10 +94,8 @@ $( document ).ready(function() {
       opacity: 0
     }, 1000, function(){
 
-      //display none so it doesn't take up space
-      $("#submitsearch").hide();
-      $("#selectdogs").hide();
-      $("#selectbees").hide();
+      //display none for search and select buttons so it doesn't take up space
+      $(".select-button").hide();
 
       //fade in loading progress bar elements
       $("#bar-wrapper").fadeIn(500);
@@ -110,24 +111,28 @@ $( document ).ready(function() {
 
   /***** BEE SELECT BUTTON *****/
   //event handler for image search form submit button
-  $("#selectdogs").click(function(e) {
+  $("#selectbees").click(function(e) {
     e.preventDefault();
     var searchQuery = $("#search_txt").val();
     AFPS.gamestate.type = 'bee';
     
     //call giphy API to get image URLs
     console.log("loading bee assetts");
-    document.querySelector('#feargraphic1').setAttribute('src', 'graphics/bee1.gif');
-
     document.querySelector('#scarymusicclip').setAttribute('src', 'audio/bee-or-wasp-in-flight-fast.mp3');
 
-    document.querySelector('#feargraphic2').setAttribute('src', 'graphics/bee2.gif');
-    document.querySelector('#feargraphic3').setAttribute('src', 'graphics/bee3.gif');
-    document.querySelector('#feargraphic4').setAttribute('src', 'graphics/bee4.gif');
-    document.querySelector('#feargraphic5').setAttribute('src', 'graphics/bee5.gif');
+    AFPS.gamestate.imageurls[0] = 'graphics/bee1.gif';
+    AFPS.gamestate.imageurls[1] = 'graphics/bee2.gif';
+    AFPS.gamestate.imageurls[2] = 'graphics/bee3.gif';
+    AFPS.gamestate.imageurls[3] = 'graphics/bee4.gif';
+    AFPS.gamestate.imageurls[4] = 'graphics/bee5.gif';
+
+    document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+    document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
+    document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+
 
     //set fear element to active so we know we are ready to play
-    AFPS.gamestate.fearisactive = true;
+  //  AFPS.gamestate.fearisactive = true;
     AFPS.gamestate.startgame = true;
 
     //hide submit button and show loading progress bar
@@ -135,10 +140,8 @@ $( document ).ready(function() {
       opacity: 0
     }, 1000, function(){
 
-      //display none so it doesn't take up space
-      $("#submitsearch").hide();
-      $("#selectdogs").hide();
-      $("#selectbees").hide();
+      //display none for search and select buttons so it doesn't take up space
+      $(".select-button").hide();
 
       //fade in loading progress bar elements
       $("#bar-wrapper").fadeIn(500);
@@ -206,18 +209,18 @@ $("#search_form").submit(function(e) {
         var gifUrl = "https://media.giphy.com/media/" + response.data[0].id + "/giphy.gif"
         console.log(gifUrl);
 
-        AFPS.gamestate.searchurls[0] = 'https://media.giphy.com/media/' + response.data[0].id + '/giphy.gif';
-        AFPS.gamestate.searchurls[1] = 'https://media.giphy.com/media/' + response.data[1].id + '/giphy.gif';
-        AFPS.gamestate.searchurls[2] = 'https://media.giphy.com/media/' + response.data[2].id + '/giphy.gif';
-        AFPS.gamestate.searchurls[3] = 'https://media.giphy.com/media/' + response.data[3].id + '/giphy.gif';
-        AFPS.gamestate.searchurls[4] = 'https://media.giphy.com/media/' + response.data[4].id + '/giphy.gif';
+        AFPS.gamestate.imageurls[0] = 'https://media.giphy.com/media/' + response.data[0].id + '/giphy.gif';
+        AFPS.gamestate.imageurls[1] = 'https://media.giphy.com/media/' + response.data[1].id + '/giphy.gif';
+        AFPS.gamestate.imageurls[2] = 'https://media.giphy.com/media/' + response.data[2].id + '/giphy.gif';
+        AFPS.gamestate.imageurls[3] = 'https://media.giphy.com/media/' + response.data[3].id + '/giphy.gif';
+        AFPS.gamestate.imageurls[4] = 'https://media.giphy.com/media/' + response.data[4].id + '/giphy.gif';
 
         //update image assets
-        document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.searchurls[0]);
-        document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.searchurls[1]);
-        document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.searchurls[2]);
-        document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.searchurls[3]);
-        document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.searchurls[4]);
+        document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+        document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
+        document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+        document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+        document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
         console.log("load search result images into graphics asset elements");
       }
        // var body = document.getElementsByTagName('body')[0];
@@ -242,18 +245,34 @@ AFRAME.registerComponent('game-loop', {
     //  const initialdistance = camPos.distanceTo(targetPos);
    //   thetarget.setAttribute('initdistance', initialdistance);
       AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
+
+      // Set up the tick throttling. Will check if marker is active every 250ms
+    this.tick = AFRAME.utils.throttleTick(this.tick, 250, this);
     },
     tick: function() {
+//PRE GAME
+    //ready to begin
+    if(AFPS.gamestate.fearisactive != true && AFPS.gamestate.startgame == true){
+      let thefear = document.getElementById('thefear');
+      thefear.setAttribute('material', 'src', '#feargraphic1');
+      AFPS.gamestate.fearisactive = true;
+      AFPS.gamestate.startgame = false;
+    }
+
+
+
+//DURING GAME
+  //is the player close enough to the fear entitity to face it?
+  if( AFPS.gamestate.fearisactive ){
+
       let thetarget = document.getElementById('thefear');
-  //    let textcont = document.getElementById('debug-text');
       let camera = document.getElementById('camera');
       let camPos = camera.object3D.position;
       let targetPos = thetarget.object3D.position;
       let initialdistance = AFPS.gamestate.initialdistance;// Number(thetarget.getAttribute("initdistance"));
       let currentdistance = camPos.distanceTo(targetPos);
 
-  //is the player close enough to the fear entitity to face it?
-  if( AFPS.gamestate.fearisactive ){
+
   	if((currentdistance / initialdistance) > 0.85 ){
 	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
   	} 
