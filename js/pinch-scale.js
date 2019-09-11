@@ -28,41 +28,41 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     max: { default: 8 }
   },
   init: function () {
-    this.initialScale = this.el.object3D.scale.clone()
-    this.scaleFactor = 1
-    this.handleEvent = this.handleEvent.bind(this)
-    this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
+        this.initialScale = this.el.object3D.scale.clone()
+        this.scaleFactor = 1
+        this.handleEvent = this.handleEvent.bind(this)
+        this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
 
-  //make sure everything is in order after load
-  const scene = this.el.sceneEl;
-  scene.addEventListener('realityready', () => {
-  if(AFPS.gamestate.fearisactive != true){
-    
-    document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearmusicurl);
-    document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+        //make sure everything is in order after load
+        const scene = this.el.sceneEl;
+        scene.addEventListener('realityready', () => {
+          if(AFPS.gamestate.fearisactive != true){
+            
+            document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearmusicurl);
+            document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
 
-    let fearmusic = document.getElementById('scarymusic');
-    fearmusic.components.sound.stopSound();
-    fearmusic.setAttribute('src', '#scarymusicclip');
-    fearmusic.components.sound.playSound();
+            let fearmusic = document.getElementById('scarymusic');
+            fearmusic.components.sound.stopSound();
+            fearmusic.setAttribute('src', '#scarymusicclip');
+            fearmusic.components.sound.playSound();
 
-    let thefear = document.getElementById('thefear');
-    thefear.setAttribute('material', 'src', '#feargraphic1');
-    AFPS.gamestate.fearisactive = true;
-  }
+            let thefear = document.getElementById('thefear');
+            thefear.setAttribute('material', 'src', '#feargraphic1');
+            AFPS.gamestate.fearisactive = true;
+          }
 
-    //initial position
-    const camera = document.getElementById('camera'); 
-    //second way to do position
-    console.log("calculate position with rar camera angle and position: ");
-    var angle = camera.getAttribute("rotation");
-    var x = 1 * Math.cos(angle.y * Math.PI / 180);
-    var y = 1 * Math.sin(angle.y * Math.PI / 180);
-    var pos2 = camera.getAttribute("position");
-    pos2.x -= y*15;
-    pos2.z -= x*15;
-    this.el.setAttribute("position", pos2);
-    console.log(pos2);
+        //initial position
+        const camera = document.getElementById('camera'); 
+        //second way to do position
+        console.log("calculate position with rar camera angle and position: ");
+        var angle = camera.getAttribute("rotation");
+        var x = 1 * Math.cos(angle.y * Math.PI / 180);
+        var y = 1 * Math.sin(angle.y * Math.PI / 180);
+        var pos2 = camera.getAttribute("position");
+        pos2.x -= y*15;
+        pos2.z -= x*15;
+        this.el.setAttribute("position", pos2);
+        console.log(pos2);
 
     })
 
