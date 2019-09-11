@@ -36,7 +36,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         //make sure everything is in order after load
         const scene = this.el.sceneEl;
         scene.addEventListener('realityready', () => {
-          if(AFPS.gamestate.fearisactive != true){
+    /*      if(AFPS.gamestate.fearisactive != true){
             
             document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearmusicurl);
             document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
@@ -49,22 +49,26 @@ AFRAME.registerComponent('pinch-scale-destroy', {
             let thefear = document.getElementById('thefear');
             thefear.setAttribute('material', 'src', '#feargraphic1');
             AFPS.gamestate.fearisactive = true;
-          }
+          } */
 
-        //initial position
-        const camera = document.getElementById('camera'); 
-        //second way to do position
-        console.log("calculate position with rar camera angle and position: ");
-        var angle = camera.getAttribute("rotation");
-        var x = 1 * Math.cos(angle.y * Math.PI / 180);
-        var y = 1 * Math.sin(angle.y * Math.PI / 180);
-        var pos2 = camera.getAttribute("position");
-        pos2.x -= y*15;
-        pos2.z -= x*15;
-        this.el.setAttribute("position", pos2);
-        console.log(pos2);
+            //initial position
+            const thetarget = document.getElementById('thefear');
+            const camera = document.getElementById('camera'); 
 
-    })
+            console.log("calculate position with rar camera angle and position: ");
+            var angle = camera.getAttribute("rotation");
+            var x = 1 * Math.cos(angle.y * Math.PI / 180);
+            var y = 1 * Math.sin(angle.y * Math.PI / 180);
+            var pos = camera.getAttribute("position");
+            pos.x -= y*15;
+            pos.z -= x*15;
+            this.el.setAttribute("position", pos);
+            console.log(pos);
+
+            let camPos = camera.object3D.position;
+            let targetPos = thetarget.object3D.position;
+            AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
+        })
 
   },
   remove: function () {
@@ -72,7 +76,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
   },
   handleEvent: function (event) {
     console.log("pinch event");
-    
+
     const thefear = document.getElementById('thefear');
     const explodegraphic = document.getElementById('explodegraphic');
 

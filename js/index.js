@@ -106,8 +106,8 @@ $( document ).ready(function() {
       $("#bar-wrapper").fadeIn(500);
 
       $( ".bar" ).delay(500).animate({
-        width: "284px",
-        }, 25000, "swing",
+        width: "80%",
+        }, 28000, "swing",
         function() {
             console.log("progress bar complete");
         });
@@ -153,8 +153,8 @@ $( document ).ready(function() {
       $("#bar-wrapper").fadeIn(500);
 
       $( ".bar" ).delay(500).animate({
-        width: "284px",
-        }, 25000, "swing",
+        width: "80%",
+        }, 28000, "swing",
         function() {
             console.log("progress bar complete");
         });
@@ -247,12 +247,19 @@ AFRAME.registerComponent('game-loop', {
 
     const scene = this.el.sceneEl;
     scene.addEventListener('realityready', () => {
-      const thetarget = document.getElementById('thefear');
+   /*   const thetarget = document.getElementById('thefear');
       const camera = document.getElementById('camera'); 
       let camPos = camera.object3D.position;
       let targetPos = thetarget.object3D.position;
-      AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
-    })
+      AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos); */
+
+      //start default game after delay if user doesn't press any selection buttons
+      if(AFPS.gamestate.fearisactive == false && AFPS.gamestate.startgame == false){
+        setTimeout(()=> {
+          AFPS.gamestate.startgame = true;
+          console.log("NO USER SELECTION OF GAME TYPE - STARTING DEFAULT");
+          }, 2000);
+      })
     //  const initialdistance = camPos.distanceTo(targetPos);
    //   thetarget.setAttribute('initdistance', initialdistance);
       
