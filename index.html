@@ -59,9 +59,10 @@ Started from 8th Wall A-Frame Product Boilerplate.
     <img src="graphics/prompt.png" height="120px">
   </div>
 
+ <!-- ***************** INITIAL USER INTERFACE ******************* -->
   <div id="fearsearch" class="search-ui">
 
-    <H2>NAME YOUR FEAR</H2>
+    <H2 class="search-ui">NAME YOUR FEAR</H2>
 
     <div id="search_form" class="search-ui">
       <input type="text" id="search_txt" class="search-ui select-button" placeholder="lions, tigers, and bears oh my" />
@@ -89,8 +90,8 @@ Started from 8th Wall A-Frame Product Boilerplate.
   </div>
 
   
-
-  <!-- We must add the tap-place component to the scene so it has an effect -->
+  <!-- ***************** A-FRAME SCENE ******************* -->
+  <!-- We must add the global components to the scene -->
   <a-scene loading-screen game-loop gesture-detector  camera-orientation req-camera-permissions shadow="type: pcfsoft"
   devicemotion-checker>
 
@@ -108,11 +109,14 @@ Started from 8th Wall A-Frame Product Boilerplate.
       <!-- images -->
       <img id="explode" src="graphics/explode.gif">
 
-      <img id="feargraphic1" src="graphics/dog1.gif">
-      <img id="feargraphic2" src="graphics/explode.gif">
-      <img id="feargraphic3" src="graphics/explode.gif">
-      <img id="feargraphic4" src="graphics/explode.gif">
-      <img id="feargraphic5" src="graphics/explode.gif">
+      <img id="dogimageinit" src="graphics/dog1small.gif">
+      <img id="beeimageinit" src="graphics/bee1.gif">
+
+      <img id="feargraphic1" src="graphics/tinyplaceholder.gif">
+      <img id="feargraphic2" src="graphics/tinyplaceholder.gif">
+      <img id="feargraphic3" src="graphics/tinyplaceholder.gif">
+      <img id="feargraphic4" src="graphics/tinyplaceholder.gif">
+      <img id="feargraphic5" src="graphics/tinyplaceholder.gif">
 
     </a-assets>
 
