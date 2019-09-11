@@ -265,7 +265,9 @@ AFRAME.registerComponent('game-loop', {
       //FLAG CONDITION CONTROLLED BY USER INTERFACE SELECTION BUTTONS - ready to begin
       if(AFPS.gamestate.fearisactive != true && AFPS.gamestate.startgame == true){
         console.log("**GAME READY INSIDE TICKER FUNCTION");
-        
+        console.log("AFPS.gamestate.type: " + AFPS.gamestate.type);
+        console.log("AFPS.gamestate.fearisactive: " + AFPS.gamestate.fearisactive);
+
         let thefear = document.getElementById('thefear');
         let fearmusic = document.getElementById('scarymusic');
             fearmusic.components.sound.stopSound();
@@ -274,7 +276,7 @@ AFRAME.registerComponent('game-loop', {
             thefear.setAttribute('material', 'src', '#feargraphic1');
             fearmusic.setAttribute('src', '#scarymusicclip');
 
-        } else if(AFPS.gamestate.type == 'search'){
+        } else if(AFPS.gamestate.type == 'bee'){
             thefear.setAttribute('material', 'src', '#beeimageinit');
             fearmusic.setAttribute('src', '#beemusicclip');
 

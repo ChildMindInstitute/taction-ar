@@ -71,7 +71,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     this.el.sceneEl.removeEventListener('twofingermove', this.handleEvent)
   },
   handleEvent: function (event) {
-
+    console.log("pinch event");
+    
     const thefear = document.getElementById('thefear');
     const explodegraphic = document.getElementById('explodegraphic');
 
