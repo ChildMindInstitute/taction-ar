@@ -81,7 +81,7 @@ Started from 8th Wall A-Frame Product Boilerplate.
 
   </div>
 
-  <div id="dialogue">TESTING</div>
+  <div id="dialogue"></div>
   <div id="scoredisplay">SCORE: 0</div>
 
   <div class="gfxButton" id="extLinkButton">
@@ -155,12 +155,12 @@ Started from 8th Wall A-Frame Product Boilerplate.
               visible="true" 
               look-at="#camera" 
               pinch-scale-destroy>
-      <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="auto" ></a-sound>
+      <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="auto" volume="1"></a-sound>
 
     </a-entity>
 
     <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode;" visible="false" look-at="#camera">
-      <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="false" crossorigin="anonymous" preload="auto" ></a-sound>
+      <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="false" crossorigin="anonymous" preload="auto" volume="1"></a-sound>
     </a-entity>
 
     

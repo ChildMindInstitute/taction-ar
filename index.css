@@ -96,20 +96,15 @@
 
 #fearsearch input{
   font-size: 1.2rem;
-  width: 50%;
+  width: 90%;
+  margin-left: 5%;
   font-family: Arial, Verdana, sans-serif;
   padding: 3px;
 }
 
-#fearsearch #submitsearch{
-  width: 30%;
-  font-size: 1.3rem;
-  font-family: Arial, Verdana, sans-serif;
-  border-radius: 5px;
-  display: inline-block;
-}
 
-#fearsearch #selectdogs, #fearsearch #selectbees{
+
+#selectdogs, #selectbees, #submitsearch{
   font-size: 1.3rem;
   font-family: Arial, Verdana, sans-serif;
   border-radius: 5px;
@@ -117,6 +112,7 @@
   margin-top: 5%;
   margin-bottom: 5%;
   width: 33.3%;
+  height: 3.5vh;
   margin-left: 33.3%;
   padding: 2%;
 }
@@ -144,7 +140,7 @@
   height: auto;
   display: block;
   text-align: center;
-  bottom: 8vh;
+  bottom: 7vh;
   pointer-events: auto;
 
   color: white;
@@ -164,7 +160,7 @@
   height: auto;
   display: block;
   text-align: center;
-  bottom: 4vh;
+  bottom: 3vh;
   pointer-events: auto;
 
   color: white;

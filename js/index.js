@@ -33,7 +33,7 @@ $( document ).ready(function() {
     AFPS.gamestate.type = 'search';
 
     //load generic scary music for fear entity sound
-    AFPS.gamestate.fearmusicurl = 'audio/Le-grand-cahier-Les-alertes-small.mp3';
+    AFPS.gamestate.fearmusicurl = '#scarymusicclip';
     
     //call giphy API to get image URLs
     console.log("searching giphy for " + searchQuery);
@@ -78,7 +78,7 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("loading dog assetts");
-    AFPS.gamestate.fearmusicurl = 'audio/DogGrowling.mp3';
+    AFPS.gamestate.fearmusicurl = '#dogmusicclip';
 
     AFPS.gamestate.imageurls[0] = 'graphics/dog1small.gif';
     AFPS.gamestate.imageurls[1] = 'graphics/dog2small.gif';
@@ -125,7 +125,7 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("loading bee assetts");
-    AFPS.gamestate.fearmusicurl = 'audio/bee-or-wasp-in-flight-fast.mp3';
+    AFPS.gamestate.fearmusicurl = '#beemusicclip';
 
     AFPS.gamestate.imageurls[0] = 'graphics/bee1.gif';
     AFPS.gamestate.imageurls[1] = 'graphics/bee2.gif';
@@ -314,16 +314,18 @@ AFRAME.registerComponent('game-loop', {
           let initialdistance = AFPS.gamestate.initialdistance;// Number(thetarget.getAttribute("initdistance"));
           let currentdistance = camPos.distanceTo(targetPos);
 
+          console.log("(currentdistance / initialdistance): " + currentdistance + " / " + initialdistance + " = " + (currentdistance / initialdistance) );
+
 
         	if((currentdistance / initialdistance) > 0.85 ){
             if(AFPS.gamestate.dialogue != 'closer'){
-        	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
+        	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p>";
             }
             AFPS.gamestate.dialogue = 'closer';
         	} 
         	else {
             if(AFPS.gamestate.dialogue != 'pinch'){
-        		  document.getElementById("dialogue").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
+        		  document.getElementById("dialogue").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p>";
             }
             AFPS.gamestate.dialogue = 'pinch';
         	}

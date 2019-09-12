@@ -34,8 +34,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
 
         //make sure everything is in order after load
-   //     const scene = this.el.sceneEl;
-  //      scene.addEventListener('realityready', () => {
+        const scene = this.el.sceneEl;
+        scene.addEventListener('realityready', () => {
     /*      if(AFPS.gamestate.fearisactive != true){
             
             document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearmusicurl);
@@ -69,7 +69,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
             let targetPos = thetarget.object3D.position;
             AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
             console.log("INITITAL AFPS.gamestate.initialdistance calculation: " + AFPS.gamestate.initialdistance);
-     //   })
+        })
 
   },
   remove: function () {
@@ -131,6 +131,10 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         const explodesound = document.getElementById('explodesound');
         fearsound.components.sound.stopSound();
         explodesound.components.sound.playSound();
+
+                //check to see if audio reverted
+        let audiosrc = fearsound.getAttribute('src');
+        if(audiosrc != AFPS.gamestate.fearmusicurl){ fearsound.setAttribute('src', AFPS.gamestate.fearmusicurl); }
 
         //start loading next fear graphic into fear entity in background
         console.log("change material");
@@ -224,7 +228,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
 
             }, 5000);
 
-        }, 4000);
+        }, 3000);
 
 
 
