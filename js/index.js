@@ -9,6 +9,7 @@ window.AFPS = {
     startgame: false,
     initialdistance: 0,
     feardistance: 0,      //distance of player/camera from fear entity
+    dialogue: 'closer',
     imageurls: ["", "", "", "", ""],
     fearmusicurl: ""
   }
@@ -259,7 +260,9 @@ AFRAME.registerComponent('game-loop', {
           AFPS.gamestate.startgame = true;
           console.log("NO USER SELECTION OF GAME TYPE - STARTING DEFAULT");
           }, 2000);
-      })
+
+      }
+    })
     //  const initialdistance = camPos.distanceTo(targetPos);
    //   thetarget.setAttribute('initdistance', initialdistance);
       
@@ -270,7 +273,7 @@ AFRAME.registerComponent('game-loop', {
     tick: function() {
       //PRE GAME
       //FLAG CONDITION CONTROLLED BY USER INTERFACE SELECTION BUTTONS - ready to begin
-      if(AFPS.gamestate.fearisactive != true && AFPS.gamestate.startgame == true){
+      if(AFPS.gamestate.fearisactive == false && AFPS.gamestate.startgame == true){
         console.log("**GAME READY INSIDE TICKER FUNCTION");
         console.log("AFPS.gamestate.type: " + AFPS.gamestate.type);
         console.log("AFPS.gamestate.fearisactive: " + AFPS.gamestate.fearisactive);
@@ -312,17 +315,23 @@ AFRAME.registerComponent('game-loop', {
           let currentdistance = camPos.distanceTo(targetPos);
 
 
-      	if((currentdistance / initialdistance) > 0.85 ){
-    	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
-      	} 
-      	else {
-      		document.getElementById("dialogue").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
-      	}
+        	if((currentdistance / initialdistance) > 0.85 ){
+            if(AFPS.gamestate.dialogue != 'closer'){
+        	  	document.getElementById("dialogue").innerHTML = "<p>GET CLOSER!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
+            }
+            AFPS.gamestate.dialogue = 'closer';
+        	} 
+        	else {
+            if(AFPS.gamestate.dialogue != 'pinch'){
+        		  document.getElementById("dialogue").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p><br><p>" + (currentdistance / initialdistance) + "</p>";
+            }
+            AFPS.gamestate.dialogue = 'pinch';
+        	}
 
-        //increase init distance value if current distance is greater ie init distance -> max distance
-        if(currentdistance > initialdistance){
-          AFPS.gamestate.initialdistance = currentdistance;
-        }
+          //increase init distance value if current distance is greater ie init distance -> max distance
+          if(currentdistance > initialdistance){
+            AFPS.gamestate.initialdistance = currentdistance;
+          }
       }
       
 

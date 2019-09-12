@@ -34,8 +34,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
 
         //make sure everything is in order after load
-        const scene = this.el.sceneEl;
-        scene.addEventListener('realityready', () => {
+   //     const scene = this.el.sceneEl;
+  //      scene.addEventListener('realityready', () => {
     /*      if(AFPS.gamestate.fearisactive != true){
             
             document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearmusicurl);
@@ -68,7 +68,8 @@ AFRAME.registerComponent('pinch-scale-destroy', {
             let camPos = camera.object3D.position;
             let targetPos = thetarget.object3D.position;
             AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
-        })
+            console.log("INITITAL AFPS.gamestate.initialdistance calculation: " + AFPS.gamestate.initialdistance);
+     //   })
 
   },
   remove: function () {
@@ -84,7 +85,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
     console.log("active status inside pinch event: " + AFPS.gamestate.fearisactive);
 
     //don't allow for user interaction when fear entity is not active
-    if(AFPS.gamestate.fearisactive){
+    if(AFPS.gamestate.fearisactive == true){
 
 
       this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
@@ -209,14 +210,17 @@ AFRAME.registerComponent('pinch-scale-destroy', {
                 thefear.setAttribute('visible', true);
 
                 //get new initial distance of camera/player from fear entity
-                let camPos = camera.object3D.position;
-                let targetPos = thefear.object3D.position;
-                AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
+                //need to wait for position to update
+                setTimeout(()=> {
+                    let camPos = camera.object3D.position;
+                    let targetPos = thefear.object3D.position;
+                    AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
 
-                console.log("recaclulated initial distance:" + AFPS.gamestate.initialdistance);
+                    console.log("recaclulated initial distance:" + AFPS.gamestate.initialdistance);
 
-                //allow user interaction with fear entity
-                AFPS.gamestate.fearisactive = true;
+                    //allow user interaction with fear entity
+                    AFPS.gamestate.fearisactive = true;
+                }, 500);
 
             }, 5000);
 

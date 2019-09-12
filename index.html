@@ -66,7 +66,7 @@ Started from 8th Wall A-Frame Product Boilerplate.
 
     <div id="search_form" class="search-ui">
       <input type="text" id="search_txt" class="search-ui select-button" placeholder="lions, tigers, and bears oh my" />
-      <button id="submitsearch" class="search-ui select-button">ENTER</button>
+      <button id="submitsearch" class="search-ui select-button">search</button>
     <!--  <h2>or</h2> -->
       <button id="selectdogs" class="search-ui select-button">DOGS</button>
       <button id="selectbees" class="search-ui select-button">BEES</button>
@@ -150,7 +150,7 @@ Started from 8th Wall A-Frame Product Boilerplate.
 
     <a-entity id="thefear" 
               initdistance="0"
-              geometry="primitive:circle;radius:7;"  
+              geometry="primitive:plane;width:8;height:8"  
               material="shader:gif; alphaTest:0.5;" 
               visible="true" 
               look-at="#camera" 

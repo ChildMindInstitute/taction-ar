@@ -88,7 +88,7 @@
   color: white;
   text-shadow: 0.2rem 0.2rem 0.3rem black;
   font-weight: bold;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: Arial, Verdana, sans-serif;
   text-rendering: optimizeLegibility;
 
   font-size: 1.8rem;
@@ -97,21 +97,21 @@
 #fearsearch input{
   font-size: 1.2rem;
   width: 50%;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: Arial, Verdana, sans-serif;
   padding: 3px;
 }
 
 #fearsearch #submitsearch{
   width: 30%;
   font-size: 1.3rem;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: Arial, Verdana, sans-serif;
   border-radius: 5px;
   display: inline-block;
 }
 
 #fearsearch #selectdogs, #fearsearch #selectbees{
   font-size: 1.3rem;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: Arial, Verdana, sans-serif;
   border-radius: 5px;
   display: block;
   margin-top: 5%;
@@ -119,6 +119,10 @@
   width: 33.3%;
   margin-left: 33.3%;
   padding: 2%;
+}
+
+.search-ui{
+  opacity: 0;
 }
 
 .gfxButton {
