@@ -123,6 +123,10 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         thefear.setAttribute('visible', false);
         explodegraphic.setAttribute('visible', true);
 
+        //check to see if explosion graphic reverted
+     //   let explodesrc = explodegraphic.getAttribute('material', 'src');
+     //   if(explodesrc != '#explode') { explodegraphic.setAttribute('material', 'src', '#explode'); }
+
         //set fear entitity distance really high for game loop dialogue
         document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
 
@@ -132,7 +136,7 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         fearsound.components.sound.stopSound();
         explodesound.components.sound.playSound();
 
-                //check to see if audio reverted
+        //check to see if audio reverted
         let audiosrc = fearsound.getAttribute('src');
         if(audiosrc != AFPS.gamestate.fearmusicurl){ fearsound.setAttribute('src', AFPS.gamestate.fearmusicurl); }
 

@@ -9,7 +9,7 @@ window.AFPS = {
     startgame: false,
     initialdistance: 0,
     feardistance: 0,      //distance of player/camera from fear entity
-    dialogue: 'closer',
+    dialogue: 'none',
     imageurls: ["", "", "", "", ""],
     fearmusicurl: ""
   }
@@ -73,7 +73,7 @@ $( document ).ready(function() {
   $("#selectdogs").click(function(e) {
     console.log("PRESS DOG BUTTON");
     e.preventDefault();
-    var searchQuery = $("#search_txt").val();
+  
     AFPS.gamestate.type = 'dog';
     
     //call giphy API to get image URLs
@@ -120,7 +120,7 @@ $( document ).ready(function() {
   $("#selectbees").click(function(e) {
     console.log("PRESS BEE BUTTON");
     e.preventDefault();
-    var searchQuery = $("#search_txt").val();
+   
     AFPS.gamestate.type = 'bee';
     
     //call giphy API to get image URLs
@@ -226,8 +226,8 @@ $("#search_form").submit(function(e) {
         document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
         document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
         document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
-        document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
-        document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+      //  document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+      //  document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
         console.log("load search result images into graphics asset elements");
       }
        // var body = document.getElementsByTagName('body')[0];
@@ -274,32 +274,42 @@ AFRAME.registerComponent('game-loop', {
       //PRE GAME
       //FLAG CONDITION CONTROLLED BY USER INTERFACE SELECTION BUTTONS - ready to begin
       if(AFPS.gamestate.fearisactive == false && AFPS.gamestate.startgame == true){
-        console.log("**GAME READY INSIDE TICKER FUNCTION");
-        console.log("AFPS.gamestate.type: " + AFPS.gamestate.type);
-        console.log("AFPS.gamestate.fearisactive: " + AFPS.gamestate.fearisactive);
+        setTimeout(()=> {
+            console.log("**GAME READY INSIDE TICKER FUNCTION");
+            console.log("AFPS.gamestate.type: " + AFPS.gamestate.type);
+            console.log("AFPS.gamestate.fearisactive: " + AFPS.gamestate.fearisactive);
 
-        let thefear = document.getElementById('thefear');
-        let fearmusic = document.getElementById('scarymusic');
-            fearmusic.components.sound.stopSound();
+            let thefear = document.getElementById('thefear');
+            let fearmusic = document.getElementById('scarymusic');
+                fearmusic.components.sound.stopSound();
 
-        if(AFPS.gamestate.type == 'search'){
-            thefear.setAttribute('material', 'src', '#feargraphic1');
-            fearmusic.setAttribute('src', '#scarymusicclip');
+            if(AFPS.gamestate.type == 'search'){
+                thefear.setAttribute('material', 'src', '#feargraphic1');
+                fearmusic.setAttribute('src', '#scarymusicclip');
 
-        } else if(AFPS.gamestate.type == 'bee'){
-            thefear.setAttribute('material', 'src', '#beeimageinit');
-            fearmusic.setAttribute('src', '#beemusicclip');
+            } else if(AFPS.gamestate.type == 'bee'){
+                thefear.setAttribute('material', 'src', '#beeimageinit');
+                fearmusic.setAttribute('src', '#beemusicclip');
 
-        } else { //default is dog
-          AFPS.gamestate.type = 'dog';
-            thefear.setAttribute('material', 'src', '#dogimageinit');
-            fearmusic.setAttribute('src', '#dogmusicclip');
-        }
-        
-        fearmusic.components.sound.playSound();
+            } else { //default is dog
+              AFPS.gamestate.type = 'dog';
+                thefear.setAttribute('material', 'src', '#dogimageinit');
+                fearmusic.setAttribute('src', '#dogmusicclip');
+            }
 
-        AFPS.gamestate.fearisactive = true;
-        AFPS.gamestate.startgame = false;
+            const explodegraphic = document.getElementById('explodegraphic');
+            explodegraphic.setAttribute('material', 'src', '#explode');
+            
+            fearmusic.components.sound.playSound();
+
+            setTimeout(()=> {
+                AFPS.gamestate.fearisactive = true;
+              }, 2000);
+
+        }, 5000);
+
+      
+        AFPS.gamestate.startgame = 'done';
       }
 
 
@@ -336,7 +346,7 @@ AFRAME.registerComponent('game-loop', {
           }
       }
       
-
+console.log("end ticker");
 
     }
 });

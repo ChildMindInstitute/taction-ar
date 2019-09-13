@@ -96,7 +96,7 @@
 
 #fearsearch input{
   font-size: 1.2rem;
-  width: 90%;
+  width: 85%;
   margin-left: 5%;
   font-family: Arial, Verdana, sans-serif;
   padding: 3px;
@@ -112,7 +112,7 @@
   margin-top: 5%;
   margin-bottom: 5%;
   width: 33.3%;
-  height: 3.5vh;
+  height: 4.5vh;
   margin-left: 33.3%;
   padding: 2%;
 }
