@@ -89,6 +89,8 @@ $( document ).ready(function() {
     document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
     document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
     document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+    document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+    document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
 
 
     //set fear element to active so we know we are ready to play
@@ -136,6 +138,8 @@ $( document ).ready(function() {
     document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
     document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
     document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+    document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+    document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
 
 
     //set fear element to active so we know we are ready to play
@@ -226,8 +230,8 @@ $("#search_form").submit(function(e) {
         document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
         document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
         document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
-      //  document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
-      //  document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+        document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+        document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
         console.log("load search result images into graphics asset elements");
       }
        // var body = document.getElementsByTagName('body')[0];
@@ -298,7 +302,7 @@ AFRAME.registerComponent('game-loop', {
             }
 
             const explodegraphic = document.getElementById('explodegraphic');
-            explodegraphic.setAttribute('material', 'src', '#explode');
+            explodegraphic.setAttribute('material', 'src', 'graphics/explode.gif');
             
             fearmusic.components.sound.playSound();
 
@@ -488,7 +492,7 @@ AFRAME.registerComponent('req-camera-permissions', {
       loadingImg.style.height = '95%';
       console.log(window.orientation)
     } else {
-      loadingImg.src = "graphics/LoadingScreen.jpg";
+    //  loadingImg.src = "graphics/LoadingScreen.jpg";
       loadingImg.src = "graphics/shark.gif";
       scene.setAttribute('xrweb', '');
 
