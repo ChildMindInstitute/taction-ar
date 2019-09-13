@@ -4,14 +4,14 @@
 window.AFPS = {
   gamestate: {
     score: 0,
-    type: 'dog',       //search, dog or bee - search is default
+    type: 'none',       //search, dog or bee - search is default
     fearisactive: false,  //can player interact with/destroy the fear entity
     startgame: false,
     initialdistance: 0,
     feardistance: 0,      //distance of player/camera from fear entity
     dialogue: 'none',
     imageurls: ["", "", "", "", ""],
-    fearmusicurl: ""
+    fearsoundurl: ""
   }
 };
 
@@ -33,7 +33,7 @@ $( document ).ready(function() {
     AFPS.gamestate.type = 'search';
 
     //load generic scary music for fear entity sound
-    AFPS.gamestate.fearmusicurl = '#scarymusicclip';
+    AFPS.gamestate.fearsoundurl = 'audio/Le-grand-cahier-Les-alertes_short.mp3';
     
     //call giphy API to get image URLs
     console.log("searching giphy for " + searchQuery);
@@ -78,19 +78,22 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("loading dog assetts");
-    AFPS.gamestate.fearmusicurl = '#dogmusicclip';
+    AFPS.gamestate.fearsoundurl = 'audio/DogGrowling.mp3';
 
     AFPS.gamestate.imageurls[0] = 'graphics/dog1small.gif';
     AFPS.gamestate.imageurls[1] = 'graphics/dog2small.gif';
-    AFPS.gamestate.imageurls[2] = 'graphics/dog3.gif';
-    AFPS.gamestate.imageurls[3] = 'graphics/dog4.gif';
-    AFPS.gamestate.imageurls[4] = 'graphics/dog5.gif';
+    AFPS.gamestate.imageurls[2] = 'graphics/dog3small.gif';
+    AFPS.gamestate.imageurls[3] = 'graphics/dog4small.gif';
+    AFPS.gamestate.imageurls[4] = 'graphics/dog5small.gif';
 
     document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
-    document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
-    document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
-    document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
-    document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+
+    setTimeout(()=> {
+      document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
+      document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+      document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+      document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+    }, 8000);
 
 
     //set fear element to active so we know we are ready to play
@@ -127,19 +130,22 @@ $( document ).ready(function() {
     
     //call giphy API to get image URLs
     console.log("loading bee assetts");
-    AFPS.gamestate.fearmusicurl = '#beemusicclip';
+    AFPS.gamestate.fearsoundurl = 'audio/beehive-clip.mp3"';
 
     AFPS.gamestate.imageurls[0] = 'graphics/bee1.gif';
     AFPS.gamestate.imageurls[1] = 'graphics/bee2.gif';
     AFPS.gamestate.imageurls[2] = 'graphics/bee3.gif';
-    AFPS.gamestate.imageurls[3] = 'graphics/bee4.gif';
-    AFPS.gamestate.imageurls[4] = 'graphics/bee5.gif';
+    AFPS.gamestate.imageurls[3] = 'graphics/bee4small.gif';
+    AFPS.gamestate.imageurls[4] = 'graphics/bee5small.gif';
 
     document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
-    document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
-    document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
-    document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
-    document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+
+    setTimeout(()=> {
+      document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
+      document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+      document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+      document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+    }, 8000);
 
 
     //set fear element to active so we know we are ready to play
@@ -228,10 +234,14 @@ $("#search_form").submit(function(e) {
 
         //update image assets
         document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
-        document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
-        document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
-        document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
-        document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+
+        setTimeout(()=> {
+          document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
+          document.querySelector('#feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]);
+          document.querySelector('#feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]);
+          document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
+        }, 8000);
+
         console.log("load search result images into graphics asset elements");
       }
        // var body = document.getElementsByTagName('body')[0];
@@ -263,7 +273,7 @@ AFRAME.registerComponent('game-loop', {
         setTimeout(()=> {
           AFPS.gamestate.startgame = true;
           console.log("NO USER SELECTION OF GAME TYPE - STARTING DEFAULT");
-          }, 2000);
+        }, 2000);
 
       }
     })
@@ -287,28 +297,38 @@ AFRAME.registerComponent('game-loop', {
             let fearmusic = document.getElementById('scarymusic');
                 fearmusic.components.sound.stopSound();
 
-            if(AFPS.gamestate.type == 'search'){
-                thefear.setAttribute('material', 'src', '#feargraphic1');
-                fearmusic.setAttribute('src', '#scarymusicclip');
-
-            } else if(AFPS.gamestate.type == 'bee'){
-                thefear.setAttribute('material', 'src', '#beeimageinit');
-                fearmusic.setAttribute('src', '#beemusicclip');
-
-            } else { //default is dog
-              AFPS.gamestate.type = 'dog';
-                thefear.setAttribute('material', 'src', '#dogimageinit');
-                fearmusic.setAttribute('src', '#dogmusicclip');
-            }
-
-            const explodegraphic = document.getElementById('explodegraphic');
-            explodegraphic.setAttribute('material', 'src', 'graphics/explode.gif');
-            
-            fearmusic.components.sound.playSound();
+            document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+            document.getElementById('explode').setAttribute('src', 'graphics/explode.gif');
 
             setTimeout(()=> {
-                AFPS.gamestate.fearisactive = true;
-              }, 2000);
+
+                thefear.setAttribute('material', 'src', '#feargraphic1');
+
+                if(AFPS.gamestate.type == 'search'){
+                    fearmusic.setAttribute('src', '#scarymusicclip');
+
+                } else if(AFPS.gamestate.type == 'bee'){
+                    fearmusic.setAttribute('src', '#beemusicclip');
+
+                } else { //default is dog
+                  AFPS.gamestate.type = 'dog';
+                    fearmusic.setAttribute('src', '#dogmusicclip');
+                }
+
+                document.getElementById('explodegraphic').setAttribute('material', 'src', '#explode');
+
+                fearmusic.components.sound.playSound();
+
+                setTimeout(()=> {
+                    AFPS.gamestate.fearisactive = true;
+
+                    //set all music to selection music to prevent edge case
+                    document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearsoundurl);
+                    document.getElementById('dogmusicclip').setAttribute('src', AFPS.gamestate.fearsoundurl);
+                    document.getElementById('beemusicclip').setAttribute('src', AFPS.gamestate.fearsoundurl);
+                  }, 2000);
+
+            }, 3000);
 
         }, 5000);
 

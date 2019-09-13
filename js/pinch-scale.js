@@ -36,20 +36,6 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         //make sure everything is in order after load
         const scene = this.el.sceneEl;
         scene.addEventListener('realityready', () => {
-    /*      if(AFPS.gamestate.fearisactive != true){
-            
-            document.getElementById('scarymusicclip').setAttribute('src', AFPS.gamestate.fearmusicurl);
-            document.getElementById('feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
-
-            let fearmusic = document.getElementById('scarymusic');
-            fearmusic.components.sound.stopSound();
-            fearmusic.setAttribute('src', '#scarymusicclip');
-            fearmusic.components.sound.playSound();
-
-            let thefear = document.getElementById('thefear');
-            thefear.setAttribute('material', 'src', '#feargraphic1');
-            AFPS.gamestate.fearisactive = true;
-          } */
 
             //initial position
             const thetarget = document.getElementById('thefear');
@@ -69,6 +55,12 @@ AFRAME.registerComponent('pinch-scale-destroy', {
             let targetPos = thetarget.object3D.position;
             AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
             console.log("INITITAL AFPS.gamestate.initialdistance calculation: " + AFPS.gamestate.initialdistance);
+
+            //make sure fear graphic is loaded
+            setTimeout(()=> {
+                thetarget.setAttribute('material', 'src', '#feargraphic1');
+                thetarget.setAttribute('visible', true);
+            }, 2000);
         })
 
   },
@@ -119,13 +111,16 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         console.log(theposition);
         explodegraphic.setAttribute('position', theposition);
 
+        console.log("current position of explode element:");
+        console.log( explodegraphic.getAttribute('position') );
+
         //hide 'destroyed' fear graphic and show explosion graphic
         thefear.setAttribute('visible', false);
         explodegraphic.setAttribute('visible', true);
 
         //check to see if explosion graphic reverted
      //   let explodesrc = explodegraphic.getAttribute('material', 'src');
-     //   if(explodesrc != '#explode') { explodegraphic.setAttribute('material', 'src', '#explode'); }
+     //   if(explodesrc != 'graphics/explode.gif') { explodegraphic.setAttribute('material', 'src', 'graphics/explode.gif'); }
 
         //set fear entitity distance really high for game loop dialogue
         document.getElementById("dialogue").innerHTML = "<p>SILLY FEAR!</p>";
@@ -136,9 +131,11 @@ AFRAME.registerComponent('pinch-scale-destroy', {
         fearsound.components.sound.stopSound();
         explodesound.components.sound.playSound();
 
+        explodegraphic.setAttribute('visible', true);
+
         //check to see if audio reverted
-        let audiosrc = fearsound.getAttribute('src');
-        if(audiosrc != AFPS.gamestate.fearmusicurl){ fearsound.setAttribute('src', AFPS.gamestate.fearmusicurl); }
+      //  let audiosrc = fearsound.getAttribute('src');
+      //  if(audiosrc != AFPS.gamestate.fearmusicurl){ fearsound.setAttribute('src', AFPS.gamestate.fearmusicurl); }
 
         //start loading next fear graphic into fear entity in background
         console.log("change material");

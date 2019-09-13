@@ -103,7 +103,7 @@ Started from 8th Wall A-Frame Product Boilerplate.
    <!--   <a-asset-item id="demoModel" src="glb/Moxy08e.glb"></a-asset-item> -->
 
       <!-- audio -->
-      <audio id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes-short.mp3">
+      <audio id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes_short.mp3">
       <audio id="dogmusicclip" src="audio/DogGrowling.mp3">
       <audio id="beemusicclip" src="audio/beehive-clip.mp3">
       <audio id="explodesoundclip" src="audio/explosion_backdraft.mp3">
@@ -155,11 +155,11 @@ Started from 8th Wall A-Frame Product Boilerplate.
               visible="true" 
               look-at="#camera" 
               pinch-scale-destroy>
-      <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="auto" volume="1"></a-sound>
+      <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="false" volume="1"></a-sound>
 
     </a-entity>
 
-    <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode;" visible="false" look-at="#camera">
+    <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode" visible="false" look-at="#camera">
       <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="false" crossorigin="anonymous" preload="auto" volume="1"></a-sound>
     </a-entity>
 
