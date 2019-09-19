@@ -20,7 +20,7 @@ $( document ).ready(function() {
     console.log( "stupid jquery!" );
 
   //fade in image search form after delay
-  $(".search-ui").delay(2000).animate({ opacity: 1 }, 300, function(){ });
+  $(".search-ui").delay(2000).animate({ opacity: 1 }, 200, function(){ });
 
   /***** IMAGE SEARCH SUBMIT BUTTON *****/
   //event handler for image search form submit button
@@ -41,9 +41,11 @@ $( document ).ready(function() {
       getGif(searchQuery);
     }
 
-    //set fear element to active so we know we are ready to play
- //   AFPS.gamestate.fearisactive = true;
-    AFPS.gamestate.startgame = true; //SET FLAG
+
+    setTimeout(()=> {
+      //set fear element to active so we know we are ready to play
+      AFPS.gamestate.startgame = true;
+    }, 3500);
 
     //hide submit button and show loading progress bar
     $("#submitsearch").animate({
@@ -86,7 +88,12 @@ $( document ).ready(function() {
     AFPS.gamestate.imageurls[3] = 'graphics/dog4small.gif';
     AFPS.gamestate.imageurls[4] = 'graphics/dog5small.gif';
 
-    document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+    setTimeout(()=> {
+      document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+
+      //set fear element to active so we know we are ready to play
+      AFPS.gamestate.startgame = true;
+    }, 3000);
 
     setTimeout(()=> {
       document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
@@ -96,9 +103,7 @@ $( document ).ready(function() {
     }, 8000);
 
 
-    //set fear element to active so we know we are ready to play
-  //  AFPS.gamestate.fearisactive = true;
-    AFPS.gamestate.startgame = true;
+
 
     //hide submit button and show loading progress bar
     $("#submitsearch").animate({
@@ -138,7 +143,12 @@ $( document ).ready(function() {
     AFPS.gamestate.imageurls[3] = 'graphics/bee4small.gif';
     AFPS.gamestate.imageurls[4] = 'graphics/bee5small.gif';
 
-    document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+    setTimeout(()=> {
+      document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+
+      //set fear element to active so we know we are ready to play
+      AFPS.gamestate.startgame = true;
+    }, 3000);
 
     setTimeout(()=> {
       document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
@@ -147,10 +157,6 @@ $( document ).ready(function() {
       document.querySelector('#feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]);
     }, 8000);
 
-
-    //set fear element to active so we know we are ready to play
-  //  AFPS.gamestate.fearisactive = true;
-    AFPS.gamestate.startgame = true;
 
     //hide submit button and show loading progress bar
     $("#submitsearch").animate({
@@ -233,7 +239,9 @@ $("#search_form").submit(function(e) {
         AFPS.gamestate.imageurls[4] = 'https://media.giphy.com/media/' + response.data[4].id + '/giphy.gif';
 
         //update image assets
-        document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+        setTimeout(()=> {
+          document.querySelector('#feargraphic1').setAttribute('src', AFPS.gamestate.imageurls[0]);
+        }, 3000);
 
         setTimeout(()=> {
           document.querySelector('#feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]);
