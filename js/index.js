@@ -20,7 +20,7 @@ $( document ).ready(function() {
     console.log( "stupid jquery!" );
 
   //fade in image search form after delay
-  $(".search-ui").delay(2000).animate({ opacity: 1 }, 200, function(){ });
+  $(".search-ui").delay(2000).animate({ opacity: 1 }, 225, function(){ });
 
   /***** IMAGE SEARCH SUBMIT BUTTON *****/
   //event handler for image search form submit button
