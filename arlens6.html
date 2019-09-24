@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Taction AR App</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/slick-theme.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=201905161239">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <script defer src="//cdn.8thwall.com/web/aframe/aframe-animation-component-5.1.2.min.js"></script>
+    <script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script>
+    <script src="//codeawesome.s3-us-west-2.amazonaws.com/dulce303/assets/xrextras-climatelens.js" ></script>
+    <script src="./assets/js/gesture-detector.js"></script>
+    <script src="./assets/js/hold-drag.js"></script>
+    <script src="./assets/js/pinch-scale.js"></script>
+    <script src="./assets/js/two-finger-spin.js"></script>
+    <!-- <script src="./assets/js/photomode.js"></script> -->
+
+        <script src="//cdn.8thwall.com/web/aframe/aframe-extras-4.2.0.min.js"></script>
+    <script
+    src="//apps.8thwall.com/xrweb?appKey=gcGClZ7V2H4eITDKoOedf6lysRHTJg6JmhxUVEGSk5hu4EdnLkWdecrUfgBVATISaV5xg2"></script>
+
+    <script src="./assets/js/dance.js?v=201905161239"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+</head>
+<body class="no_padd">
+    <header class="fixed">
+        </header>
+        <div class="mob_menu d-block">
+        <a href="./index.html" class="mob_logo"><h4>Taction AR App</h4></a>
+    </div>
+    <!-- Content -->
+
+    <!-- If your app only interacts with image targets and not the world, disabling world tracking can improve speed. -->
+    <a-scene
+    antialias="true"
+    xrweb="disableWorldTracking: true"
+    gesture-detector
+    xrextras-almost-there
+    xrextras-loading
+    xrextras-runtime-error
+    photo-mode style="z-index: 0;">
+    
+      <a-assets>
+        <a-asset-item id="water-glb" src="./assets/models/water-lower-wind-trans2.glb"></a-asset-item>
+      </a-assets>
+      <a-camera id="camera" position="0 8 8"></a-camera>
+
+      <a-entity light="type: ambient; intensity: 2;" position="1 4.3 -18"></a-entity>
+        <a-entity id="water" position="-0.5 0 -2" scale="0.05 0.05 0.05" class="cantap" hold-drag two-finger-spin pinch-scale gltf-model="#water-glb" animation-mixer="loop: repeat"></a-entity>
+      
+      
+    </a-scene>
+    <section class="panel">
+<div class="inner" style="width: 70%; position: fixed; margin-top: 180px; margin-left: -10px;">
+									<ul class="grid-icons three connected">
+										<li><a href="arlens.html"><span class="icon"><img src="images/water.svg" alt="" style="width: 70px !important;"/><span class="label">Lorem</span></span></a></li>
+
+										<li><a href="arlens4.html"><span class="icon"><img src="images/bulb.svg" alt="" style="width: 70px !important;"/><span class="label">Ipsum</span></span></a></li>
+
+										<li><a href="arlens3.html"><span class="icon"><img src="images/hamburger.svg" alt="" style="width: 70px !important;"/><span class="label">Dolor</span></span></a></li>
+
+										<li><a href="arlens4.html"><span class="icon"><img src="images/transportation.svg" alt="" style="width: 70px !important;"/><span class="label">Sit</span></span></a></li>
+
+										<li><a href="arlens5.html"><span class="icon"><img src="images/waste.svg" alt="" style="width: 70px !important;"/><span class="label">Amet</span></span></a></li>
+
+										<li><a href="arlens6.html"><span class="icon"><img src="images/turbine.svg" alt="" style="width: 70px !important;"/><span class="label">Nullam</span></span></a></li>
+									</ul>
+                                </div>
+                                </section>
+    <footer class="fixed d-none">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-12 text-center">
+                    <div class="debug-text" style="display: none; color: white; font-size: 8px;">
+                        <span id="debug-text-status-1">&nbps;</span>
+                        <span id="debug-text-status-2">&nbps;</span>
+                        <span id="debug-text-status-3">&nbps;</span>
+                    </div>
+                    <a href="index.html" class="logo full-width">Taction AR App</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+    <!-- App Interfaces -->
+    <script type="text/javascript" src="./assets/js/interfaces.js"></script>
+
+</body>
+</html>

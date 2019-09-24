@@ -1,183 +1,455 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
+	<head>
+		<title>Taction AR</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-<!-- 
-This Augmented Reality (AR) mobile web experience is an exploration in the use of augmented 
-reality to help people over come fear and anxiety - a sort of AR exposure therapy. The idea is to 
-invoke, confront and overcome symbols or representations on fear and anxiety in a real world 
-'daily life' setting.
+		<style>
+			@media screen and (max-width: 400px){
+				h1 br, h2 br, h3 br, h4 br, h5 br, h6 br {
+    			display: block;
+				}
+			}
+		</style>
+	</head>
+	<body class="is-preload">
 
-Designed and developed by Curt White (curtpw@gmail.com) at the Child Mind Institute MATTER Lab: https://matter.childmind.org
-Code is open source and available here: https://github.com/ChildMindInstitute/taction-ar
-Started from 8th Wall A-Frame Product Boilerplate.
--->
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
 
-<head>
-  <meta charset="utf-8">
-  <title>Taction AR</title>
+				<!-- Wrapper -->
+					<div id="wrapper">
 
-  <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+						<!-- Panel (Banner) -->
+							<section class="panel banner right">
+								<div class="content color0 span-3-75">
+									<h1 class="major">Welcome to<br/>
+									Taction AR</h1>
+									<p>We overcome fear by confronting it – in a therapeutic setting this is sometimes called "exposure therapy". However, we can face our fears on our own terms and at our own pace. This app uses the camera on your mobile device to place images and sounds in the environment around you (Augmented Reality) - almost as if they were really there!</p>
+									<ul class="actions">
+										<li><a href="#first" class="button primary color1 circle icon solid fa-angle-right">Next</a></li>
+									</ul>
+								</div>
+								<div class="image filtered span-1-75" data-position="25% 25%">
+									<img src="images/01.png" alt="" />
+								</div>
+							</section>
 
-  <!-- We've included a slightly modified version of A-Frame, which fixes some polish concerns -->
-  <script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script>
-  <!-- Included Don McCurdy's aframe-extras for animation-mixer component in AFrame -->
-  <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.0.0/dist/aframe-extras.min.js"></script>
-  <script src="//cdn.8thwall.com/web/aframe/aframe-animation-component-5.1.2.min.js"></script>
-  <!-- XR Extras - provides utilities like load screen, almost there, and error handling.
-         See github.com/8thwall/web/xrextras -->
-  <!-- <script defer src="//cdn.8thwall.com/web/xrextras/xrextras.js"></script> -->
-  <!-- 8thWall Web - Replace the app key here with your own app key -->
-  <script async src="//apps.8thwall.com/xrweb?appKey=s7uGvCNJAkTrMQ6UpClduqwSpaOdc95QZ0YC4UBhDKItiNxY2ywCvW5cWFAuwgNdiM63Mc"></script>
+						<!-- Panel (Spotlight) -->
+							<section class="panel spotlight medium right" id="first">
+								<div class="content span-7" style="background-color: rgba(0, 0, 0, 0.25) 10% !important">
+									<h2 class="major">Lorem ipsum dolor</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dolor sed viverra ipsum nunc aliquet bibendum enim. In massa tempor nec feugiat. Nunc aliquet bibendum enim facilisis gravida. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Amet luctus venenatis lectus magna fringilla. Volutpat maecenas volutpat blandit aliquam etiam erat velit scelerisque in.</p>
+								</div>
+								<div class="image filtered tinted" data-position="top left">
+									<img src="images/03.png" alt="" />
+								</div>
+							</section>
 
-  <script src="./js/aframe-gif-component.min.js"></script>
-  <script src="./js/aframe-look-at-component.min.js"></script>
-  <script src="./js/gesture-detector.js"></script>
+						<!-- Panel -->
+							<section class="panel color1">
+								<div class="intro joined">
+									<h2 class="major">Lorem ipsum dolor</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dolor sed viverra ipsum nunc aliquet bibendum enim.</p>
+									<h2 class="major">Choose Your Fear.</h2>
+									<p>Click on the icons below to see and hear your fears mixed into your surroundings.</p>
+								</div>
+								<div class="inner">
+									<ul class="grid-icons three connected">
+										<li><a href="arlens.html"><span class="icon"><img src="images/water.svg" alt="" style="width: 70px !important;"/><span class="label">Lorem</span></span></a></li>
 
-  <link rel="stylesheet" href="index.css">
-  <script src="./js/index.js"></script>
- <!-- <script src="./js/hold-drag.js"></script> -->
-  
-  <script src="./js/pinch-scale.js"></script>
-  
-  
-<!--  <script src="./js/aframe-gif-shader.min.js"></script> -->
-  <!-- <script src="./aframe-inspector-master/dist/aframe-inspector.js"></script> -->
+										<li><a href="arlens2.html"><span class="icon"><img src="images/bulb.svg" alt="" style="width: 70px !important;"/><span class="label">Ipsum</span></span></a></li>
 
+										<li><a href="arlens3.html"><span class="icon"><img src="images/hamburger.svg" alt="" style="width: 70px !important;"/><span class="label">Dolor</span></span></a></li>
 
-</head>
+										<li><a href="arlens4.html"><span class="icon"><img src="images/transportation.svg" alt="" style="width: 70px !important;"/><span class="label">Sit</span></span></a></li>
 
-<body>
-  <!-- 2D overlay UI can be done in HTML -->
-  <div id="overlay">
-    <div id="loadingScreen">
-    <!--  <img id="loadingImg" src="graphics/LoadingScreen.jpg"> -->
-      <img id="loadingImg" src="graphics/shark.gif">
-    </div>
-  </div>
+										<li><a href="arlens5.html"><span class="icon"><img src="images/waste.svg" alt="" style="width: 70px !important;"/><span class="label">Amet</span></span></a></li>
 
-  <div id="gyroSettings" class="absolute-fill" style="display: none"></div>
+										<li><a href="arlens6.html"><span class="icon"><img src="images/turbine.svg" alt="" style="width: 70px !important;"/><span class="label">Nullam</span></span></a></li>
+									</ul>
+								</div>
+								<!--div class="inner">
+									<ul class="grid-icons three connected">
+										<li><span class="icon fa-gem"><span class="label">Lorem</span></span></li>
+										<li><span class="icon solid fa-camera-retro"><span class="label">Ipsum</span></span></li>
+										<li><span class="icon solid fa-cog"><span class="label">Dolor</span></span></li>
+										<li><span class="icon solid fa-paper-plane"><span class="label">Sit</span></span></li>
+										<li><span class="icon solid fa-chart-bar"><span class="label">Amet</span></span></li>
+										<li><span class="icon solid fa-code"><span class="label">Nullam</span></span></li>
+									</ul>
+								</div-->
+							</section>
 
-  <div id="promptImage">
-    <img src="graphics/prompt.png" height="120px">
-  </div>
+						<!-- Panel (Spotlight) -->
+							<section class="panel spotlight large left">
+								<div class="content span-5" style="background-color: rgba(0, 0, 0, 0.25) 10% !important">
+									<h2 class="major">Lorem ipsum dolor!</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dolor sed viverra ipsum nunc aliquet bibendum enim. In massa tempor nec feugiat. Nunc aliquet bibendum enim facilisis gravida. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Amet luctus venenatis lectus magna fringilla. Volutpat maecenas volutpat blandit aliquam etiam
+ 									<br>
+ 									<br>
+									Volutpat commodo sed egestas egestas. Felis donec et odio pellentesque diam. Pharetra vel turpis nunc eget lorem dolor sed viverra. Porta nibh venenatis cras sed felis eget.
+									<br>
+									<br>
+									
+</p>
+								</div>
+								<div class="image filtered tinted" data-position="top right">
+									<img src="images/02.png" alt="" />
+								</div>
+							</section>
 
- <!-- ***************** INITIAL USER INTERFACE ******************* -->
-  <div id="fearsearch" class="search-ui">
+						<!-- Panel
+							<section class="panel">
+								<div class="intro color2">
+									<h2 class="major">Elit integer</h2>
+									<p>Sed vel nibh libero. Mauris et lorem pharetra massa lorem turpis congue pulvinar. Vivamus sed feugiat finibus. Duis amet bibendum amet sed. Duis mauris ex, dapibus sed ligula tempus volutpat magna etiam.</p>
+								</div>
+								<div class="gallery">
+									<div class="group span-3">
+										<a href="images/gallery/fulls/01.jpg" class="image filtered span-3" data-position="bottom"><img src="images/gallery/thumbs/01.jpg" alt="" /></a>
+										<a href="images/gallery/fulls/02.jpg" class="image filtered span-1-5" data-position="center"><img src="images/gallery/thumbs/02.jpg" alt="" /></a>
+										<a href="images/gallery/fulls/03.jpg" class="image filtered span-1-5" data-position="bottom"><img src="images/gallery/thumbs/03.jpg" alt="" /></a>
+									</div>
+									<a href="images/gallery/fulls/04.jpg" class="image filtered span-2-5" data-position="top"><img src="images/gallery/thumbs/04.jpg" alt="" /></a>
+									<div class="group span-4-5">
+										<a href="images/gallery/fulls/05.jpg" class="image filtered span-3" data-position="top"><img src="images/gallery/thumbs/05.jpg" alt="" /></a>
+										<a href="images/gallery/fulls/06.jpg" class="image filtered span-1-5" data-position="center"><img src="images/gallery/thumbs/06.jpg" alt="" /></a>
+										<a href="images/gallery/fulls/07.jpg" class="image filtered span-1-5" data-position="bottom"><img src="images/gallery/thumbs/07.jpg" alt="" /></a>
+										<a href="images/gallery/fulls/08.jpg" class="image filtered span-3" data-position="top"><img src="images/gallery/thumbs/08.jpg" alt="" /></a>
+									</div>
+									<a href="images/gallery/fulls/09.jpg" class="image filtered span-2-5" data-position="right"><img src="images/gallery/thumbs/09.jpg" alt="" /></a>
+								</div>
+							</section> -->
 
-    <H2 class="search-ui">NAME YOUR FEAR</H2>
+						<!-- Panel -->
+							<section class="panel color4-alt">
+								<div class="intro color4">
+									<h2 class="major">Lorem ipsum dolor!</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dolor sed viverra ipsum nunc aliquet bibendum enim. In massa tempor nec feugiat. Nunc aliquet bibendum enim facilisis gravida. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Amet luctus venenatis lectus magna fringilla. 
+										<br>
+										<br>
+									Want to know more? Send us a message!
+									</p>
+								</div>
+								<div class="inner columns divided">
+									<div class="span-3-25">
+										<form method="post" action="#">
+											<div class="fields">
+												<div class="field half">
+													<label for="name">Name</label>
+													<input type="text" name="name" id="name" />
+												</div>
+												<div class="field half">
+													<label for="email">Email</label>
+													<input type="email" name="email" id="email" />
+												</div>
+												<div class="field">
+													<label for="message">Message</label>
+													<textarea name="message" id="message" rows="4"></textarea>
+												</div>
+											</div>
+											<ul class="actions">
+												<li><input type="submit" value="Send Message" class="button primary" /></li>
+											</ul>
+										</form>
+									</div>
+									<div class="span-1-5">
+										<ul class="contact-icons color1">
+											<li class="icon brands fa-twitter"><a href="#">@tactionar</a></li>
+											<li class="icon brands fa-facebook-f"><a href="#">facebook.com/tactionar</a></li>
+											<li class="icon brands fa-snapchat-ghost"><a href="#">@tactionar</a></li>
+											<li class="icon brands fa-instagram"><a href="#">@tactionar</a></li>
+											<li class="icon brands fa-medium-m"><a href="#">medium.com/tactionar</a></li>
+										</ul>
+									</div>
+								</div>
+							</section>
 
-    <div id="search_form" class="search-ui">
-      <input type="text" id="search_txt" class="search-ui select-button" placeholder="lions, tigers, and bears oh my" />
-      <button id="submitsearch" class="search-ui select-button">search</button>
-    <!--  <h2>or</h2> -->
-      <button id="selectdogs" class="search-ui select-button">DOGS</button>
-      <button id="selectbees" class="search-ui select-button">BEES</button>
-    </div>
+						<!-- Panel
+							<section class="panel color2-alt">
+								<div class="intro color2">
+									<h2 class="major">Elements</h2>
+									<p>Sed vel nibh libero. Mauris et lorem pharetra massa lorem turpis congue pulvinar. Vivamus sed feugiat finibus. Duis amet bibendum amet sed. Duis mauris ex, dapibus sed ligula tempus volutpat magna etiam. </p>
+								</div>
+								<div class="inner columns aligned">
+									<div class="span-2-75">
 
-    <div id="bar-wrapper">
-      <p>Loading...</p>
-      <div class="container">
-        <div class="bar"></div>
-      </div>
-    </div>
+										<h3 class="major">Text</h3>
+										<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+										This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+										This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
 
-  </div>
+										<h1>Heading Level 1</h1>
+										<h2>Heading Level 2</h2>
+										<h3>Heading Level 3</h3>
+										<h4>Heading Level 4</h4>
+										<h5>Heading Level 5</h5>
+										<h6>Heading Level 6</h6>
 
-  <div id="dialogue"></div>
-  <div id="scoredisplay">SCORE: 0</div>
+									</div>
+									<div class="span-3">
 
-  <div class="gfxButton" id="extLinkButton">
-    <a href="http://matter.childmind.org/">
-    <img src="graphics/extLinkButton.jpg" height="25px" ></a>
-  </div>
+										<h4>Blockquote</h4>
+										<blockquote>Lorem ipsum dolor sit amet. Felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in vestibulum. Blandit adipiscing eu iaculis volutpat ac adipiscing volutpat ac adipiscing faucibus.</blockquote>
 
-  
-  <!-- ***************** A-FRAME SCENE ******************* -->
-  <!-- We must add the global components to the scene -->
-  <a-scene loading-screen game-loop gesture-detector  camera-orientation req-camera-permissions shadow="type: pcfsoft"
-  devicemotion-checker>
+										<h4>Preformatted</h4>
+										<pre><code>i = 0; 
 
+while (!deck.isInOrder()) {
+    print 'Iteration ' + (i++);
+    deck.shuffle();
+}
 
+print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
+									</div>
+									<div class="span-1-25">
 
-    <!-- We can define assets here to be loaded when A-Frame initializes -->
-    <a-assets>
+										<h3 class="major">Lists</h3>
 
-      <!-- images -->
-      <img id="explode" src="graphics/explode.gif">
+										<h4>Unordered</h4>
+										<ul>
+											<li>Lorem ipsum dolor sit.</li>
+											<li>Dolor pulvinar etiam.</li>
+											<li>Etiam vel felis viverra.</li>
+										</ul>
 
-    <!--  <img id="dogimageinit" src="graphics/dog1small.gif">
-      <img id="beeimageinit" src="graphics/bee1.gif"> -->
+										<h4>Alternate</h4>
+										<ul class="alt">
+											<li>Lorem ipsum dolor sit.</li>
+											<li>Dolor pulvinar etiam.</li>
+											<li>Etiam vel felis viverra.</li>
+											<li>Felis enim feugiat.</li>
+										</ul>
 
-      <img id="feargraphic1" src="graphics/tinyplaceholder.gif">
-      <img id="feargraphic2" src="graphics/tinyplaceholder.gif">
-      <img id="feargraphic3" src="graphics/tinyplaceholder.gif">
-      <img id="feargraphic4" src="graphics/tinyplaceholder.gif">
-      <img id="feargraphic5" src="graphics/tinyplaceholder.gif">
+									</div>
+									<div class="span-1-5">
 
-      <!-- audio -->
-      <audio id="scarymusicclip" src="audio/Le-grand-cahier-Les-alertes_short.mp3">
-      <audio id="dogmusicclip" src="audio/DogGrowling.mp3">
-      <audio id="beemusicclip" src="audio/beehive-clip.mp3">
-      <audio id="explodesoundclip" src="audio/explosion_backdraft.mp3">
+										<h4>Ordered</h4>
+										<ol>
+											<li>Lorem ipsum dolor sit.</li>
+											<li>Dolor pulvinar etiam.</li>
+											<li>Etiam vel felis viverra.</li>
+											<li>Felis enim feugiat.</li>
+											<li>Etiam vel felis lorem.</li>
+										</ol>
 
-    </a-assets>
+										<h4>Actions</h4>
+										<ul class="actions">
+											<li><a href="#" class="button primary color2">Default</a></li>
+											<li><a href="#" class="button">Default</a></li>
+										</ul>
+										<ul class="actions stacked">
+											<li><a href="#" class="button primary color2">Default</a></li>
+											<li><a href="#" class="button">Default</a></li>
+										</ul>
 
-    <!-- The raycaster will emit mouse events on scene objects specified with the cantap class -->
-    <a-camera  id="camera" position="0 8 8" raycaster="objects: .cantap" cursor="
-          fuse: false;
-          rayOrigin: mouse;">
-      </a-entity>
+									</div>
+									<div class="span-1-25">
 
-    </a-camera>
+										<h4>Icons</h4>
+										<ul class="icons">
+											<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+											<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+											<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+											<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+											<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+										</ul>
 
-    <a-entity id="ambient" light="type: ambient; intensity: .5;"></a-entity>
-    <a-entity id="rim" light="type:directional;intensity:.75;color:#ffffff" position="-4.0 1.6 -6.0"></a-entity>
-    <a-entity id="fill" light="type:directional;intensity:0.5;color:#ffffff" position="4.0 3.6 6.0"></a-entity>
-    <a-entity id="key" light="type: directional; castShadow:true; shadowCameraTop:20; shadowCameraRight:20;
-      color:#ffffff; intensity:1.0" position="5.0 10.0 5.0"></a-entity>
-    
+										<h4>Contact Icons</h4>
+										<ul class="contact-icons color2">
+											<li class="icon brands fa-twitter"><a href="#">Twitter</a></li>
+											<li class="icon brands fa-facebook-f"><a href="#">Facebook</a></li>
+											<li class="icon brands fa-instagram"><a href="#">Instagram</a></li>
+											<li class="icon brands fa-github"><a href="#">GitHub</a></li>
+											<li class="icon brands fa-medium-m"><a href="#">Medium</a></li>
+										</ul>
 
+									</div>
+									<div class="span-3">
+										<h3 class="major">Table</h3>
+										<h4>Default</h4>
+										<div class="table-wrapper">
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Description</th>
+														<th>Price</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Item One</td>
+														<td>Ante turpis integer aliquet porttitor.</td>
+														<td>29.99</td>
+													</tr>
+													<tr>
+														<td>Item Two</td>
+														<td>Vis ac commodo adipiscing arcu aliquet.</td>
+														<td>19.99</td>
+													</tr>
+													<tr>
+														<td>Item Three</td>
+														<td> Morbi faucibus arcu accumsan lorem.</td>
+														<td>29.99</td>
+													</tr>
+													<tr>
+														<td>Item Four</td>
+														<td>Vitae integer tempus condimentum.</td>
+														<td>19.99</td>
+													</tr>
+												</tbody>
+												<tfoot>
+													<tr>
+														<td colspan="2"></td>
+														<td>100.00</td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+									<div class="span-3">
+										<h4>Alternate</h4>
+										<div class="table-wrapper">
+											<table class="alt">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Description</th>
+														<th>Price</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Item One</td>
+														<td>Ante turpis integer aliquet porttitor.</td>
+														<td>29.99</td>
+													</tr>
+													<tr>
+														<td>Item Two</td>
+														<td>Vis ac commodo adipiscing arcu aliquet.</td>
+														<td>19.99</td>
+													</tr>
+													<tr>
+														<td>Item Three</td>
+														<td> Morbi faucibus arcu accumsan lorem.</td>
+														<td>29.99</td>
+													</tr>
+													<tr>
+														<td>Item Four</td>
+														<td>Vitae integer tempus condimentum.</td>
+														<td>19.99</td>
+													</tr>
+													<tr>
+														<td>Item Five</td>
+														<td>Ante turpis integer aliquet porttitor.</td>
+														<td>29.99</td>
+													</tr>
+												</tbody>
+												<tfoot>
+													<tr>
+														<td colspan="2"></td>
+														<td>100.00</td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+									<div class="span-2-25">
+										<h3 class="major">Buttons</h3>
+										<ul class="actions">
+											<li><a href="#" class="button primary color2">Primary</a></li>
+											<li><a href="#" class="button">Default</a></li>
+										</ul>
+										<ul class="actions">
+											<li><a href="#" class="button">Default</a></li>
+											<li><a href="#" class="button large">Large</a></li>
+											<li><a href="#" class="button small">Small</a></li>
+										</ul>
+										<ul class="actions">
+											<li><a href="#" class="button primary color2 icon solid fa-cog">Icon</a></li>
+											<li><a href="#" class="button icon fa-gem">Icon</a></li>
+										</ul>
+										<ul class="actions">
+											<li><span class="button primary color2 disabled">Disabled</span></li>
+											<li><span class="button disabled">Disabled</span></li>
+										</ul>
+										<ul class="actions">
+											<li><a href="#" class="button primary color2 circle icon solid fa-cog">Icon</a></li>
+											<li><a href="#" class="button circle icon fa-gem">Icon</a></li>
+										</ul>
+									</div>
+									<div class="span-4-5">
+										<h3 class="major">Form</h3>
+										<form method="post" action="#">
+											<div class="fields">
+												<div class="field third">
+													<label for="demo-name">Name</label>
+													<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
+												</div>
+												<div class="field third">
+													<label for="demo-email">Email</label>
+													<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
+												</div>
+												<div class="field third">
+													<label for="demo-category">Category</label>
+													<div class="select-wrapper">
+														<select name="demo-category" id="demo-category">
+															<option value="">-</option>
+															<option value="1">Manufacturing</option>
+															<option value="1">Shipping</option>
+															<option value="1">Administration</option>
+															<option value="1">Human Resources</option>
+														</select>
+													</div>
+												</div>
+												<div class="field quarter">
+													<input type="radio" id="demo-priority-low" name="demo-priority" class="color2" checked />
+													<label for="demo-priority-low">Low Priority</label>
+												</div>
+												<div class="field quarter">
+													<input type="radio" id="demo-priority-high" name="demo-priority" class="color2" />
+													<label for="demo-priority-high">High Priority</label>
+												</div>
+												<div class="field quarter">
+													<input type="checkbox" id="demo-copy" name="demo-copy" class="color2" />
+													<label for="demo-copy">Email a copy</label>
+												</div>
+												<div class="field quarter">
+													<input type="checkbox" id="demo-human" name="demo-human" class="color2" checked />
+													<label for="demo-human">Not a robot</label>
+												</div>
+												<div class="field">
+													<label for="demo-message">Message</label>
+													<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="2"></textarea>
+												</div>
+											</div>
+											<ul class="actions">
+												<li><input type="submit" value="Send Message" class="primary color2" /></li>
+												<li><input type="reset" value="Reset" /></li>
+											</ul>
+										</form>
+									</div>
+								</div>
+							</section> -->
 
-  <!--  <a-image src="#explode"></a-image> -->
+						<!-- Copyright -->
+							<div class="copyright">&copy; 2019 -- Child Mind Institute</div>
 
-    <a-entity id="ground" class="cantap" geometry="primitive: box" material="color: #ffffff; transparent: true; opacity: 0.0"
-      scale="1000 2 1000" position="0 -1 0" shadow-material shadow>
-    </a-entity>   
+					</div>
 
+			</div>
 
-   <!-- <a-image position="4.5 2 0"  width="10" height="10" src="#snake1" look-at="#camera"></a-image> -->
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/main.js"></script>
 
-
-    <a-entity id="thefear" 
-              initdistance="0"
-              geometry="primitive:plane;width:12;height:12"  
-              material="shader:gif; alphaTest:0.5;" 
-              visible="true" 
-              look-at="#camera" 
-              pinch-scale-destroy>
-      <a-sound id="scarymusic" src="#scarymusicclip" autoplay="true" loop="true" crossorigin="anonymous" preload="false" volume="1"></a-sound>
-
-    </a-entity>
-
-    <a-entity id="explodegraphic" geometry="primitive:plane;width:12;height:12;"  material="shader:gif; alphaTest:0.5; src:#explode" visible="false" look-at="#camera">
-      <a-sound id="explodesound" src="#explodesoundclip" autoplay="false" loop="false" crossorigin="anonymous" preload="auto" volume="1"></a-sound>
-    </a-entity>
-
-    
-    <!-- <a-entity id="spideyM" gltf-model="#spideyModel"  hold-drag two-finger-spin pinch-scale scale="5.0 5.0 5.0" position="0.0 -2.454 0.0" visible=true> -->
-      
-    </a-entity>
-
-    
-
-  </a-scene>
-
-
-</body>
-
+	</body>
 </html>
-
