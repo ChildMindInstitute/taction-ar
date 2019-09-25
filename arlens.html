@@ -16,7 +16,8 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
     <script defer src="//cdn.8thwall.com/web/aframe/aframe-animation-component-5.1.2.min.js"></script>
-    <script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script>
+ 	<!--   <script src="//cdn.8thwall.com/web/aframe/8frame-0.9.0.min.js"></script> -->
+ 	<script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script>
     <script src="//codeawesome.s3-us-west-2.amazonaws.com/dulce303/assets/xrextras-climatelens.js" ></script>
     <script src="./assets/js/gesture-detector.js"></script>
     <script src="./assets/js/hold-drag.js"></script>
@@ -62,6 +63,47 @@
           })
         }
       })
+
+
+      AFRAME.registerComponent('initial-events', {
+        init: function() {
+
+        	const scene = this.el.sceneEl;
+        	const camera = document.getElementById('camera'); 
+        	const thefear = document.getElementById('fear-entity');
+
+        	//do stuff when device camera feed becomes visible
+	        scene.addEventListener('realityready', () => {
+	        	//stuff
+	        	thefear.components.sound.playSound();
+	        })
+
+	        //do stuff after model is loaded
+            thefear.addEventListener('model-loaded', () => {
+            	thefear.setAttribute('visible', 'true');
+            })
+
+	        //set init position
+	        var angle = camera.getAttribute('rotation');
+            var x = 1 * Math.cos(angle.y * Math.PI / 180);
+            var y = 1 * Math.sin(angle.y * Math.PI / 180);
+            var pos = camera.getAttribute('position');
+            pos.x -= y*15;
+            pos.z -= x*15;
+            thefear.setAttribute('position', pos);
+
+            //set init sound
+            thefear.setAttribute('sound', 'src', '#fear-sound-1');
+            thefear.setAttribute('sound', 'autoplay', 'false');
+            thefear.setAttribute('sound', 'loop', 'true');
+
+            //set init model specs
+            thefear.setAttribute('visible', 'false');
+            thefear.setAttribute('scale', '1.0 1.0 1.0');
+            thefear.setAttribute('gltf-model', '#dog-glb');
+            thefear.setAttribute('animation-mixer', 'loop', 'repeat');
+        }
+      })
     </script>
 
 </head>
@@ -77,6 +119,7 @@
     <a-scene
     antialias="true"
     xrweb="disableWorldTracking: true"
+    initial-events
     tap-place
     gesture-detector
     xrextras-almost-there
@@ -84,23 +127,34 @@
     xrextras-runtime-error
     photo-mode style="z-index: 0;">
     
-      <a-assets>
-      <!--  <a-asset-item id="water-glb" src="./assets/models/water-rise-trans5.glb"></a-asset-item> -->
-        <a-asset-item id="dog-glb" src="./assets/models/dog-shiba-model.glb"></a-asset-item>
-      </a-assets>
-      <a-camera id="camera" position="0 8 8"></a-camera>
+      	<a-assets>
+      		<!--  <a-asset-item id="water-glb" src="./assets/models/water-rise-trans5.glb"></a-asset-item> -->
+        	<a-asset-item id="dog-glb" src="./assets/models/low_poly_dog_model.glb"></a-asset-item>
+        	<audio id="fear-sound-1" src="./assets/audio/DogGrowling.mp3">
+        		
+      	</a-assets>
 
-         <a-entity light="type: ambient; intensity: 2;" position="1 4.3 -18"></a-entity>
-        <a-entity id="water" position="-0.5 0 -5" scale="0.5 0.5 0.5" class="cantap" hold-drag two-finger-spin pinch-scale gltf-model="#dog-glb" animation-mixer="loop: repeat"></a-entity>
+      	<a-camera id="camera" position="0 8 8"></a-camera>
+
+        <a-entity 
+        light="type: ambient; intensity: 2;" 
+        position="1 4.3 -18"></a-entity>
+
+        <a-entity 
+        id="fear-entity" 
+        class="cantap" 
+        hold-drag 
+        two-finger-spin 
+        pinch-scale></a-entity>
       
-            <a-entity
+        <a-entity
         id="ground"
         class="cantap"
         geometry="primitive: box"
         material="color: #ffffff; transparent: true; opacity: 0.0"
         scale="1000 2 1000"
-        position="0 -1 0">
-      </a-entity>
+        position="0 -1 0"></a-entity>
+
     </a-scene>
     <section class="panel">
 <div class="inner" style="width: 70%; position: fixed; margin-top: 180px; margin-left: -05px;">
