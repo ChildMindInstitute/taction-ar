@@ -76,6 +76,15 @@
 	        scene.addEventListener('realityready', () => {
 	        	//stuff
 	        	thefear.components.sound.playSound();
+
+	        	//set init position
+		        var angle = camera.getAttribute('rotation');
+	            var x = 1 * Math.cos(angle.y * Math.PI / 180);
+	            var y = 1 * Math.sin(angle.y * Math.PI / 180);
+	            var pos = camera.getAttribute('position');
+	            pos.x -= y*15;
+	            pos.z -= x*15;
+	            thefear.setAttribute('position', pos);
 	        })
 
 	        //do stuff after model is loaded
@@ -83,14 +92,6 @@
             	thefear.setAttribute('visible', 'true');
             })
 
-	        //set init position
-	        var angle = camera.getAttribute('rotation');
-            var x = 1 * Math.cos(angle.y * Math.PI / 180);
-            var y = 1 * Math.sin(angle.y * Math.PI / 180);
-            var pos = camera.getAttribute('position');
-            pos.x -= y*15;
-            pos.z -= x*15;
-            thefear.setAttribute('position', pos);
 
             //set init sound
             thefear.setAttribute('sound', 'src', '#fear-sound-1');
@@ -99,7 +100,7 @@
 
             //set init model specs
             thefear.setAttribute('visible', 'false');
-            thefear.setAttribute('scale', '1.0 1.0 1.0');
+            thefear.setAttribute('scale', '0.5 0.5 0.5');
             thefear.setAttribute('gltf-model', '#dog-glb');
             thefear.setAttribute('animation-mixer', 'loop', 'repeat');
         }
@@ -131,7 +132,7 @@
       		<!--  <a-asset-item id="water-glb" src="./assets/models/water-rise-trans5.glb"></a-asset-item> -->
         	<a-asset-item id="dog-glb" src="./assets/models/low_poly_dog_model.glb"></a-asset-item>
         	<audio id="fear-sound-1" src="./assets/audio/DogGrowling.mp3">
-        		
+
       	</a-assets>
 
       	<a-camera id="camera" position="0 8 8"></a-camera>
