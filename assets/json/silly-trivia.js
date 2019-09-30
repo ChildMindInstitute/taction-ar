@@ -964,17 +964,9 @@ const allQuestions = [{
   "correct": "appendix",
   "answers": ["tonsils", "appendix", "uvula", "pineal gland"]
 }, {
-  "question": "These are lumps of ice and dust.  When they get close enough to the Sun they gradually evaporate.  Jets of gas and dust create long tails that people can see from Earth.",
-  "correct": "Comets",
-  "answers": ["Asteroids", "Comets", "UFOs", "Stars"]
-}, {
   "question": "This planet is slightly smaller than Earth and its closest neighbor (excluding the Moon).",
   "correct": "Venus",
   "answers": ["Venus", "Uranus", "Mars", "Saturn"]
-}, {
-  "question": "This planet of the Solar System was named after a Greek god of the sea and earthquakes. The name is actually the Roman translation of the Greek.",
-  "correct": "Neptune",
-  "answers": ["Mercury", "Neptune", "Pluto", "Uranus"]
 }, {
   "question": "Which Solar System celestial bodys revolution around the Sun takes 248 years?",
   "correct": "Pluto",

@@ -16,9 +16,19 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
     <script>
-      let gameState = {
-        quizActive: true;
-      };
+    window.AFPS = {
+      gameState: {
+        quizActive: true,
+        score: 0,
+        type: 'none',       //search, dog or bee - search is default
+        fearIsActive: false,  //can player interact with/destroy the fear entity
+        initialDistance: 0,
+        fearDistance: 0,      //distance of player/camera from fear entity
+        dialogue: 'none',
+        imageurls: ["", "", "", "", ""],
+        fearSoundUrl: ""
+      }
+    };
     </script>
 
     <script defer src="//cdn.8thwall.com/web/aframe/aframe-animation-component-5.1.2.min.js"></script>
@@ -49,11 +59,16 @@
         position: relative;
         width: 80%;
         left: 10%;
-        top: 60%;
+        top: 55%;
       }
-      #quiz-text{
+      #quiz-question{
         display: block;
-        color: #3a3a3a;
+        color: #4b739a;
+        text-align: center;
+      }
+      #quiz-answer{
+        display: block;
+        color: #54ab80;
         text-align: center;
       }
 
