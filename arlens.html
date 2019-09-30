@@ -15,10 +15,17 @@
     <link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+    <script>
+      let gameState = {
+        quizActive: true;
+      };
+    </script>
+
     <script defer src="//cdn.8thwall.com/web/aframe/aframe-animation-component-5.1.2.min.js"></script>
  	<!--   <script src="//cdn.8thwall.com/web/aframe/8frame-0.9.0.min.js"></script> -->
  	<script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script>
  <!--   <script src="//codeawesome.s3-us-west-2.amazonaws.com/dulce303/assets/xrextras-climatelens.js" ></script> -->
+    <script src="./assets/json/silly-trivia.js" ></script>
     <script src="./assets/js/xrextras-climatelens.js" ></script>
     <script src="./assets/js/gesture-detector.js"></script>
     <script src="./assets/js/hold-drag.js"></script>
@@ -37,6 +44,19 @@
 
 <!-- temp dev styling -->
     <style>
+      #quiz-container{
+        display: block;
+        position: relative;
+        width: 80%;
+        left: 10%;
+        top: 60%;
+      }
+      #quiz-text{
+        display: block;
+        color: #3a3a3a;
+        text-align: center;
+      }
+
         #bar-wrapper {
           /* display:none; */
           display: block;

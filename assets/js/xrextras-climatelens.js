@@ -735,6 +735,10 @@
                         e = (l = r).querySelector("#loadBackground"), n = l.querySelector("#loadImageContainer"), t = document.getElementById("requestingCameraPermissions"), o = document.getElementById("cameraPermissionsErrorAndroid"), i = document.getElementById("cameraPermissionsErrorApple"), a = document.getElementById("cameraPermissionsErrorSamsung"), s = document.getElementById("deviceMotionErrorApple")
                     })(m), u = !0, d && d.onxrloaded && (window.XR ? d.onxrloaded() : window.addEventListener("xrloaded", d.onxrloaded));
 
+                    /*****************************************************************
+                    ******************** PROGRESS BAR AND QUIZ ***********************
+                    *****************************************************************/
+
                     //APPEND LOAD SCREEN
                     console.log("append load screen in extras js");
 
@@ -742,14 +746,29 @@
 
                 //    $("#bar-wrapper").fadeIn(500);
 
-			          $("#bar-wrapper .bar" ).animate({
+			         $("#bar-wrapper .bar" ).animate({
 			            width: "80%",
 			            }, 28000, "swing",
 			            function() {
 			                console.log("progress bar complete");
 			            }
 
-			          );
+			         );
+
+                    //QUIZ
+                    let quiz = setInterval(frame, 4000);
+
+                    function frame() {
+                        if (gameState.quizActive == false) {
+                          clearInterval(quiz);
+                        } else {
+                            let questionIndex = Math.floor(Math.random() * Math.floor(allQuestions.length));
+                            console.log("quiz question #: " + questionIndex);
+                            let activeQuestion = allQuestions[ questionIndex ];
+                            $("#quiz-text").text(activeQuestion.question);
+                        }
+                    }
+
 
 
                 };
@@ -833,7 +852,7 @@
 		<img id="cameraPermissionsErrorAppleReloadCamera" src="//s3-us-west-2.amazonaws.com/codeawesome/moad/reload-camera.png" />
 	</div>
 	*/
-    e.exports = '<div id="loadingContainer" class="absolute-fill">\n  \x3c!--Loading screen--\x3e\n <div id="loadBackground" class="absolute-fill">\n   <div id="bar-wrapper">\n  <p>Loading...</p>\n  <div class="bar-container">\n  <div class="bar"></div>\n </div>\n  </div>\n  <div id="loadImageContainer" class="absolute-fill">\n    <center><img src="./images/cmi-logo-vert.svg" id="loadImage" />FFF<p>FFF</p<h2>PPP</h2></center>\n      <h3 style="display: block !important;">Loading</h3>\n    </div>\n  </div>\n\n  \x3c!--Camera Permissions--\x3e\n  <div id="requestingCameraPermissions" class="hidden" />\n    <img id="requestingCameraIcon" src="//s3-us-west-2.amazonaws.com/codeawesome/moad/camera-moad-white.png" />\n    Tap "Allow" so we can<br>augment your reality.\n  </div>\n\n  \x3c!--Permission error, iOS--\x3e\n  <div id="cameraPermissionsErrorApple" class="absolute-fill hidden" />\n    Refresh the page to enable<br>your camera for AR\n    <img id="cameraPermissionsErrorAppleArrow" src="//s3-us-west-2.amazonaws.com/codeawesome/moad/arrow.png" />\n    <img id="cameraPermissionsErrorAppleReloadCamera" src="//s3-us-west-2.amazonaws.com/codeawesome/moad/reload-camera.png" />\n  </div>\n\n  \x3c!--Permission error, Android--\x3e\n  <div id="cameraPermissionsErrorAndroid" class="absolute-fill hidden">\n    <div id="cameraPermissionsCameraIcon">\n      <img src="//s3-us-west-2.amazonaws.com/codeawesome/moad/camera-moad.png" />\n    </div>\n    <div class="loading-error-header">Let\'s enable your camera</div>\n    <ol class="loading-error-instructions">\n      <li>Tap the <img src="//cdn.8thwall.com/web/img/loading/v1/ellipsis.png"> in the top right</li>\n      <li>Tap <span class="highlight">Settings</li>\n      <li class="chrome-instruction hidden">\n        <span class="highlight">Site settings</span>\n      </li>\n      <li class="chrome-instruction hidden">\n        <span class="highlight">Camera</span>\n      </li>\n      <li class="chrome-instruction hidden">\n        <span class="highlight">Blocked</span>\n        <br>\n        <span class="camera-instruction-block domain-view">apps.8thwall.com</span>\n      </li>\n      <li class="chrome-instruction hidden">\n        <span class="camera-instruction-button">CLEAR & RESET</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        <span class="highlight">Advanced</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        <span class="highlight">Manage website data</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        Press and hold<br>\n        <span class="camera-instruction-block domain-view">apps.8thwall.com</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        <span class="highlight" style="color: #1500ba">DELETE</span>\n      </li>\n    </ol>\n    <div class="loading-error-footer">\n      <img src="//cdn.8thwall.com/web/img/loading/v1/reload.png" />\n      Then, reload the page to experience some AR magic!\n    </div>\n  </div>\n\n    \x3c!--iOS devicemotion sensor is disabled --\x3e\n  <div id="deviceMotionErrorApple" class="absolute-fill hidden">\n    <div class="loading-error-header">Let\'s enable your motion sensors</div>\n    <ol class="loading-error-instructions">\n      <li>Open <img src="https://cdn.8thwall.com/web/img/loading/v1/settings-icon-ios.png" style="max-height: 4vh"><b>Settings</b></li>\n      <li>Select <img src="https://cdn.8thwall.com/web/img/loading/v1/safari-icon.png" style="max-height: 4vh"><b>Safari</b></li>\n      <li>Enable <span class="highlight">Motion&nbsp;&amp;&nbsp;Orientation Access</span></li>\n      <li>Reload the page <img src="//cdn.8thwall.com/web/img/loading/v1/reload.png"></li>\n    </ol>\n    \x3c!-- Empty footer to take up space --\x3e\n    <div class="loading-error-footer"></div>\n  </div>\n</div>\n'
+    e.exports = '<div id="loadingContainer" class="absolute-fill">\n  \x3c!--Loading screen--\x3e\n <div id="loadBackground" class="absolute-fill">\n   <div id="bar-wrapper">\n  <p>Loading...</p>\n  <div class="bar-container">\n  <div class="bar"></div>\n </div>\n   </div>\n  <div id="loadImageContainer" class="absolute-fill">\n    <center><img src="./images/cmi-logo-vert.svg" id="loadImage" /></center>\n    <h3 style="display: block !important;">Loading</h3>\n    </div>\n      <div id="quiz-container"><h2 id="quiz-text">Quiz</h2></div>\n   </div>\n\n  \x3c!--Camera Permissions--\x3e\n  <div id="requestingCameraPermissions" class="hidden" />\n    <img id="requestingCameraIcon" src="//s3-us-west-2.amazonaws.com/codeawesome/moad/camera-moad-white.png" />\n    Tap "Allow" so we can<br>augment your reality.\n  </div>\n\n  \x3c!--Permission error, iOS--\x3e\n  <div id="cameraPermissionsErrorApple" class="absolute-fill hidden" />\n    Refresh the page to enable<br>your camera for AR\n    <img id="cameraPermissionsErrorAppleArrow" src="//s3-us-west-2.amazonaws.com/codeawesome/moad/arrow.png" />\n    <img id="cameraPermissionsErrorAppleReloadCamera" src="//s3-us-west-2.amazonaws.com/codeawesome/moad/reload-camera.png" />\n  </div>\n\n  \x3c!--Permission error, Android--\x3e\n  <div id="cameraPermissionsErrorAndroid" class="absolute-fill hidden">\n    <div id="cameraPermissionsCameraIcon">\n      <img src="//s3-us-west-2.amazonaws.com/codeawesome/moad/camera-moad.png" />\n    </div>\n    <div class="loading-error-header">Let\'s enable your camera</div>\n    <ol class="loading-error-instructions">\n      <li>Tap the <img src="//cdn.8thwall.com/web/img/loading/v1/ellipsis.png"> in the top right</li>\n      <li>Tap <span class="highlight">Settings</li>\n      <li class="chrome-instruction hidden">\n        <span class="highlight">Site settings</span>\n      </li>\n      <li class="chrome-instruction hidden">\n        <span class="highlight">Camera</span>\n      </li>\n      <li class="chrome-instruction hidden">\n        <span class="highlight">Blocked</span>\n        <br>\n        <span class="camera-instruction-block domain-view">apps.8thwall.com</span>\n      </li>\n      <li class="chrome-instruction hidden">\n        <span class="camera-instruction-button">CLEAR & RESET</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        <span class="highlight">Advanced</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        <span class="highlight">Manage website data</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        Press and hold<br>\n        <span class="camera-instruction-block domain-view">apps.8thwall.com</span>\n      </li>\n      <li class="samsung-instruction hidden">\n        <span class="highlight" style="color: #1500ba">DELETE</span>\n      </li>\n    </ol>\n    <div class="loading-error-footer">\n      <img src="//cdn.8thwall.com/web/img/loading/v1/reload.png" />\n      Then, reload the page to experience some AR magic!\n    </div>\n  </div>\n\n    \x3c!--iOS devicemotion sensor is disabled --\x3e\n  <div id="deviceMotionErrorApple" class="absolute-fill hidden">\n    <div class="loading-error-header">Let\'s enable your motion sensors</div>\n    <ol class="loading-error-instructions">\n      <li>Open <img src="https://cdn.8thwall.com/web/img/loading/v1/settings-icon-ios.png" style="max-height: 4vh"><b>Settings</b></li>\n      <li>Select <img src="https://cdn.8thwall.com/web/img/loading/v1/safari-icon.png" style="max-height: 4vh"><b>Safari</b></li>\n      <li>Enable <span class="highlight">Motion&nbsp;&amp;&nbsp;Orientation Access</span></li>\n      <li>Reload the page <img src="//cdn.8thwall.com/web/img/loading/v1/reload.png"></li>\n    </ol>\n    \x3c!-- Empty footer to take up space --\x3e\n    <div class="loading-error-footer"></div>\n  </div>\n</div>\n'
 }, function(e, n, t) {
     t(2), t(19);
     const r = t(21);
