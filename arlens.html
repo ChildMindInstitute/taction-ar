@@ -321,6 +321,54 @@
             document.getElementById("game-message").innerHTML = "<h2>SILLY FEAR!</h2>";
             document.getElementById("score-message").innerHTML = "<h2>SCORE: " + AFPS.gamestate.score "</h2>";
 
+
+            //stop explosion graphics and hide everything after a few seconds
+            setTimeout(()=> {
+                explodeGraphic.setAttribute('visible', false);
+                explodeGraphic.components.sound.stopSound();
+
+                document.getElementById("game-message").innerHTML = "<p>LOOK AROUND TO FACE MORE FEAR...</p>";
+
+                //RESET FOR NEXT FEAR ENTITY
+                setTimeout(()=> {
+                    fearsound.components.sound.playSound();
+
+                    //set new position
+                    const camera = document.getElementById('camera'); 
+
+                    var angle = camera.getAttribute("rotation");
+                    var x = 1 * Math.cos(angle.y * Math.PI / 180);
+                    var y = 1 * Math.sin(angle.y * Math.PI / 180);
+                    var pos = camera.getAttribute("position");
+                    pos.x -= y*15;
+                    pos.z -= x*15;
+                    this.el.setAttribute("position", pos);
+                    console.log("change position: ");
+                    console.log(pos);
+
+                    //reset scale
+                    this.scaleFactor = 1;
+
+                    //make fear entity visible again
+                    thefear.setAttribute('visible', true);
+
+                    //get new initial distance of camera/player from fear entity
+                    //need to wait for position to update
+                    setTimeout(()=> {
+                        let camPos = camera.object3D.position;
+                        let targetPos = thefear.object3D.position;
+                        AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
+
+                        console.log("recaclulated initial distance:" + AFPS.gamestate.initialdistance);
+
+                        //allow user interaction with fear entity
+                        AFPS.gamestate.fearisactive = true;
+                    }, 500);
+
+                }, 5000);
+
+            }, 3000);
+
           }
 
         }
