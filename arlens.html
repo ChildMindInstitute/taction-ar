@@ -186,6 +186,7 @@
 
         	//do stuff when device camera feed becomes visible (don't want asset loading to slow startup)
 	        scene.addEventListener('realityready', () => {
+            console.log("initial-events component -->  realityready");
 	        	//stuff
 	        	thefear.components.sound.playSound();
 
@@ -198,6 +199,8 @@
 	            pos.z -= x*15;
 	            pos.y = 0;
 	            thefear.setAttribute('position', pos);
+
+              console.log("initial-events set pos:"); console.log(pos);
 
 	            //set init animation
               let posAnimate = pos;
@@ -228,6 +231,13 @@
 	            expload.setAttribute('material', 'shader', 'gif'); 
 	            expload.setAttribute('material', 'alphaTest', '0.5');
 	            expload.setAttribute('material', 'src', '#expload-gif');
+
+              //enable game mode once everything is ready
+              setTimeout(function(){ 
+                AFPS.gameState.fearIsActive = true;
+                console.log("AFPS.gameState.fearIsActive = true;");
+              }, 500);
+              
 
 	        })
 
@@ -267,8 +277,11 @@
 	    },
 	    handleEvent: function(event) {
 
-        //only make small if user approaches fear entity
-        if(AFPS.gameState.fearInRange == true){
+        //only make small if user approaches fear entity + game is active
+        if(AFPS.gameState.fearInRange == true && AFPS.gamestate.fearisactive == true){
+          const fearEntity = document.getElementById('fear-entity');
+          const explodeGraphic = document.getElementById('explode-graphic');
+
   	      this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
   	      this.scaleFactor = Math.min(Math.max(this.scaleFactor, this.data.min), this.data.max)
   	  
@@ -279,8 +292,37 @@
           //user has destroyed fear entity by decreasing scale (pinching)
           if(this.scaleFactor < AFPS.gameState.scaleDestroyCuttOff){
 
+            AFPS.gamestate.fearisactive = false;
+            console.log("AFPS.gamestate.fearisactive = false;");
+
+            //increase score and set fear entitity as not active
+            let newscore = AFPS.gamestate.score + 1;
+            console.log("new score: " + newscore);
+            AFPS.gamestate.score = newscore;
+
+            //set explode graphic position to fear entity position
+            let thePosition = fearEntity.getAttribute('position');
+            console.log("current position of fear element: "); 
+            console.log(thePosition);
+            explodeGraphic.setAttribute('position', thePosition);
+
+            console.log("current position of explode element:");
+            console.log( explodeGraphic.getAttribute('position') );
+
+            //stop fear entity sound and play expload sound
+            fearEntity.components.sound.stopSound();
+            explodeGraphic.components.sound.playSound();
+
+            //hide 'destroyed' fear graphic and show explosion graphic
+            fearEntity.setAttribute('visible', false);
+            explodeGraphic.setAttribute('visible', true);
+
+            //update in game text messages
+            document.getElementById("game-message").innerHTML = "<h2>SILLY FEAR!</h2>";
+            document.getElementById("score-message").innerHTML = "<h2>SCORE: " + AFPS.gamestate.score "</h2>";
+
           }
-          
+
         }
 	    }
 	  })
@@ -293,6 +335,10 @@
        <a href="./index.html" class="mob_logo"><h4>Taction AR App</h4></a>
     </div>
     <!-- Content -->
+
+    <!-- in game text message display -->
+    <div id="game-message"></div>
+    <div id="score-message"></div>
 
     <!-- If your app only interacts with image targets and not the world, disabling world tracking can improve speed. -->
     <a-scene
