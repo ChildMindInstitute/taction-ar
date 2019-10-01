@@ -774,20 +774,20 @@
                             console.log("quiz question #: " + questionIndex);
                             let activeQuestion = allQuestions[ questionIndex ];
 
-                            //fade out last question
-                            $("#quiz-question, #quiz-answer").fadeOut(300, function() {
+                            //show new question
+                            $("#quiz-question").fadeIn(300, function() {
 
-                                $("#quiz-question").text(activeQuestion.question);
-                                $("#quiz-answer").text(activeQuestion.correct);
+                                    $("#quiz-answer").delay(3000).fadeIn(300, function() {
 
-                                //show new question
-                                $("#quiz-question").delay(2000).fadeIn(300, function() {
+                                        //fade out last question
+                                        $("#quiz-question, #quiz-answer").delay(3000).fadeOut(300, function() {
 
-                                    $("#quiz-answer").delay(4500).fadeIn(300);
-                                });
+                                            $("#quiz-question").text(activeQuestion.question);
+                                            $("#quiz-answer").text(activeQuestion.correct);
+                                        });
+                                    });
+                            });
 
-                            }); 
-                            
                         }
                     }
 
