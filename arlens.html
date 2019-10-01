@@ -22,11 +22,13 @@
         score: 0,
         type: 'none',       //search, dog or bee - search is default
         fearIsActive: false,  //can player interact with/destroy the fear entity
+        fearInRange: true,
         initialDistance: 0,
         fearDistance: 0,      //distance of player/camera from fear entity
         dialogue: 'none',
         imageurls: ["", "", "", "", ""],
-        fearSoundUrl: ""
+        fearSoundUrl: "",
+        scaleDestroyCuttOff: 0.5
       }
     };
     </script>
@@ -198,9 +200,12 @@
 	            thefear.setAttribute('position', pos);
 
 	            //set init animation
+              let posAnimate = pos;
+              posAnimate.x = pos.x + 3;
+              posAnimate.z = pos.z + 3;
 	            newElement.setAttribute('animation', {
 	                property: 'position',
-	                to: '1.0 0 1.0',
+	                to: posAnimate,
 	                easing: 'easeOutElastic',
 	                dur: 800,
 	            })
@@ -261,12 +266,22 @@
 	      this.el.sceneEl.removeEventListener('twofingermove', this.handleEvent)
 	    },
 	    handleEvent: function(event) {
-	      this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
-	      this.scaleFactor = Math.min(Math.max(this.scaleFactor, this.data.min), this.data.max)
-	  
-	      this.el.object3D.scale.x = this.scaleFactor * this.initialScale.x
-	      this.el.object3D.scale.y = this.scaleFactor * this.initialScale.y
-	      this.el.object3D.scale.z = this.scaleFactor * this.initialScale.z
+
+        //only make small if user approaches fear entity
+        if(AFPS.gameState.fearInRange == true){
+  	      this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
+  	      this.scaleFactor = Math.min(Math.max(this.scaleFactor, this.data.min), this.data.max)
+  	  
+  	      this.el.object3D.scale.x = this.scaleFactor * this.initialScale.x
+  	      this.el.object3D.scale.y = this.scaleFactor * this.initialScale.y
+  	      this.el.object3D.scale.z = this.scaleFactor * this.initialScale.z
+
+          //user has destroyed fear entity by decreasing scale (pinching)
+          if(this.scaleFactor < AFPS.gameState.scaleDestroyCuttOff){
+
+          }
+          
+        }
 	    }
 	  })
     </script>
