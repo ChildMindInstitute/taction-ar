@@ -20,7 +20,7 @@
       gameState: {
         quizActive: true,
         score: 0,
-        type: 'none',       //search, dog or bee - search is default
+        type: 'dog',       //search, dog or bee - search is default
         fearIsActive: false,  //can player interact with/destroy the fear entity
         fearInRange: true,
         initialDistance: 0,
@@ -271,6 +271,43 @@
 	      this.scaleFactor = 1
 	      this.handleEvent = this.handleEvent.bind(this)
 	      this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
+
+        // Set up the tick throttling. Will check if marker is active every 250ms
+        this.tick = AFRAME.utils.throttleTick(this.tick, 250, this);
+      },
+      tick: function() {
+        //ticker stuff
+        /**************** MEASURE PROXIMITY OF PLAYER TO FEAR ENTITY SO WE CAN DETERMINE IF THEY ARE IN RANGE **************/
+        if( AFPS.gameState.fearisActive == true ){
+
+            let fearEntity = document.getElementById('fear-entity');
+            let camera = document.getElementById('camera');
+            let camPos = camera.object3D.position;
+            let targetPos = fearEntity.object3D.position;
+            let initialDistance = AFPS.gameState.initialDistance;// Number(fearEntity.getAttribute("initdistance"));
+            let currentDistance = camPos.distanceTo(targetPos);
+
+            console.log("(currentdistance / initialdistance): " + currentdistance + " / " + initialdistance + " = " + (currentdistance / initialdistance) );
+
+
+            if((currentDistance / initialDistance) > 0.85 ){
+              if(AFPS.gameState.dialogue != 'closer'){
+                document.getElementById("game-message").innerHTML = "<H2>GET CLOSER!</H2>";
+              }
+              AFPS.gameState.dialogue = 'closer';
+            } 
+            else {
+              if(AFPS.gameState.dialogue != 'pinch'){
+                document.getElementById("game-message").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p>";
+              }
+              AFPS.gameState.dialogue = 'pinch';
+            }
+
+            //increase init distance value if current distance is greater ie init distance -> max distance
+            if(currentDistance > initialDistance){
+              AFPS.gameState.initialDistance = currentDistance;
+            }
+        }
 	    },
 	    remove: function() {
 	      this.el.sceneEl.removeEventListener('twofingermove', this.handleEvent)
@@ -289,7 +326,7 @@
   	      this.el.object3D.scale.y = this.scaleFactor * this.initialScale.y
   	      this.el.object3D.scale.z = this.scaleFactor * this.initialScale.z
 
-          //user has destroyed fear entity by decreasing scale (pinching)
+          /*********** HANDLE USER DESTRUCTION ON FEAR ENTITY BY SUFFICIENT PINCHING *************/
           if(this.scaleFactor < AFPS.gameState.scaleDestroyCuttOff){
 
             AFPS.gamestate.fearisactive = false;
@@ -331,12 +368,12 @@
 
                 //RESET FOR NEXT FEAR ENTITY
                 setTimeout(()=> {
-                    fearsound.components.sound.playSound();
+                    fearEntity.components.sound.playSound();
 
                     //set new position
                     const camera = document.getElementById('camera'); 
 
-                    var angle = camera.getAttribute("rotation");
+                    const angle = camera.getAttribute("rotation");
                     var x = 1 * Math.cos(angle.y * Math.PI / 180);
                     var y = 1 * Math.sin(angle.y * Math.PI / 180);
                     var pos = camera.getAttribute("position");
@@ -350,19 +387,19 @@
                     this.scaleFactor = 1;
 
                     //make fear entity visible again
-                    thefear.setAttribute('visible', true);
+                    fearEntity.setAttribute('visible', true);
 
                     //get new initial distance of camera/player from fear entity
                     //need to wait for position to update
                     setTimeout(()=> {
                         let camPos = camera.object3D.position;
-                        let targetPos = thefear.object3D.position;
-                        AFPS.gamestate.initialdistance = camPos.distanceTo(targetPos);
+                        let targetPos = fearEntity.object3D.position;
+                        AFPS.gameState.initialDistance = camPos.distanceTo(targetPos);
 
-                        console.log("recaclulated initial distance:" + AFPS.gamestate.initialdistance);
+                        console.log("recaclulated initial distance:" + AFPS.gameState.initialDistance);
 
                         //allow user interaction with fear entity
-                        AFPS.gamestate.fearisactive = true;
+                        AFPS.gameState.fearIsActive = true;
                     }, 500);
 
                 }, 5000);
