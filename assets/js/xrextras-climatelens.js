@@ -763,6 +763,9 @@
                     $("#quiz-question").text(activeQuestion.question);
                     $("#quiz-answer").text(activeQuestion.correct);
 
+                    //to avoid delay, call function immediately first time
+                    frame();
+
                     let quiz = setInterval(frame, 9000);
 
                     function frame() {
@@ -777,7 +780,7 @@
                             //show new question
                             $("#quiz-question").fadeIn(300, function() {
 
-                                    $("#quiz-answer").delay(2500).fadeIn(300, function() {
+                                    $("#quiz-answer").delay(3000).fadeIn(300, function() {
 
                                         //fade out last question
                                         $("#quiz-question, #quiz-answer").delay(3000).fadeOut(300, function() {
