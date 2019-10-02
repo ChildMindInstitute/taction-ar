@@ -272,6 +272,8 @@
 	      max: {default: 8}
 	    },
 	    init: function() {
+	      console.log("init pinch-scale-destroy");
+
 	      this.initialScale = this.el.object3D.scale.clone()
 	      this.scaleFactor = 1
 	      this.handleEvent = this.handleEvent.bind(this)

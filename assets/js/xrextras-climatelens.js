@@ -766,7 +766,7 @@
                     //to avoid delay, call function immediately first time
                     frame();
 
-                    let quiz = setInterval(frame, 9000);
+                    let quiz = setInterval(frame, 10000);
 
                     function frame() {
                         if (AFPS.gameState.quizActive == false) {
@@ -780,7 +780,7 @@
                             //show new question
                             $("#quiz-question").fadeIn(300, function() {
 
-                                    $("#quiz-answer").delay(3000).fadeIn(300, function() {
+                                    $("#quiz-answer").delay(4000).fadeIn(300, function() {
 
                                         //fade out last question
                                         $("#quiz-question, #quiz-answer").delay(3000).fadeOut(300, function() {
