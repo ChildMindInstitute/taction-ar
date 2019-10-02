@@ -188,6 +188,11 @@
 	        scene.addEventListener('realityready', () => {
             console.log("initial-events component -->  realityready");
 	        	//stuff
+
+	        	//turn off quiz jquery
+	        	AFPS.gameState.quizActive = false;
+
+	        	//start playing key sound effect
 	        	thefear.components.sound.playSound();
 
 	        	//set init position
@@ -356,7 +361,7 @@
 
             //update in game text messages
             document.getElementById("game-message").innerHTML = "<h2>SILLY FEAR!</h2>";
-            document.getElementById("score-message").innerHTML = "<h2>SCORE: " + AFPS.gamestate.score "</h2>";
+            document.getElementById("score-message").innerHTML = "<h2>SCORE: " + AFPS.gameState.score + "</h2>";
 
 
             //stop explosion graphics and hide everything after a few seconds

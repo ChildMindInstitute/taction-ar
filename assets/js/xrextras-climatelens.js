@@ -777,7 +777,7 @@
                             //show new question
                             $("#quiz-question").fadeIn(300, function() {
 
-                                    $("#quiz-answer").delay(3000).fadeIn(300, function() {
+                                    $("#quiz-answer").delay(2500).fadeIn(300, function() {
 
                                         //fade out last question
                                         $("#quiz-question, #quiz-answer").delay(3000).fadeOut(300, function() {
