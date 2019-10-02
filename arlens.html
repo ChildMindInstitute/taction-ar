@@ -205,15 +205,15 @@
 	            pos.y = 0;
 	            thefear.setAttribute('position', pos);
 
-              console.log("initial-events set pos:"); console.log(pos);
+              	console.log("initial-events set pos:"); console.log(pos);
 
 	            //set init animation
-              let posAnimate = pos;
-              posAnimate.x = pos.x + 3;
-              posAnimate.z = pos.z + 3;
-	            newElement.setAttribute('animation', {
+              //	let posAnimate = pos;
+              //	posAnimate.x = pos.x + 3;
+              //	posAnimate.z = pos.z + 3;
+	            thefear.setAttribute('animation', {
 	                property: 'position',
-	                to: posAnimate,
+	                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
 	                easing: 'easeOutElastic',
 	                dur: 800,
 	            })
@@ -283,7 +283,7 @@
       tick: function() {
         //ticker stuff
         /**************** MEASURE PROXIMITY OF PLAYER TO FEAR ENTITY SO WE CAN DETERMINE IF THEY ARE IN RANGE **************/
-        if( AFPS.gameState.fearisActive == true ){
+        if( AFPS.gameState.fearIsActive == true ){
 
             let fearEntity = document.getElementById('fear-entity');
             let camera = document.getElementById('camera');
@@ -320,7 +320,7 @@
 	    handleEvent: function(event) {
 
         //only make small if user approaches fear entity + game is active
-        if(AFPS.gameState.fearInRange == true && AFPS.gamestate.fearisactive == true){
+        if(AFPS.gameState.fearInRange == true && AFPS.gameState.fearIsactive == true){
           const fearEntity = document.getElementById('fear-entity');
           const explodeGraphic = document.getElementById('explode-graphic');
 
@@ -334,13 +334,13 @@
           /*********** HANDLE USER DESTRUCTION ON FEAR ENTITY BY SUFFICIENT PINCHING *************/
           if(this.scaleFactor < AFPS.gameState.scaleDestroyCuttOff){
 
-            AFPS.gamestate.fearisactive = false;
-            console.log("AFPS.gamestate.fearisactive = false;");
+            AFPS.gamestate.fearIsActive = false;
+            console.log("AFPS.gameState.fearIsActive = false;");
 
             //increase score and set fear entitity as not active
-            let newscore = AFPS.gamestate.score + 1;
-            console.log("new score: " + newscore);
-            AFPS.gamestate.score = newscore;
+            let newScore = AFPS.gameState.score + 1;
+            console.log("new score: " + newScore);
+            AFPS.gameState.score = newScore;
 
             //set explode graphic position to fear entity position
             let thePosition = fearEntity.getAttribute('position');
@@ -462,7 +462,7 @@
         class="cantap" 
         hold-drag 
         two-finger-spin 
-        pinch-scale></a-entity>
+        pinch-scale-destroy></a-entity>
 
         <a-entity 
         id="explode-graphic" 
