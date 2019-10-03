@@ -742,7 +742,7 @@
                     //APPEND LOAD SCREEN
                     console.log("append load screen in extras js");
 
-                    $("#bar-wrapper").append("<p>TESTING123</p>");
+                //    $("#bar-wrapper").append("<p>TESTING123</p>");
 
                 //    $("#bar-wrapper").fadeIn(500);
 

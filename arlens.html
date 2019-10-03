@@ -65,6 +65,7 @@
       }
       #game-message h2, #score-message h2{
         color: white;
+        text-align: center;
       }
       #game-message{
         top: 80%;
@@ -77,7 +78,7 @@
         display: block;
         position: relative;
         width: 84%;
-        left: 12%;
+        left: 8%;
         top: 50%;
       }
       #quiz-question{
@@ -89,6 +90,10 @@
         display: none;
         color: #54ab80;
         text-align: center;
+      }
+
+      #loadImage{
+        margin-left: -1.5em;
       }
 
         #bar-wrapper {
@@ -312,20 +317,28 @@
             let currentDistance = camPos.distanceTo(targetPos);
             let relativeDistance = currentDistance / initialDistance;
 
-            console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance );
+          //  console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance );
 
 
             if(relativeDistance > AFPS.gameState.distanceCutOff ){
+
               if(AFPS.gameState.dialogue != 'closer'){
                 document.getElementById("game-message").innerHTML = "<H2>GET CLOSER!</H2>";
               }
               AFPS.gameState.dialogue = 'closer';
+
+              //flag disable pinch fear entity
+              AFPS.gameState.fearInRange = false;
             } 
             else {
+
               if(AFPS.gameState.dialogue != 'pinch'){
-                document.getElementById("game-message").innerHTML = "<p>PINCH YOUR FEAR AWAY!</p>";
+                document.getElementById("game-message").innerHTML = "<H2>PINCH YOUR FEAR AWAY!</H2>";
               }
               AFPS.gameState.dialogue = 'pinch';
+
+              //flag can now pinch fear entity
+              AFPS.gameState.fearInRange = true;
             }
 
             //increase init distance value if current distance is greater ie init distance -> max distance
@@ -389,7 +402,7 @@
                 explodeGraphic.setAttribute('visible', false);
                 explodeGraphic.components.sound.stopSound();
 
-                document.getElementById("game-message").innerHTML = "<p>LOOK AROUND TO FACE MORE FEAR...</p>";
+                document.getElementById("game-message").innerHTML = "<H2>LOOK AROUND TO FACE MORE FEAR...</H2>";
 
                 //RESET FOR NEXT FEAR ENTITY
                 setTimeout(()=> {
