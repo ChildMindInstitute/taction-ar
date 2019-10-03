@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 
+  <!-- NOT: 10M MAX IS A GOOD SIZE FOR MODELS -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Taction AR App</title>
@@ -26,10 +28,11 @@
         initialDistance: 0,
         fearDistance: 0,      //distance of player/camera from fear entity
         distanceCutOff: 0.75,
+        scaleDestroyCuttOff: 0.5,
         dialogue: 'none',
         imageurls: ["", "", "", "", ""],
-        fearSoundUrl: "",
-        scaleDestroyCuttOff: 0.5
+        fearModelSRC: "",
+        fearSoundSRC: ""
       }
     };
     </script>
@@ -45,6 +48,7 @@
     <script src="./assets/js/pinch-scale.js"></script>
     <script src="./assets/js/two-finger-spin.js"></script>
     <script src="./assets/js/aframe-gif-component.min.js"></script>
+    <script src="./assets/js/aframe-look-at-component.min.js"></script>
     <!-- <script src="./assets/js/photomode.js"></script> -->
 
     <script src="//cdn.8thwall.com/web/aframe/aframe-extras-4.2.0.min.js"></script>
@@ -324,6 +328,7 @@
 
               if(AFPS.gameState.dialogue != 'closer'){
                 document.getElementById("game-message").innerHTML = "<H2>GET CLOSER!</H2>";
+                console.log("AFPS.gameState.fearInRange = false;");
               }
               AFPS.gameState.dialogue = 'closer';
 
@@ -334,6 +339,7 @@
 
               if(AFPS.gameState.dialogue != 'pinch'){
                 document.getElementById("game-message").innerHTML = "<H2>PINCH YOUR FEAR AWAY!</H2>";
+                console.log("AFPS.gameState.fearInRange = true;");
               }
               AFPS.gameState.dialogue = 'pinch';
 
@@ -352,10 +358,14 @@
 	    },
 	    handleEvent: function(event) {
 
+        console.log("raw pinch event");
+
         //only make small if user approaches fear entity + game is active
-        if(AFPS.gameState.fearInRange == true && AFPS.gameState.fearIsactive == true){
+        if(AFPS.gameState.fearInRange == true && AFPS.gameState.fearIsActive == true){
           const fearEntity = document.getElementById('fear-entity');
           const explodeGraphic = document.getElementById('explode-graphic');
+
+          console.log("pinching fear in pinch event");
 
   	      this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
   	      this.scaleFactor = Math.min(Math.max(this.scaleFactor, this.data.min), this.data.max)
@@ -367,8 +377,8 @@
           /*********** HANDLE USER DESTRUCTION ON FEAR ENTITY BY SUFFICIENT PINCHING *************/
           if(this.scaleFactor < AFPS.gameState.scaleDestroyCuttOff){
 
-            AFPS.gamestate.fearIsActive = false;
-            console.log("AFPS.gameState.fearIsActive = false;");
+            AFPS.gameState.fearIsActive = false;
+            console.log("fear entity destroyed - AFPS.gameState.fearIsActive = false;");
 
             //increase score and set fear entitity as not active
             let newScore = AFPS.gameState.score + 1;
@@ -417,7 +427,17 @@
                     var pos = camera.getAttribute("position");
                     pos.x -= y*15;
                     pos.z -= x*15;
+                    pos.y = 0;
                     this.el.setAttribute("position", pos);
+
+                    //set movement animation
+                    this.el.setAttribute('animation', {
+                        property: 'position',
+                        to:  {x: pos.x + 30, y: 0, z: pos.z + 30},
+                        easing: 'easeOutElastic',
+                        dur: 800,
+                    })
+
                     console.log("change position: ");
                     console.log(pos);
 
@@ -479,7 +499,7 @@
       	<a-assets id="assets">
       		<!--  <a-asset-item id="water-glb" src="./assets/models/water-rise-trans5.glb"></a-asset-item> --> 
         <!--	<a-asset-item id="dog-glb" src="./assets/models/low_poly_dog_model.glb"></a-asset-item> -->
-            <a-asset-item id="dog-glb" src="./assets/models/bee-big-model.glb"></a-asset-item>
+            <a-asset-item id="dog-glb" src="./assets/models/dog-beagle-model.glb"></a-asset-item> 
         	<audio id="fear-sound-1" src="./assets/audio/DogGrowling.mp3">
 
       	</a-assets>
@@ -493,6 +513,7 @@
         <a-entity 
         id="fear-entity" 
         class="cantap" 
+        scale="2 2 2" 
         hold-drag 
         two-finger-spin 
         pinch-scale-destroy></a-entity>
