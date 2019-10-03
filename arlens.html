@@ -25,6 +25,7 @@
         fearInRange: true,
         initialDistance: 0,
         fearDistance: 0,      //distance of player/camera from fear entity
+        distanceCutOff: 0.75,
         dialogue: 'none',
         imageurls: ["", "", "", "", ""],
         fearSoundUrl: "",
@@ -56,12 +57,28 @@
 
 <!-- temp dev styling -->
     <style>
+      #game-message, #score-message{
+        position: fixed;
+        display: block;
+        width: 100%;
+        z-index: 999;
+      }
+      #game-message h2, #score-message h2{
+        color: white;
+      }
+      #game-message{
+        top: 80%;
+      }
+      #score-message{
+        top: 92%;
+      }
+
       #quiz-container{
         display: block;
         position: relative;
-        width: 80%;
-        left: 10%;
-        top: 55%;
+        width: 84%;
+        left: 12%;
+        top: 50%;
       }
       #quiz-question{
         display: block;
@@ -293,11 +310,12 @@
             let targetPos = fearEntity.object3D.position;
             let initialDistance = AFPS.gameState.initialDistance;// Number(fearEntity.getAttribute("initdistance"));
             let currentDistance = camPos.distanceTo(targetPos);
+            let relativeDistance = currentDistance / initialDistance;
 
-            console.log("(currentdistance / initialdistance): " + currentdistance + " / " + initialdistance + " = " + (currentdistance / initialdistance) );
+            console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance );
 
 
-            if((currentDistance / initialDistance) > 0.85 ){
+            if(relativeDistance > AFPS.gameState.distanceCutOff ){
               if(AFPS.gameState.dialogue != 'closer'){
                 document.getElementById("game-message").innerHTML = "<H2>GET CLOSER!</H2>";
               }
