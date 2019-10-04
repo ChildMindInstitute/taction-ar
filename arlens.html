@@ -30,9 +30,11 @@
         distanceCutOff: 0.75,
         scaleDestroyCuttOff: 0.5,
         dialogue: 'none',
-        imageurls: ["", "", "", "", ""],
-        fearModelSRC: "",
-        fearSoundSRC: ""
+        fearImageSRC: ["", "", "", "", ""],
+        fearModelSRC: ["./assets/models/dog-beagle-model.glb", "./assets/models/dog-terrier-model.glb", "./assets/models/wolf-running-model.glb"],
+        fearSoundSRC: ["./assets/audio/DogGrowling.mp3", "./assets/audio/DogGrowling.mp3"],
+        exploadImageSRC: ["./assets/gif/explode.gif", "./assets/gif/explode.gif"],
+        exploadSoundSRC: ["./assets/audio/explosion_backdraft.mp3", "./assets/audio/explosion_backdraft.mp3"]
       }
     };
     </script>
@@ -210,6 +212,25 @@
         	const assets = document.getElementById('assets');
         	const expload = document.getElementById('explode-graphic');
 
+        	//IMMEDIATE ACTIONS
+
+        	//do stuff after model is loaded
+            thefear.addEventListener('model-loaded', () => {
+            	thefear.setAttribute('visible', 'true');
+            })
+
+            //set init sound
+            thefear.setAttribute('sound', 'src', '#fear-sound-1');
+            thefear.setAttribute('sound', 'autoplay', 'false');
+            thefear.setAttribute('sound', 'loop', 'true');
+
+            //set init model specs
+            thefear.setAttribute('visible', 'false');
+            thefear.setAttribute('scale', '0.5 0.5 0.5');
+            thefear.setAttribute('gltf-model', '#fear-model-1');
+            thefear.setAttribute('animation-mixer', 'loop', 'repeat');
+
+            //AFTER AUGMENTED REALITY CAMERA FEED ACTIVE
         	//do stuff when device camera feed becomes visible (don't want asset loading to slow startup)
 	        scene.addEventListener('realityready', () => {
             console.log("initial-events component -->  realityready");
@@ -268,26 +289,40 @@
                 AFPS.gameState.fearIsActive = true;
                 console.log("AFPS.gameState.fearIsActive = true;");
               }, 500);
+
+              //DELAYED GENERATION AND LOADING OF FUTURE ASSETS
+              //enable game mode once everything is ready
+              setTimeout(function(){ 
+              	const fearModel2Element = document.createElement('a-asset-item');
+              	fearModel2Element.setAttribute('id', 'fear-model-2');
+              	fearModel2Element.setAttribute('src', AFPS.gameState.fearModelSRC[1]);
+              	assets.appendChild(fearModel2Element);
+
+              	const fearSound2Element = document.createElement('audio');
+              	fearSound2Element.setAttribute('id', 'fear-sound-2');
+              	fearSound2Element.setAttribute('src', AFPS.gameState.fearSoundSRC[1]);
+              	assets.appendChild(fearSound2Element);
+                
+                console.log("Level 2 assets appended to loader");
+
+                setTimeout(function(){ 
+                	const fearModel3Element = document.createElement('a-asset-item');
+	              	fearModel3Element.setAttribute('id', 'fear-model-3');
+	              	fearModel3Element.setAttribute('src', AFPS.gameState.fearModelSRC[2]);
+	              	assets.appendChild(fearModel3Element);
+
+	              	const fearSound3Element = document.createElement('audio');
+	              	fearSound3Element.setAttribute('id', 'fear-sound-3');
+	              	fearSound3Element.setAttribute('src', AFPS.gameState.fearSoundSRC[2]);
+	              	assets.appendChild(fearSound3Element);
+	                
+	                console.log("Level 3 assets appended to loader");
+                }, 3000);
+              }, 1500);
               
 
 	        })
 
-	        //do stuff after model is loaded
-            thefear.addEventListener('model-loaded', () => {
-            	thefear.setAttribute('visible', 'true');
-            })
-
-
-            //set init sound
-            thefear.setAttribute('sound', 'src', '#fear-sound-1');
-            thefear.setAttribute('sound', 'autoplay', 'false');
-            thefear.setAttribute('sound', 'loop', 'true');
-
-            //set init model specs
-            thefear.setAttribute('visible', 'false');
-            thefear.setAttribute('scale', '0.5 0.5 0.5');
-            thefear.setAttribute('gltf-model', '#dog-glb');
-            thefear.setAttribute('animation-mixer', 'loop', 'repeat');
         }
       })
 
@@ -414,6 +449,46 @@
 
                 document.getElementById("game-message").innerHTML = "<H2>LOOK AROUND TO FACE MORE FEAR...</H2>";
 
+                switch (newScore - 1)
+			    {
+			        case 0:
+			            thefear.setAttribute('material', 'src', '#feargraphic1');
+			            document.getElementById('feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]); //load next image into asset element
+			            break;
+			        case 1:
+			            thefear.setAttribute('material', 'src', '#feargraphic2');
+			            document.getElementById('feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]); //load next image into asset element
+			            break;
+			        case 2:
+			            thefear.setAttribute('material', 'src', '#feargraphic3');
+			            document.getElementById('feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]); //load next image into asset element
+			            break;
+			        case 3:
+			            thefear.setAttribute('material', 'src', '#feargraphic4');
+			            document.getElementById('feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]); //load next image into asset element
+			            break;
+			        case 4:
+			            thefear.setAttribute('material', 'src', '#feargraphic5');
+			            break;
+			        case 5:
+			            thefear.setAttribute('material', 'src', '#feargraphic1');
+			            break;
+			        case 6:
+			            thefear.setAttribute('material', 'src', '#feargraphic2');
+			            break;
+			        case 7:
+			            thefear.setAttribute('material', 'src', '#feargraphic3');
+			            break;
+			        case 8:
+			            thefear.setAttribute('material', 'src', '#feargraphic4');
+			            break;
+			        case 9:
+			            thefear.setAttribute('material', 'src', '#feargraphic5');
+			            break;
+			        default:
+			            thefear.setAttribute('material', 'src', '#feargraphic2');
+			        }
+
                 //RESET FOR NEXT FEAR ENTITY
                 setTimeout(()=> {
                     fearEntity.components.sound.playSound();
@@ -498,8 +573,8 @@
     
       	<a-assets id="assets">
       		<!--  <a-asset-item id="water-glb" src="./assets/models/water-rise-trans5.glb"></a-asset-item> --> 
-        <!--	<a-asset-item id="dog-glb" src="./assets/models/low_poly_dog_model.glb"></a-asset-item> -->
-            <a-asset-item id="dog-glb" src="./assets/models/dog-beagle-model.glb"></a-asset-item> 
+        <!--	<a-asset-item id="fear-model-1" src="./assets/models/low_poly_dog_model.glb"></a-asset-item> -->
+            <a-asset-item id="fear-model-1" src="./assets/models/dog-beagle-model.glb"></a-asset-item> 
         	<audio id="fear-sound-1" src="./assets/audio/DogGrowling.mp3">
 
       	</a-assets>
