@@ -32,8 +32,8 @@
         dialogue: 'none',
         fearImageSRC: ["", "", "", "", ""],
         fearModelSRC: ["./assets/models/dog-beagle-model.glb", "./assets/models/dog-terrier-model.glb", "./assets/models/wolf-running-model.glb"],
-        fearSoundSRC: ["./assets/audio/DogGrowling.mp3", "./assets/audio/DogGrowling.mp3"],
-        exploadImageSRC: ["./assets/gif/explode.gif", "./assets/gif/explode.gif"],
+        fearSoundSRC: ["./assets/audio/DogGrowling.mp3", "./assets/audio/DogGrowling.mp3", "./assets/audio/DogGrowling.mp3"],
+        exploadImageSRC: ["./assets/gif/explode1.gif", "./assets/gif/explode2.gif", "./assets/gif/explode3.gif", "./assets/gif/explode4.gif", "./assets/gif/explode5.gif", "./assets/gif/explode6.gif", "./assets/gif/explode7.gif"],
         exploadSoundSRC: ["./assets/audio/explosion_backdraft.mp3", "./assets/audio/explosion_backdraft.mp3"]
       }
     };
@@ -202,7 +202,9 @@
 	        }
 	      })
 
-
+	/*************************************************************
+	***************** PRIMARY LOAD COMPONENT *********************
+	*************************************************************/
       AFRAME.registerComponent('initial-events', {
         init: function() {
 
@@ -268,12 +270,12 @@
 	            //load future assets after reality loads
 	            const exploadAudioElement = document.createElement('audio');
 	            exploadAudioElement.setAttribute('id', 'expload-sound');
-	            exploadAudioElement.setAttribute('src', './assets/audio/explosion_backdraft.mp3');
+	            exploadAudioElement.setAttribute('src', AFPS.gameState.exploadSoundSRC[0]);
 	            assets.appendChild(exploadAudioElement);
 
 	            const exploadGraphicElement = document.createElement('img');
 	            exploadGraphicElement.setAttribute('id', 'expload-gif');
-	            exploadGraphicElement.setAttribute('src', './assets/gif/explode.gif'); 
+	            exploadGraphicElement.setAttribute('src', AFPS.gameState.exploadImageSRC[0]); 
 	            assets.appendChild(exploadGraphicElement);
 
 	            //add sound & image to expload element
@@ -326,7 +328,9 @@
         }
       })
 
-
+	/*************************************************************
+	***************** PRIMARY GAME COMPONENT *********************
+	*************************************************************/
       AFRAME.registerComponent('pinch-scale-destroy', {
 	    schema: {
 	      min: {default: 0.3},
@@ -449,44 +453,44 @@
 
                 document.getElementById("game-message").innerHTML = "<H2>LOOK AROUND TO FACE MORE FEAR...</H2>";
 
+                //SWITCH AUDIO AND VISUAL FOR LEVEL CHANGE
                 switch (newScore - 1)
 			    {
 			        case 0:
-			            thefear.setAttribute('material', 'src', '#feargraphic1');
-			            document.getElementById('feargraphic2').setAttribute('src', AFPS.gamestate.imageurls[1]); //load next image into asset element
+			            fearEntity.setAttribute('sound', 'src', AFPS.gamestate.fearSoundSRC[1]);
+            			fearEntity.setAttribute('gltf-model', AFPS.gamestate.fearModelSRC[1]);
 			            break;
 			        case 1:
-			            thefear.setAttribute('material', 'src', '#feargraphic2');
-			            document.getElementById('feargraphic3').setAttribute('src', AFPS.gamestate.imageurls[2]); //load next image into asset element
+			            fearEntity.setAttribute('sound', 'src', AFPS.gamestate.fearSoundSRC[2]);
+            			fearEntity.setAttribute('gltf-model', AFPS.gamestate.fearModelSRC[2]);
 			            break;
 			        case 2:
-			            thefear.setAttribute('material', 'src', '#feargraphic3');
-			            document.getElementById('feargraphic4').setAttribute('src', AFPS.gamestate.imageurls[3]); //load next image into asset element
+			            //something here
 			            break;
 			        case 3:
-			            thefear.setAttribute('material', 'src', '#feargraphic4');
-			            document.getElementById('feargraphic5').setAttribute('src', AFPS.gamestate.imageurls[4]); //load next image into asset element
+			            //something here
 			            break;
 			        case 4:
-			            thefear.setAttribute('material', 'src', '#feargraphic5');
+			            //something here
 			            break;
 			        case 5:
-			            thefear.setAttribute('material', 'src', '#feargraphic1');
+			            //something here
 			            break;
 			        case 6:
-			            thefear.setAttribute('material', 'src', '#feargraphic2');
+			            //something here
 			            break;
 			        case 7:
-			            thefear.setAttribute('material', 'src', '#feargraphic3');
+			            //something here
 			            break;
 			        case 8:
-			            thefear.setAttribute('material', 'src', '#feargraphic4');
+			            //something here
 			            break;
 			        case 9:
-			            thefear.setAttribute('material', 'src', '#feargraphic5');
+			            //something here
 			            break;
 			        default:
-			            thefear.setAttribute('material', 'src', '#feargraphic2');
+			        	fearEntity.setAttribute('sound', 'src', AFPS.gamestate.fearSoundSRC[1]);
+            			fearEntity.setAttribute('gltf-model', AFPS.gamestate.fearModelSRC[1]);
 			        }
 
                 //RESET FOR NEXT FEAR ENTITY
