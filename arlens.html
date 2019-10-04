@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 
-  <!-- NOT: 10M MAX IS A GOOD SIZE FOR MODELS -->
+  <!-- NOT: 10M MAX IS A GOOD SIZE FOR MODELS - too small!! -->
+  <!-- dog-terrier-model resized to max 25meters -->
+  <!-- wolf-running-model resized to max 20meters -->
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -32,7 +34,7 @@
         dialogue: 'none',
         fearImageSRC: ["", "", "", "", ""],
         fearModelSRC: ["./assets/models/dog-beagle-model.glb", "./assets/models/dog-terrier-model.glb", "./assets/models/wolf-running-model.glb"],
-        fearSoundSRC: ["./assets/audio/DogGrowling.mp3", "./assets/audio/DogGrowling.mp3", "./assets/audio/DogGrowling.mp3"],
+        fearSoundSRC: ["./assets/audio/dog-small-sound.mp3", "./assets/audio/dog-growling-sound.mp3", "./assets/audio/dog-evil-sound.mp3"],
         explodeImageSRC: ["./assets/gif/explode1.gif", "./assets/gif/explode2.gif", "./assets/gif/explode3.gif", "./assets/gif/explode4.gif", "./assets/gif/explode5.gif", "./assets/gif/explode6.gif", "./assets/gif/explode7.gif"],
         explodeSoundSRC: ["./assets/audio/explosion_backdraft.mp3", "./assets/audio/explosion_backdraft.mp3", "./assets/audio/explosion_backdraft.mp3"]
       }
@@ -229,7 +231,7 @@
 
             //set init model specs
             theFear.setAttribute('visible', 'false');
-            theFear.setAttribute('scale', '0.5 0.5 0.5');
+            theFear.setAttribute('scale', '1.5 1.5 1.5');
             theFear.setAttribute('gltf-model', '#fear-model-1');
             theFear.setAttribute('animation-mixer', 'loop', 'repeat');
 
@@ -263,9 +265,13 @@
               //	posAnimate.z = pos.z + 3;
 	            theFear.setAttribute('animation', {
 	                property: 'position',
+	                from: {x: pos.x, y: 0, z: pos.z},
 	                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
 	                easing: 'easeOutElastic',
-	                dur: 800,
+	                loop: 'true',
+	                dur: 2000,
+	                dir: 'alternate',
+	                enabled: 'true'
 	            })
 //<img id="explode-img" src="graphics/explode.gif">
 	            //load future assets after reality loads
@@ -508,6 +514,8 @@
 			            //something here
 			            break;
 			        case 5:
+			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-1');
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
 			            //something here
 			            break;
@@ -528,8 +536,8 @@
 			            //something here
 			            break;
 			        default:
-			        	fearEntity.setAttribute('sound', 'src', AFPS.gameState.fearSoundSRC[1]);
-            			fearEntity.setAttribute('gltf-model', AFPS.gameState.fearModelSRC[1]);
+			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-1');
 			        }
 
                 //RESET FOR NEXT FEAR ENTITY
@@ -551,9 +559,11 @@
                     //set movement animation
                     this.el.setAttribute('animation', {
                         property: 'position',
-                        to:  {x: pos.x + 30, y: 0, z: pos.z + 30},
+                        from: {x: pos.x, y: 0, z: pos.z},
+                        to:  {x: pos.x + 5, y: 0, z: pos.z + 5},
                         easing: 'easeOutElastic',
-                        dur: 800,
+                        dur: 1500,
+                        loop: 'true'
                     })
 
                     console.log("change position: ");
@@ -562,26 +572,6 @@
                     //reset scale
                     this.scaleFactor = 1;
 
-                    //do stuff after model is loaded
-		            fearEntity.addEventListener('model-loaded', () => {
-		            	//make fear entity visible again
-	                    fearEntity.setAttribute('visible', true);
-
-	                    //get new initial distance of camera/player from fear entity
-	                    //need to wait for position to update
-	                    setTimeout(()=> {
-	                        let camPos = camera.object3D.position;
-	                        let targetPos = fearEntity.object3D.position;
-	                        AFPS.gameState.initialDistance = camPos.distanceTo(targetPos);
-
-	                        console.log("recaclulated initial distance:" + AFPS.gameState.initialDistance);
-
-	                        //allow user interaction with fear entity
-	                        AFPS.gameState.fearIsActive = true;
-	                    }, 500);
-		            })
-
-/*
                     //make fear entity visible again
                     fearEntity.setAttribute('visible', true);
 
@@ -597,9 +587,8 @@
                         //allow user interaction with fear entity
                         AFPS.gameState.fearIsActive = true;
                     }, 500);
- */
 
-                }, 5000);
+                }, 6000);
 
             }, 3000);
 
@@ -639,7 +628,7 @@
       		<!--  <a-asset-item id="water-glb" src="./assets/models/water-rise-trans5.glb"></a-asset-item> --> 
         <!--	<a-asset-item id="fear-model-1" src="./assets/models/low_poly_dog_model.glb"></a-asset-item> -->
             <a-asset-item id="fear-model-1" src="./assets/models/dog-beagle-model.glb"></a-asset-item> 
-        	<audio id="fear-sound-1" src="./assets/audio/DogGrowling.mp3">
+        	<audio id="fear-sound-1" src="./assets/audio/dog-small-sound.mp3">
 
       	</a-assets>
 
