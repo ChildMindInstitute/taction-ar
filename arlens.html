@@ -232,6 +232,7 @@
             //set init model specs
             theFear.setAttribute('visible', 'false');
             theFear.setAttribute('scale', '1.5 1.5 1.5');
+            theFear.setAttribute('rotation', '320 0 0'); //without rotation model looks like its above you
             theFear.setAttribute('gltf-model', '#fear-model-1');
             theFear.setAttribute('animation-mixer', 'loop', 'repeat');
 
@@ -260,20 +261,18 @@
               	console.log("initial-events set pos:"); console.log(pos);
 
 	            //set init animation
-              //	let posAnimate = pos;
-              //	posAnimate.x = pos.x + 3;
-              //	posAnimate.z = pos.z + 3;
-	            theFear.setAttribute('animation', {
+	    /*        theFear.setAttribute('animation', {
 	                property: 'position',
 	                from: {x: pos.x, y: 0, z: pos.z},
 	                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
-	                easing: 'easeOutElastic',
+	                easing: 'easeInOutQuad',
+	                elasticity: 0,
 	                loop: 'true',
 	                dur: 2000,
 	                dir: 'alternate',
-	                enabled: 'true'
-	            })
-//<img id="explode-img" src="graphics/explode.gif">
+	                enabled: 'true',
+	            });   */
+
 	            //load future assets after reality loads
 	            const explodeAudioElement = document.createElement('audio');
 	            explodeAudioElement.setAttribute('id', 'explode-sound');
@@ -489,6 +488,19 @@
 	            		explodeGraphicElement4.setAttribute('id', 'explode-gif4');
 	            		explodeGraphicElement4.setAttribute('src', AFPS.gameState.explodeImageSRC[3]); 
 	            		assets.appendChild(explodeGraphicElement4);
+
+	            		//add animation
+	            		fearEntity.setAttribute('animation', {
+			                property: 'position',
+			                from: {x: pos.x, y: 0, z: pos.z},
+			                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
+			                easing: 'easeInOutQuad',
+			                elasticity: 0,
+			                loop: 'true',
+			                dur: 2000,
+			                dir: 'alternate',
+			                enabled: 'true',
+			            });
 			            break;
 			        case 2:
 			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
@@ -557,14 +569,15 @@
                     this.el.setAttribute("position", pos);
 
                     //set movement animation
-                    this.el.setAttribute('animation', {
+                /*    this.el.setAttribute('animation', {
                         property: 'position',
                         from: {x: pos.x, y: 0, z: pos.z},
-                        to:  {x: pos.x + 5, y: 0, z: pos.z + 5},
-                        easing: 'easeOutElastic',
-                        dur: 1500,
-                        loop: 'true'
-                    })
+                        to:  {x: pos.x + 5, y: 0, z: pos.z + 1},
+                        easing: 'easeInOutQuad',
+                        elasticity: 400,
+                        dur: 1000,
+                        loop: 'true',
+                    }) */
 
                     console.log("change position: ");
                     console.log(pos);
