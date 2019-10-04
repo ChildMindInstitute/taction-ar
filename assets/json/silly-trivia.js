@@ -1,8 +1,4 @@
-const allQuestions = [{  
-	"question": "What do you call a lawyer who doesn't know the law?",
-    "correct": "A judge.",
-    "answers": ["False", "True"]
-}, {
+const allQuestions = [{
       "question": "What did the duck say when he bought lipstick?",
       "correct": "Put it on my bill.",
       "answers": ["False", "True"]
@@ -52,28 +48,13 @@ const allQuestions = [{
       "answers": ["False", "True"]
    },
    {  
-      "question": "Why is England the wettest country?",
-      "correct": "Because so many kings and queens have been reigning there.",
-      "answers": ["False", "True"]
-   },
-   {  
       "question": "What’s the best thing about Switzerland?",
       "correct": "I don't know, but the flag is a big plus.",
       "answers": ["False", "True"]
    },
    {  
-      "question": "Why wasn't Jesus born in Australia?",
-      "correct": "God couldn't find three wise men and a virgin.",
-      "answers": ["False", "True"]
-   },
-   {  
       "question": "Why are there no knock knock jokes about America?",
       "correct": "Because freedom rings!",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "What's the difference between America and yogurt?",
-      "correct": "If you leave yogurt alone for 200 years, it develops a culture.",
       "answers": ["False", "True"]
    },
    {  
@@ -94,11 +75,6 @@ const allQuestions = [{
    {  
       "question": "If a plane crashed on the Canada/USA border, where would the survivors be buried?",
       "correct": "You don't bury survivors.",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "Why is North Korea not as fun as South Korea?",
-      "correct": "Because it has no Seoul.",
       "answers": ["False", "True"]
    },
    {  
@@ -124,11 +100,6 @@ const allQuestions = [{
    {  
       "question": "Why can't you trust an atom?",
       "correct": "Because they make up everything.",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "Why are atoms Catholic?",
-      "correct": "Because they have mass.",
       "answers": ["False", "True"]
    },
    {  
@@ -167,33 +138,8 @@ const allQuestions = [{
       "answers": ["False", "True"]
    },
    {  
-      "question": "What's black and brown and looks good on a lawyer?",
-      "correct": "A Doberman pinscher.",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "Why'd the lawyer go to Heaven?",
-      "correct": "Hell was full.",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "What do you call a lawyer who has gone bad?",
-      "correct": "Senator.",
-      "answers": ["False", "True"]
-   },
-   {  
       "question": "Why'd the robber take a bath?",
       "correct": "He wanted to make a clean getaway.",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "What happened when the soldier went into an enemy bar?",
-      "correct": "He got bombed.",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "How many lawyers does it take to plaster a wall?",
-      "correct": "It depends how hard you throw them.",
       "answers": ["False", "True"]
    },
    {  
@@ -219,11 +165,6 @@ const allQuestions = [{
    {  
       "question": "What do you call a woman that sets her bills on fire?",
       "correct": "Bernadette",
-      "answers": ["False", "True"]
-   },
-   {  
-      "question": "What's red and bad for your teeth?",
-      "correct": "A brick.",
       "answers": ["False", "True"]
    },
    {  
@@ -273,7 +214,7 @@ const allQuestions = [{
    },
    {  
       "question": "Why did the tofu cross the road?",
-      "correct": "To prove he wasn't chicken.",
+      "correct": "To prove it wasn't chicken.",
       "answers": ["False", "True"]
    },
    {  
@@ -941,6 +882,102 @@ const allQuestions = [{
       "correct": "Because the bed won't come to them.",
       "answers": ["False", "True"]
    },
+
+
+
+{
+  "question": "If there are three pineapples and you take two, how many will you have?",
+  "correct": "2",
+  "answers": ["2", "1", "0", "3"]
+}, {
+  "question": "A mother has 6 daughters and each of them has a brother. How many children are there?",
+  "correct": "7",
+  "answers": ["6", "7", "12", "10"]
+}, {
+  "question": "Charlie asked Margaret how old she was and she answered him: In two years I will be twice as old as I was five years ago. How old is she?",
+  "correct": "12",
+  "answers": ["12", "6", "7", "24"]
+}, {
+  "question": "The stubs obtained by burning ten candles will yield one extra candle if you melt them all together. If you burned 100 candles, how many extra candles could you make?",
+  "correct": "11",
+  "answers": ["11", "8", "9", "10"]
+}, {
+  "question": "A fish costs a dollar and half a fish. How much do 5 fish cost?",
+  "correct": "$10",
+  "answers": ["$20", "$10", "$15", "$5"]
+}, {
+  "question": "There are 15 birds sitting on the branches of a tree. A hunter goes by and shoots 3 of them. How many birds are left on the tree?",
+  "correct": "0",
+  "answers": ["12", "10", "3", "0"]
+}, {
+  "question": "What number multiplied by 10 equals the square of the same number, times 5?",
+  "correct": "2",
+  "answers": ["4", "5", "2", "10"]
+}, {
+  "question": "Five years ago the sum of the age of a sister and a brother was 8. What will be the same sum in 5 years?",
+  "correct": "28",
+  "answers": ["It will not change.", "18", "13", "28"]
+}, {
+  "question": "If I had $654,987, how much change is that?",
+  "correct": "65,498,700 cents",
+  "answers": ["66,345,200 cents", "65,783,500 cents", "65,498,700 cents", "65,577,200 cents"]
+}, {
+  "question": "A monster had double the amount of eyes he had ears, triple the amount of ears he had legs, and had six legs. How many eyes did he have?",
+  "correct": "36",
+  "answers": ["34", "26", "36", "41"]
+}, {
+  "question": "There is a branch with 10 birds on it. I shot 2 of them and then 1 more. How many birds are left on the branch?",
+  "correct": "0",
+  "answers": ["0", "2", "8", "7"]
+}, {
+  "question": "If you have in your suitcase 6 white socks, 4 red socks, 8 green socks, and 2 brown socks, how many socks would you have to pull out (without looking at them) to be sure you have a matching pair?",
+  "correct": "5",
+  "answers": ["6", "8", "4", "5"]
+}, {
+  "question": "Joe had 29 pairs of socks. How many socks did he have?",
+  "correct": "58",
+  "answers": ["60", "58", "56", "29"]
+}, {
+  "question": "One camera could take 350 pictures and Bob bought 3 cameras of the same type. How many pictures could he take?",
+  "correct": "1050",
+  "answers": ["700", "none", "1050", "350"]
+}, {
+  "question": "One iPod can hold 950 songs and 3 movies. How many iPods of this model would one person have to buy to have 27 movies and 8550 songs?",
+  "correct": "9",
+  "answers": ["8", "10", "7", "9"]
+}, {
+  "question": "In an office building, there are 350 windows and half as many doors. How many doors are there in 3 office buildings?",
+  "correct": "525",
+  "answers": ["525", "500", "550", "575"]
+}, {
+  "question": "The vegetable rhubarb is delicious but its leaves are poisonous. What did rhubarb originally mean?",
+  "correct": "root of the barbarian",
+  "answers": ["edible poison", "beware", "root of the barbarian", "poisoned ruby"]
+}, {
+  "question": "What modern slang term once meant a carnival worker who performed disgusting tasks such as biting off the heads of live chickens?",
+  "correct": "Geek",
+  "answers": ["Nerd", "Geek", "Dork", "Freak"]
+}, {
+  "question": "What is heavier a pound of bricks or a pound of feathers?",
+  "correct": "Their weight is equal",
+  "answers": ["There is no way to tell", "The feathers", "Their weight is equal", "The bricks"]
+}, {
+  "question": "Which is the month that allows women to talk the least?",
+  "correct": "February",
+  "answers": ["February", "December", "August", "March"]
+}, {
+  "question": "What creature is responsible for the most human deaths?",
+  "correct": "The mosquito",
+  "answers": ["The brown recluse spider", "The hippo", "The great white shark", "The mosquito"]
+}, {
+  "question": "Take two apples from three apples and what do you have?",
+  "correct": "two apples",
+  "answers": ["no apples", "two apples", "three apples", "one apple"]
+}, {
+  "question": "12 candles were alight. The wind blew out 5 of them. How many candles were left?",
+  "correct": "12",
+  "answers": ["0", "7", "12", "5"]
+},
 
 
 {

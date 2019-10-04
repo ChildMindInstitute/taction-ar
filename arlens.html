@@ -274,10 +274,10 @@
 	            explodeAudioElement.setAttribute('src', AFPS.gameState.explodeSoundSRC[0]);
 	            assets.appendChild(explodeAudioElement);
 
-	            const explodeGraphicElement = document.createElement('img');
-	            explodeGraphicElement.setAttribute('id', 'explode-gif1');
-	            explodeGraphicElement.setAttribute('src', AFPS.gameState.explodeImageSRC[0]); 
-	            assets.appendChild(explodeGraphicElement);
+	            const explodeGraphicElement1 = document.createElement('img');
+	            explodeGraphicElement1.setAttribute('id', 'explode-gif1');
+	            explodeGraphicElement1.setAttribute('src', AFPS.gameState.explodeImageSRC[0]); 
+	            assets.appendChild(explodeGraphicElement1);
 
 	            //add sound & image to explode element
 	            explode.setAttribute('sound', 'src', '#explode-sound');
@@ -305,6 +305,11 @@
               	fearSound2Element.setAttribute('id', 'fear-sound-2');
               	fearSound2Element.setAttribute('src', AFPS.gameState.fearSoundSRC[1]);
               	assets.appendChild(fearSound2Element);
+
+	            const explodeGraphicElement2 = document.createElement('img');
+	            explodeGraphicElement2.setAttribute('id', 'explode-gif2');
+	            explodeGraphicElement2.setAttribute('src', AFPS.gameState.explodeImageSRC[1]); 
+	            assets.appendChild(explodeGraphicElement2);
                 
                 console.log("Level 2 assets appended to loader");
 
@@ -320,7 +325,7 @@
 	              	assets.appendChild(fearSound3Element);
 	                
 	                console.log("Level 3 assets appended to loader");
-                }, 3000);
+                }, 6000);
               }, 1500);
               
 
@@ -460,49 +465,66 @@
 			        case 0:
 			            fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
             			fearEntity.setAttribute('gltf-model', '#fear-model-2');
-            			explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[1]);
+            			explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
+
+            			//load additional assets between levels
+            			const explodeGraphicElement3 = document.createElement('img');
+	            		explodeGraphicElement3.setAttribute('id', 'explode-gif3');
+	            		explodeGraphicElement3.setAttribute('src', AFPS.gameState.explodeImageSRC[2]); 
+	            		assets.appendChild(explodeGraphicElement3);
 			            break;
 			        case 1:
 			            fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
             			fearEntity.setAttribute('gltf-model', '#fear-model-3');
-            			explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[2]);
+            			explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
+
+            			//load additional assets between levels
+            			const explodeGraphicElement4 = document.createElement('img');
+	            		explodeGraphicElement4.setAttribute('id', 'explode-gif4');
+	            		explodeGraphicElement4.setAttribute('src', AFPS.gameState.explodeImageSRC[3]); 
+	            		assets.appendChild(explodeGraphicElement4);
 			            break;
 			        case 2:
 			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
             			fearEntity.setAttribute('gltf-model', '#fear-model-1');
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[3]);
-			            //something here
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
+
+			        	//load additional assets between levels
+			            const explodeGraphicElement5 = document.createElement('img');
+	            		explodeGraphicElement5.setAttribute('id', 'explode-gif5');
+	            		explodeGraphicElement5.setAttribute('src', AFPS.gameState.explodeImageSRC[4]); 
+	            		assets.appendChild(explodeGraphicElement5);
 			            break;
 			        case 3:
 			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
             			fearEntity.setAttribute('gltf-model', '#fear-model-2');
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[4]);
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
 			            //something here
 			            break;
 			        case 4:
 			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
             			fearEntity.setAttribute('gltf-model', '#fear-model-3');
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[5]);
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
 			            //something here
 			            break;
 			        case 5:
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[6]);
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
 			            //something here
 			            break;
 			        case 6:
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[7]);
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
 			            //something here
 			            break;
 			        case 7:
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[1]);
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
 			            //something here
 			            break;
 			        case 8:
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[2]);
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
 			            //something here
 			            break;
 			        case 9:
-			        	explodeGraphic.setAttribute('material', 'src', AFPS.gameState.explodeImageSRC[3]);
+			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
 			            //something here
 			            break;
 			        default:
@@ -540,6 +562,26 @@
                     //reset scale
                     this.scaleFactor = 1;
 
+                    //do stuff after model is loaded
+		            fearEntity.addEventListener('model-loaded', () => {
+		            	//make fear entity visible again
+	                    fearEntity.setAttribute('visible', true);
+
+	                    //get new initial distance of camera/player from fear entity
+	                    //need to wait for position to update
+	                    setTimeout(()=> {
+	                        let camPos = camera.object3D.position;
+	                        let targetPos = fearEntity.object3D.position;
+	                        AFPS.gameState.initialDistance = camPos.distanceTo(targetPos);
+
+	                        console.log("recaclulated initial distance:" + AFPS.gameState.initialDistance);
+
+	                        //allow user interaction with fear entity
+	                        AFPS.gameState.fearIsActive = true;
+	                    }, 500);
+		            })
+
+/*
                     //make fear entity visible again
                     fearEntity.setAttribute('visible', true);
 
@@ -555,6 +597,7 @@
                         //allow user interaction with fear entity
                         AFPS.gameState.fearIsActive = true;
                     }, 500);
+ */
 
                 }, 5000);
 
@@ -610,6 +653,7 @@
         id="fear-entity" 
         class="cantap" 
         scale="2 2 2" 
+        look-at="#camera"
         hold-drag 
         two-finger-spin 
         pinch-scale-destroy></a-entity>
