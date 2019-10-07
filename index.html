@@ -13,6 +13,61 @@
     			display: block;
 				}
 			}
+
+			/* style for toggle switch */
+			#format-toggle-container{
+				width: 100%;
+			}
+			#format-toggle-container input {
+			    display: none;
+			}
+			#format-toggle-container p{
+				display: inline-block;
+			}
+			#format-toggle-container p.images{
+				color: #9ed7f4;
+			}
+			#format-toggle-container p.models{
+				color: #9ef4d7;
+			}
+			#format-toggle-container label {
+			    cursor: pointer;
+			    display: inline-block;
+			    border: 1px solid #9ef4d7;
+			    border-radius: 11px;
+			    background-color: #9ef4d7;
+			    width: 40px;
+			    height: 20px;
+			    padding: 0px;
+			    margin-bottom: -5px;
+			    margin-left: 5px;
+			    margin-right: 5px;
+			    position: relative;
+			    transition: all 0.2s;
+			}
+			#format-toggle-container label:after {
+			    content: '';
+			    background-color: #FFF;
+			    border: 1px solid #9ef4d7;
+			    border-radius: 10px;
+			    width: 18px;
+			    height: 18px;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    transition: all 0.2s;
+			}
+			#format-toggle-container label:before {
+				display:none;
+			}
+			#format-toggle-container input:checked + label {
+			    background-color: #9ed7f4;
+			    border-color: #9ed7f4;
+			}
+			#format-toggle-container input:checked + label:after {
+			    left: 20px;
+			    border-color: #9ed7f4;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -45,6 +100,11 @@
 
 										<li><a href="arlens8.html"><span class="icon"><img src="images/jellyfish.svg" alt="" style="width: 70px !important;"/><span class="label">Jellyfish</span></span></a></li>
 									</ul>
+
+									<div id="format-toggle-container">
+										<p class="models">models</p><input type="checkbox" id="switch" name="some-switch"><label for="switch"></label><p class="images">images</p>
+									</div>
+
 									<h2 class="major">The Game</h2>
 									<p>We overcome fear by confronting it – in a therapeutic setting this is sometimes called "exposure therapy". However, we can face our fears on our own terms and at our own pace. This app uses the camera on your mobile device to place images and sounds in the environment around you (Augmented Reality) - almost as if they were really there!</p>
 									<p>When you start the game you will see an image of whatever you fear. The app will promp you to move closer (you might have to walk or at least reach out with your phone) to your fear. When you are close enough, the app will prompt you to 'pinch' (using two fingers) the image on the screen.</p>
