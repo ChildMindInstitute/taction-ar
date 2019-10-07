@@ -205,6 +205,43 @@
 	        }
 	      })
 
+
+	      //component for making loaded models a uniform size
+	      AFRAME.registerComponent('resize', {
+		  schema: {
+		    axis: {
+		      type: 'string',
+		      default: 'x'
+		    },
+		    value: {
+		      type: 'number',
+		      default: 1
+		    }
+		  },
+		  init: function() {
+		    var el = this.el;
+		    var data = this.data;
+		    var model = el.object3D;
+		    el.addEventListener('model-loaded', function(e) {
+		      var box = new THREE.Box3().setFromObject( model );
+		      var size = box.getSize();
+		      var x = size.x;
+		      var y = size.y;
+		      var z = size.z;
+		      if(data.axis === 'x') {
+		        var scale = data.value / x;
+		      }
+		      else if(data.axis === 'y') {
+		        var scale = data.value / y;
+		      }
+		      else {
+		        var scale = data.value / z;
+		      }
+		      el.setAttribute('scale', scale + ' ' + scale + ' ' + scale);
+		    });
+		  }
+		});
+
 	/*************************************************************
 	***************** PRIMARY LOAD COMPONENT *********************
 	*************************************************************/
@@ -253,8 +290,8 @@
 	            var x = 1 * Math.cos(angle.y * Math.PI / 180);
 	            var y = 1 * Math.sin(angle.y * Math.PI / 180);
 	            var pos = camera.getAttribute('position');
-	            pos.x -= y*15;
-	            pos.z -= x*15;
+	            pos.x -= y*5;
+	            pos.z -= x*5;
 	            pos.y = 0;
 	            theFear.setAttribute('position', pos);
 
@@ -371,30 +408,31 @@
             let currentDistance = camPos.distanceTo(targetPos);
             let relativeDistance = currentDistance / initialDistance;
 
-          //  console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance );
+            //log every now and then, don't swamp console
+          	if((Math.random() * 10) < 2){  console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance ); }
 
 
             if(relativeDistance > AFPS.gameState.distanceCutOff ){
 
-              if(AFPS.gameState.dialogue != 'closer'){
-                document.getElementById("game-message").innerHTML = "<H2>GET CLOSER!</H2>";
-                console.log("AFPS.gameState.fearInRange = false;");
-              }
-              AFPS.gameState.dialogue = 'closer';
+	              if(AFPS.gameState.dialogue != 'closer'){
+	                document.getElementById("game-message").innerHTML = "<H2>GET CLOSER!</H2>";
+	                console.log("AFPS.gameState.fearInRange = false;");
+	              }
+	              AFPS.gameState.dialogue = 'closer';
 
-              //flag disable pinch fear entity
-              AFPS.gameState.fearInRange = false;
+	              //flag disable pinch fear entity
+	              AFPS.gameState.fearInRange = false;
             } 
             else {
 
-              if(AFPS.gameState.dialogue != 'pinch'){
-                document.getElementById("game-message").innerHTML = "<H2>PINCH YOUR FEAR AWAY!</H2>";
-                console.log("AFPS.gameState.fearInRange = true;");
-              }
-              AFPS.gameState.dialogue = 'pinch';
+	              if(AFPS.gameState.dialogue != 'pinch'){
+	                document.getElementById("game-message").innerHTML = "<H2>PINCH YOUR FEAR AWAY!</H2>";
+	                console.log("AFPS.gameState.fearInRange = true;");
+	              }
+	              AFPS.gameState.dialogue = 'pinch';
 
-              //flag can now pinch fear entity
-              AFPS.gameState.fearInRange = true;
+	              //flag can now pinch fear entity
+	              AFPS.gameState.fearInRange = true;
             }
 
             //increase init distance value if current distance is greater ie init distance -> max distance
@@ -656,6 +694,7 @@
         class="cantap" 
         scale="2 2 2" 
         look-at="#camera"
+        resize="axis:x; value:0.5"
         hold-drag 
         two-finger-spin 
         pinch-scale-destroy></a-entity>
