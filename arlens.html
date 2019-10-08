@@ -28,13 +28,12 @@
         fearIsActive: false,  //can player interact with/destroy the fear entity
         fearInRange: true,
         initialDistance: 0,
-        initialScale: 1.0,
         fearDistance: 0,      //distance of player/camera from fear entity
         distanceCutOff: 0.75,
         scaleDestroyCuttOff: 0.5,
         dialogue: 'none',
         fearImageSRC: ["", "", "", "", ""],
-        fearModelSRC: ["./assets/models/dog-beagle-model.glb", "./assets/models/dog-terrier-model.glb", "./assets/models/dog-german-shepherd-model.glb", "./assets/models/wolf-running-model.glb"],
+        fearModelSRC: ["./assets/models/dog-beagle-model.glb", "./assets/models/dog-terrier-model.glb", "./assets/models/wolf-running-model.glb"],
         fearSoundSRC: ["./assets/audio/dog-small-sound.mp3", "./assets/audio/dog-growling-sound.mp3", "./assets/audio/dog-evil-sound.mp3"],
         explodeImageSRC: ["./assets/gif/explode1.gif", "./assets/gif/explode2.gif", "./assets/gif/explode3.gif", "./assets/gif/explode4.gif", "./assets/gif/explode5.gif", "./assets/gif/explode6.gif", "./assets/gif/explode7.gif"],
         explodeSoundSRC: ["./assets/audio/explosion_backdraft.mp3", "./assets/audio/explosion_backdraft.mp3", "./assets/audio/explosion_backdraft.mp3"]
@@ -222,7 +221,6 @@
 		    }
 		  },
 		  init: function() {
-		  	console.log("resize component");
 		    var el = this.el;
 		    var data = this.data;
 		    var model = el.object3D;
@@ -242,29 +240,7 @@
 		        var scale = data.value / z;
 		      }
 		      el.setAttribute('scale', scale + ' ' + scale + ' ' + scale);
-		      AFPS.gameState.initialScale = scale;
 		    });
-		  },
-		  update: function () {
-		      var el = this.el;
-		      var data = this.data;
-		      var model = el.object3D;
-		  	  var box = new THREE.Box3().setFromObject( model );
-		      var size = box.getSize();
-		      var x = size.x;
-		      var y = size.y;
-		      var z = size.z;
-		      if(data.axis === 'x') {
-		        var scale = data.value / x;
-		      }
-		      else if(data.axis === 'y') {
-		        var scale = data.value / y;
-		      }
-		      else {
-		        var scale = data.value / z;
-		      }
-		      el.setAttribute('scale', scale + ' ' + scale + ' ' + scale);
-		      AFPS.gameState.initialScale = scale;
 		  }
 		});
 
@@ -273,8 +249,6 @@
 	*************************************************************/
       AFRAME.registerComponent('initial-events', {
         init: function() {
-
-console.log("initial events component init");
 
         	const scene = this.el.sceneEl;
         	const camera = document.getElementById('camera'); 
@@ -287,18 +261,17 @@ console.log("initial events component init");
         	//do stuff after model is loaded
             theFear.addEventListener('model-loaded', () => {
             	theFear.setAttribute('visible', 'true');
-
-            	//set init sound
-	            theFear.setAttribute('sound', 'src', '#fear-sound-1');
-	            theFear.setAttribute('sound', 'autoplay', 'false');
-	            theFear.setAttribute('sound', 'loop', 'true');
             })
 
-
+            //set init sound
+            theFear.setAttribute('sound', 'src', '#fear-sound-1');
+            theFear.setAttribute('sound', 'autoplay', 'false');
+            theFear.setAttribute('sound', 'loop', 'true');
 
             //set init model specs
             theFear.setAttribute('visible', 'false');
-       //     theFear.setAttribute('scale', '1.5 1.5 1.5');
+            theFear.setAttribute('scale', '1.5 1.5 1.5');
+            theFear.setAttribute('rotation', {x: 30, y: 0, z: 0});  //without rotation model looks like its above you
             theFear.setAttribute('gltf-model', '#fear-model-1');
             theFear.setAttribute('animation-mixer', 'loop', 'repeat');
 
@@ -367,7 +340,6 @@ console.log("initial events component init");
               //DELAYED GENERATION AND LOADING OF FUTURE ASSETS
               //enable game mode once everything is ready
               setTimeout(function(){ 
-              	console.log("loading model 2");
               	const fearModel2Element = document.createElement('a-asset-item');
               	fearModel2Element.setAttribute('id', 'fear-model-2');
               	fearModel2Element.setAttribute('src', AFPS.gameState.fearModelSRC[1]);
@@ -386,7 +358,6 @@ console.log("initial events component init");
                 console.log("Level 2 assets appended to loader");
 
                 setTimeout(function(){ 
-                	console.log("loading model 3");
                 	const fearModel3Element = document.createElement('a-asset-item');
 	              	fearModel3Element.setAttribute('id', 'fear-model-3');
 	              	fearModel3Element.setAttribute('src', AFPS.gameState.fearModelSRC[2]);
@@ -399,11 +370,11 @@ console.log("initial events component init");
 	                
 	                console.log("Level 3 assets appended to loader");
                 }, 6000);
-              }, 3000);
+              }, 2500);
               
 
 	        })
-console.log("intial-event component test end");
+
         }
       })
 
@@ -418,21 +389,13 @@ console.log("intial-event component test end");
 	    init: function() {
 	      console.log("init pinch-scale-destroy");
 
-	      this.initialScale = this.el.object3D.scale.clone();
-	      this.scaleFactor = 1;
-	      this.handleEvent = this.handleEvent.bind(this);
-	      this.el.sceneEl.addEventListener('twofingermove', this.handleEvent);
-
-
-	      //delay so universal resize function can go first - makes up model resize scale set
-	  /*    setTimeout(function(){ 
-	      	this.initialScale = this.el.object3D.scale.clone();
-	      	AFPS.gameState.initialScale = this.initialScale.x;
-	      }, 2000); */
+	      this.initialScale = this.el.object3D.scale.clone()
+	      this.scaleFactor = 1
+	      this.handleEvent = this.handleEvent.bind(this)
+	      this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
 
         // Set up the tick throttling. Will check if marker is active every 250ms
         this.tick = AFRAME.utils.throttleTick(this.tick, 250, this);
-        console.log("pinch-scale-destroy init test end");
       },
       tick: function() {
         //ticker stuff
@@ -497,9 +460,9 @@ console.log("intial-event component test end");
   	      this.scaleFactor *= 1 + event.detail.spreadChange / event.detail.startSpread
   	      this.scaleFactor = Math.min(Math.max(this.scaleFactor, this.data.min), this.data.max)
   	  
-  	      this.el.object3D.scale.x = this.scaleFactor * AFPS.gameState.initialScale //this.initialScale.x
-  	      this.el.object3D.scale.y = this.scaleFactor * AFPS.gameState.initialScale //this.initialScale.y
-  	      this.el.object3D.scale.z = this.scaleFactor * AFPS.gameState.initialScale //this.initialScale.z
+  	      this.el.object3D.scale.x = this.scaleFactor * this.initialScale.x
+  	      this.el.object3D.scale.y = this.scaleFactor * this.initialScale.y
+  	      this.el.object3D.scale.z = this.scaleFactor * this.initialScale.z
 
           /*********** HANDLE USER DESTRUCTION ON FEAR ENTITY BY SUFFICIENT PINCHING *************/
           if(this.scaleFactor < AFPS.gameState.scaleDestroyCuttOff){
@@ -547,7 +510,9 @@ console.log("intial-event component test end");
                 switch (newScore - 1)
 			    {
 			        case 0:
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
+			            fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-2');
+            			explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
 
             			//load additional assets between levels
             			const explodeGraphicElement3 = document.createElement('img');
@@ -556,8 +521,8 @@ console.log("intial-event component test end");
 	            		assets.appendChild(explodeGraphicElement3);
 			            break;
 			        case 1:
-			            fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-2');
+			            fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-3');
             			explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
 
             			//load additional assets between levels
@@ -565,8 +530,23 @@ console.log("intial-event component test end");
 	            		explodeGraphicElement4.setAttribute('id', 'explode-gif4');
 	            		explodeGraphicElement4.setAttribute('src', AFPS.gameState.explodeImageSRC[3]); 
 	            		assets.appendChild(explodeGraphicElement4);
+
+	            		//add animation
+	            /*		fearEntity.setAttribute('animation', {
+			                property: 'position',
+			                from: {x: pos.x, y: 0, z: pos.z},
+			                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
+			                easing: 'easeInOutQuad',
+			                elasticity: 0,
+			                loop: 'true',
+			                dur: 2000,
+			                dir: 'alternate',
+			                enabled: 'true',
+			            }); */
 			            break;
 			        case 2:
+			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-1');
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
 
 			        	//load additional assets between levels
@@ -574,44 +554,40 @@ console.log("intial-event component test end");
 	            		explodeGraphicElement5.setAttribute('id', 'explode-gif5');
 	            		explodeGraphicElement5.setAttribute('src', AFPS.gameState.explodeImageSRC[4]); 
 	            		assets.appendChild(explodeGraphicElement5);
-
-	            		//load 4th model
-	            		const fearModel4Element = document.createElement('a-asset-item');
-		              	fearModel4Element.setAttribute('id', 'fear-model-4');
-		              	fearModel4Element.setAttribute('src', AFPS.gameState.fearModelSRC[3]);
-		              	assets.appendChild(fearModel4Element);
 			            break;
 			        case 3:
+			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-2');
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
-			        //	fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-3');
-            			
+			            //something here
 			            break;
 			        case 4:
+			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-3');
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
-			        	
+			            //something here
 			            break;
 			        case 5:
+			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
+            			fearEntity.setAttribute('gltf-model', '#fear-model-1');
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
-			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-3');
-			        	fearEntity.setAttribute('gltf-model', '#fear-model-4');
-
+			            //something here
 			            break;
 			        case 6:
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
-
+			            //something here
 			            break;
 			        case 7:
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
-
+			            //something here
 			            break;
 			        case 8:
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
-
+			            //something here
 			            break;
 			        case 9:
 			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
-
+			            //something here
 			            break;
 			        default:
 			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
@@ -693,12 +669,13 @@ console.log("intial-event component test end");
     <!-- If your app only interacts with image targets and not the world, disabling world tracking can improve speed. -->
     <a-scene
     antialias="true"
-    xrextras-loading
     xrweb
     initial-events
     loading-screen
+    tap-place
     gesture-detector
     xrextras-almost-there
+    xrextras-loading
     xrextras-runtime-error
     photo-mode style="z-index: 0;">
     
@@ -718,10 +695,10 @@ console.log("intial-event component test end");
 
         <a-entity 
         id="fear-entity" 
-        position="5 -1 0"
         class="cantap" 
+        scale="2 2 2" 
         look-at="#camera"
-        resize="axis:x; value:4.0"
+        resize="axis:x; value:3.0"
         hold-drag 
         pinch-scale-destroy></a-entity>
 
