@@ -41,20 +41,18 @@
     };
     </script>
 
-    <script src="./assets/json/silly-trivia.js" ></script>
-    <script src="./assets/js/xrextras-climatelens.js" ></script>
-
     <script defer src="//cdn.8thwall.com/web/aframe/aframe-animation-component-5.1.2.min.js"></script>
  	<!--   <script src="//cdn.8thwall.com/web/aframe/8frame-0.9.0.min.js"></script> -->
  	<script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script>
  <!--   <script src="//codeawesome.s3-us-west-2.amazonaws.com/dulce303/assets/xrextras-climatelens.js" ></script> -->
-
+    <script src="./assets/json/silly-trivia.js" ></script>
+    <script src="./assets/js/xrextras-climatelens.js" ></script>
     <script src="./assets/js/gesture-detector.js"></script>
     <script src="./assets/js/hold-drag.js"></script>
     <script src="./assets/js/pinch-scale.js"></script>
     <script src="./assets/js/two-finger-spin.js"></script>
     <script src="./assets/js/aframe-gif-component.min.js"></script>
-    <script src="./assets/js/aframe-look-at-component-custom.js"></script>
+    <script src="./assets/js/aframe-look-at-component.min.js"></script>
     <!-- <script src="./assets/js/photomode.js"></script> -->
 
     <script src="//cdn.8thwall.com/web/aframe/aframe-extras-4.2.0.min.js"></script>
@@ -271,7 +269,7 @@
             //set init model specs
             theFear.setAttribute('visible', 'false');
             theFear.setAttribute('scale', '1.5 1.5 1.5');
-            theFear.setAttribute('rotation', {x: 30, y: 0, z: 0});  //without rotation model looks like its above you
+            theFear.setAttribute('rotation', '320 0 0'); //without rotation model looks like its above you
             theFear.setAttribute('gltf-model', '#fear-model-1');
             theFear.setAttribute('animation-mixer', 'loop', 'repeat');
 
@@ -292,8 +290,8 @@
 	            var x = 1 * Math.cos(angle.y * Math.PI / 180);
 	            var y = 1 * Math.sin(angle.y * Math.PI / 180);
 	            var pos = camera.getAttribute('position');
-	            pos.x -= y*8;
-	            pos.z -= x*8;
+	            pos.x -= y*5;
+	            pos.z -= x*5;
 	            pos.y = 0;
 	            theFear.setAttribute('position', pos);
 
@@ -370,7 +368,7 @@
 	                
 	                console.log("Level 3 assets appended to loader");
                 }, 6000);
-              }, 2500);
+              }, 1500);
               
 
 	        })
@@ -476,15 +474,13 @@
             AFPS.gameState.score = newScore;
 
             //set explode graphic position to fear entity position
-     /*       let thePosition = fearEntity.object3D.position; //getAttribute('position');
+            let thePosition = fearEntity.getAttribute('position');
             console.log("current position of fear element: "); 
             console.log(thePosition);
-            explodeGraphic.setAttribute('position', thePosition); */
-
-            explodeGraphic.object3D.position = fearEntity.object3D.position;
+            explodeGraphic.setAttribute('position', thePosition);
 
             console.log("current position of explode element:");
-            console.log( explodeGraphic.object3D.position ); //explodeGraphic.getAttribute('position') );
+            console.log( explodeGraphic.getAttribute('position') );
 
             //stop fear entity sound and play explode sound
             fearEntity.components.sound.stopSound();
@@ -532,7 +528,7 @@
 	            		assets.appendChild(explodeGraphicElement4);
 
 	            		//add animation
-	            /*		fearEntity.setAttribute('animation', {
+	            		fearEntity.setAttribute('animation', {
 			                property: 'position',
 			                from: {x: pos.x, y: 0, z: pos.z},
 			                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
@@ -542,7 +538,7 @@
 			                dur: 2000,
 			                dir: 'alternate',
 			                enabled: 'true',
-			            }); */
+			            });
 			            break;
 			        case 2:
 			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
@@ -619,10 +615,10 @@
                         elasticity: 400,
                         dur: 1000,
                         loop: 'true',
-                    }) 
+                    }) */
 
                     console.log("change position: ");
-                    console.log(pos); */
+                    console.log(pos);
 
                     //reset scale
                     this.scaleFactor = 1;
@@ -698,8 +694,9 @@
         class="cantap" 
         scale="2 2 2" 
         look-at="#camera"
-        resize="axis:x; value:3.0"
+        resize="axis:x; value:0.5"
         hold-drag 
+        two-finger-spin 
         pinch-scale-destroy></a-entity>
 
         <a-entity 
