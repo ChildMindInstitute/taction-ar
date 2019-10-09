@@ -53,7 +53,7 @@
     <script src="./assets/js/hold-drag.js"></script>
     <script src="./assets/js/pinch-scale.js"></script>
     <script src="./assets/js/two-finger-spin.js"></script>
-    <script src="./assets/js/aframe-look-at-component.min.js"></script>
+    <script src="./assets/js/aframe-look-at-component-custom.js"></script>
     <!-- <script src="./assets/js/photomode.js"></script> -->
 
     <script src="//cdn.8thwall.com/web/aframe/aframe-extras-4.2.0.min.js"></script>
@@ -264,8 +264,6 @@
 
         	//do stuff after model is loaded
             theFear.addEventListener('model-loaded', () => {
-
-
 
               /****** BEGIN RESIZE ****/
               const fearEntity = document.getElementById('fear-entity');
@@ -626,20 +624,21 @@
                     fearEntity.components.sound.playSound();
 
                     //set new position
-              /*      const camera = document.getElementById('camera'); 
+                    const camera = document.getElementById('camera'); 
 
-                    const angle = camera.getAttribute("rotation");
+                    var angle = camera.getAttribute('rotation');
                     var x = 1 * Math.cos(angle.y * Math.PI / 180);
                     var y = 1 * Math.sin(angle.y * Math.PI / 180);
-                    var pos = camera.getAttribute("position");
-                    pos.x -= y* AFPS.gameState.fearDistance;
+                    var pos = camera.getAttribute('position');
+                    pos.x -= y* AFPS.gameState.fearDistance; 
                     pos.z -= x* AFPS.gameState.fearDistance;
                     pos.y = 0;
-                    this.el.setAttribute("position", pos);
+                    fearEntity.setAttribute('position', pos);
+
 
                     console.log("change position: ");
                     console.log(pos);
-                     */
+                     
 
                     //set movement animation
                 /*    this.el.setAttribute('animation', {
