@@ -28,7 +28,8 @@
         fearIsActive: false,  //can player interact with/destroy the fear entity
         fearInRange: true,
         initialDistance: 0,
-        fearDistance: 0,      //distance of player/camera from fear entity
+        resize: 2.5,
+        fearDistance: 12,      //distance of player/camera from fear entity
         distanceCutOff: 0.75,
         scaleDestroyCuttOff: 0.5,
         dialogue: 'none',
@@ -47,11 +48,11 @@
  <!--   <script src="//codeawesome.s3-us-west-2.amazonaws.com/dulce303/assets/xrextras-climatelens.js" ></script> -->
     <script src="./assets/json/silly-trivia.js" ></script>
     <script src="./assets/js/xrextras-climatelens.js" ></script>
+    <script src="./assets/js/aframe-gif-component.min.js"></script>
     <script src="./assets/js/gesture-detector.js"></script>
     <script src="./assets/js/hold-drag.js"></script>
     <script src="./assets/js/pinch-scale.js"></script>
     <script src="./assets/js/two-finger-spin.js"></script>
-    <script src="./assets/js/aframe-gif-component.min.js"></script>
     <script src="./assets/js/aframe-look-at-component.min.js"></script>
     <!-- <script src="./assets/js/photomode.js"></script> -->
 
@@ -242,6 +243,11 @@
 		  }
 		});
 
+
+
+
+        
+
 	/*************************************************************
 	***************** PRIMARY LOAD COMPONENT *********************
 	*************************************************************/
@@ -258,8 +264,34 @@
 
         	//do stuff after model is loaded
             theFear.addEventListener('model-loaded', () => {
-            	theFear.setAttribute('visible', 'true');
+
+
+
+              /****** BEGIN RESIZE ****/
+              const fearEntity = document.getElementById('fear-entity');
+              var data = {'axis': 'x', 'value': AFPS.gameState.resize};
+              var model = fearEntity.object3D;
+
+              var box = new THREE.Box3().setFromObject( model );
+              var size = box.getSize();
+              var x = size.x;
+              var y = size.y;
+              var z = size.z;
+              if(data.axis === 'x') {
+                var scale = data.value / x;
+              }
+              else if(data.axis === 'y') {
+                var scale = data.value / y;
+              }
+              else {
+                var scale = data.value / z;
+              }
+              fearEntity.setAttribute('scale', scale + ' ' + scale + ' ' + scale); 
+              /******* END RESIZE ********/
+
+              theFear.setAttribute('visible', 'true');
             })
+
 
             //set init sound
             theFear.setAttribute('sound', 'src', '#fear-sound-1');
@@ -268,8 +300,7 @@
 
             //set init model specs
             theFear.setAttribute('visible', 'false');
-            theFear.setAttribute('scale', '1.5 1.5 1.5');
-            theFear.setAttribute('rotation', '320 0 0'); //without rotation model looks like its above you
+          //  theFear.setAttribute('scale', '1.5 1.5 1.5');
             theFear.setAttribute('gltf-model', '#fear-model-1');
             theFear.setAttribute('animation-mixer', 'loop', 'repeat');
 
@@ -277,7 +308,17 @@
         	//do stuff when device camera feed becomes visible (don't want asset loading to slow startup)
 	        scene.addEventListener('realityready', () => {
             console.log("initial-events component -->  realityready");
-	        	//stuff
+	        	
+            //set init position
+            var angle = camera.getAttribute('rotation');
+            var x = 1 * Math.cos(angle.y * Math.PI / 180);
+            var y = 1 * Math.sin(angle.y * Math.PI / 180);
+            var pos = camera.getAttribute('position');
+            pos.x -= y* AFPS.gameState.fearDistance; 
+            pos.z -= x* AFPS.gameState.fearDistance;
+            pos.y = 0;
+            theFear.setAttribute('position', pos);
+            console.log("initial-events set pos:"); console.log(pos); 
 
 	        	//turn off quiz jquery
 	        	AFPS.gameState.quizActive = false;
@@ -285,17 +326,7 @@
 	        	//start playing key sound effect
 	        	theFear.components.sound.playSound();
 
-	        	//set init position
-		        var angle = camera.getAttribute('rotation');
-	            var x = 1 * Math.cos(angle.y * Math.PI / 180);
-	            var y = 1 * Math.sin(angle.y * Math.PI / 180);
-	            var pos = camera.getAttribute('position');
-	            pos.x -= y*5;
-	            pos.z -= x*5;
-	            pos.y = 0;
-	            theFear.setAttribute('position', pos);
 
-              	console.log("initial-events set pos:"); console.log(pos);
 
 	            //set init animation
 	    /*        theFear.setAttribute('animation', {
@@ -319,7 +350,7 @@
 	            const explodeGraphicElement1 = document.createElement('img');
 	            explodeGraphicElement1.setAttribute('id', 'explode-gif1');
 	            explodeGraphicElement1.setAttribute('src', AFPS.gameState.explodeImageSRC[0]); 
-	            assets.appendChild(explodeGraphicElement1);
+	            assets.appendChild(explodeGraphicElement1); 
 
 	            //add sound & image to explode element
 	            explode.setAttribute('sound', 'src', '#explode-sound');
@@ -504,91 +535,91 @@
 
                 //SWITCH AUDIO AND VISUAL FOR LEVEL CHANGE
                 switch (newScore - 1)
-			    {
-			        case 0:
-			            fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-2');
-            			explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
+      			    {
+      			        case 0:
+      			            fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
+                  			fearEntity.setAttribute('gltf-model', '#fear-model-2');
+                  			explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
 
-            			//load additional assets between levels
-            			const explodeGraphicElement3 = document.createElement('img');
-	            		explodeGraphicElement3.setAttribute('id', 'explode-gif3');
-	            		explodeGraphicElement3.setAttribute('src', AFPS.gameState.explodeImageSRC[2]); 
-	            		assets.appendChild(explodeGraphicElement3);
-			            break;
-			        case 1:
-			            fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-3');
-            			explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
+                  			//load additional assets between levels
+                  			const explodeGraphicElement3 = document.createElement('img');
+      	            		explodeGraphicElement3.setAttribute('id', 'explode-gif3');
+      	            		explodeGraphicElement3.setAttribute('src', AFPS.gameState.explodeImageSRC[2]); 
+      	            		assets.appendChild(explodeGraphicElement3);
+      			            break;
+      			        case 1:
+      			            fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
+                  			fearEntity.setAttribute('gltf-model', '#fear-model-3');
+                  			explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
 
-            			//load additional assets between levels
-            			const explodeGraphicElement4 = document.createElement('img');
-	            		explodeGraphicElement4.setAttribute('id', 'explode-gif4');
-	            		explodeGraphicElement4.setAttribute('src', AFPS.gameState.explodeImageSRC[3]); 
-	            		assets.appendChild(explodeGraphicElement4);
+                  			//load additional assets between levels
+                  			const explodeGraphicElement4 = document.createElement('img');
+      	            		explodeGraphicElement4.setAttribute('id', 'explode-gif4');
+      	            		explodeGraphicElement4.setAttribute('src', AFPS.gameState.explodeImageSRC[3]); 
+      	            		assets.appendChild(explodeGraphicElement4);
 
-	            		//add animation
-	            		fearEntity.setAttribute('animation', {
-			                property: 'position',
-			                from: {x: pos.x, y: 0, z: pos.z},
-			                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
-			                easing: 'easeInOutQuad',
-			                elasticity: 0,
-			                loop: 'true',
-			                dur: 2000,
-			                dir: 'alternate',
-			                enabled: 'true',
-			            });
-			            break;
-			        case 2:
-			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-1');
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
+      	            		//add animation
+      	           /* 		fearEntity.setAttribute('animation', {
+      			                property: 'position',
+      			                from: {x: pos.x, y: 0, z: pos.z},
+      			                to:  {x: pos.x + 3, y: 0, z: pos.z + 3},
+      			                easing: 'easeInOutQuad',
+      			                elasticity: 0,
+      			                loop: 'true',
+      			                dur: 2000,
+      			                dir: 'alternate',
+      			                enabled: 'true',
+      			            }); */
+      			            break;
+      			        case 2:
+      			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
+                  			fearEntity.setAttribute('gltf-model', '#fear-model-1');
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
 
-			        	//load additional assets between levels
-			            const explodeGraphicElement5 = document.createElement('img');
-	            		explodeGraphicElement5.setAttribute('id', 'explode-gif5');
-	            		explodeGraphicElement5.setAttribute('src', AFPS.gameState.explodeImageSRC[4]); 
-	            		assets.appendChild(explodeGraphicElement5);
-			            break;
-			        case 3:
-			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-2');
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
-			            //something here
-			            break;
-			        case 4:
-			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-3');
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
-			            //something here
-			            break;
-			        case 5:
-			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-1');
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
-			            //something here
-			            break;
-			        case 6:
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
-			            //something here
-			            break;
-			        case 7:
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
-			            //something here
-			            break;
-			        case 8:
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
-			            //something here
-			            break;
-			        case 9:
-			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
-			            //something here
-			            break;
-			        default:
-			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
-            			fearEntity.setAttribute('gltf-model', '#fear-model-1');
-			        }
+      			        	//load additional assets between levels
+      			            const explodeGraphicElement5 = document.createElement('img');
+      	            		explodeGraphicElement5.setAttribute('id', 'explode-gif5');
+      	            		explodeGraphicElement5.setAttribute('src', AFPS.gameState.explodeImageSRC[4]); 
+      	            		assets.appendChild(explodeGraphicElement5);
+      			            break;
+      			        case 3:
+      			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
+                  			fearEntity.setAttribute('gltf-model', '#fear-model-2');
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
+      			            //something here
+      			            break;
+      			        case 4:
+      			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
+                  			fearEntity.setAttribute('gltf-model', '#fear-model-3');
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
+      			            //something here
+      			            break;
+      			        case 5:
+      			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
+                  			fearEntity.setAttribute('gltf-model', '#fear-model-1');
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif2');
+      			            //something here
+      			            break;
+      			        case 6:
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif3');
+      			            //something here
+      			            break;
+      			        case 7:
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif4');
+      			            //something here
+      			            break;
+      			        case 8:
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif5');
+      			            //something here
+      			            break;
+      			        case 9:
+      			        	explodeGraphic.setAttribute('material', 'src', '#explode-gif1');
+      			            //something here
+      			            break;
+      			        default:
+      			        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1'); 
+                  			fearEntity.setAttribute('gltf-model', '#fear-model-1');
+      			        }
 
                 //RESET FOR NEXT FEAR ENTITY
                 setTimeout(()=> {
@@ -601,10 +632,14 @@
                     var x = 1 * Math.cos(angle.y * Math.PI / 180);
                     var y = 1 * Math.sin(angle.y * Math.PI / 180);
                     var pos = camera.getAttribute("position");
-                    pos.x -= y*15;
-                    pos.z -= x*15;
+                    pos.x -= y* AFPS.gameState.fearDistance;
+                    pos.z -= x* AFPS.gameState.fearDistance;
                     pos.y = 0;
-                    this.el.setAttribute("position", pos); */
+                    this.el.setAttribute("position", pos);
+
+                    console.log("change position: ");
+                    console.log(pos);
+                     */
 
                     //set movement animation
                 /*    this.el.setAttribute('animation', {
@@ -617,8 +652,7 @@
                         loop: 'true',
                     }) */
 
-                    console.log("change position: ");
-                    console.log(pos);
+
 
                     //reset scale
                     this.scaleFactor = 1;
@@ -693,11 +727,24 @@
         id="fear-entity" 
         class="cantap" 
         scale="2 2 2" 
+        position="0 0 9"
+        look-at="#camera"
+        hold-drag 
+        two-finger-spin 
+        pinch-scale-destroy></a-entity>
+
+        <!--
+                  <a-entity 
+        id="fear-entity" 
+        class="cantap" 
+        scale="2 2 2" 
+        position="0 0 8"
         look-at="#camera"
         resize="axis:x; value:0.5"
         hold-drag 
         two-finger-spin 
         pinch-scale-destroy></a-entity>
+      -->
 
         <a-entity 
         id="explode-graphic" 
