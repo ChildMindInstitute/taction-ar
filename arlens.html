@@ -249,6 +249,19 @@
         	//do stuff after model is loaded
             theFear.addEventListener('model-loaded', () => {
 
+              //model diagnostics
+              console.log("~~~~~MODEL DIAGNOSTICS~~~~~");
+              var mesh = theFear.getObject3D('mesh');
+              console.log("~MESH~");
+              console.log(mesh);
+              console.log("~GEOMETRY~");
+              console.log(mesh.geometry);
+              console.log("~MATERIAL~");
+              console.log(mesh.material);
+
+
+
+
               /****** BEGIN RESIZE ****/
               const fearEntity = document.getElementById('fear-entity');
               var data = {'axis': 'x', 'value': AFPS.gameState.resize};
@@ -408,7 +421,7 @@
             let relativeDistance = currentDistance / initialDistance;
 
             //log every now and then, don't swamp console
-          	if((Math.random() * 10) < 2){  console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance ); }
+       //   	if((Math.random() * 10) < 2){  console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance ); }
 
 
             if(relativeDistance > AFPS.gameState.distanceCutOff ){
