@@ -28,8 +28,8 @@
         fearIsActive: false,  //can player interact with/destroy the fear entity
         fearInRange: true,
         initialDistance: 0,
-        resize: 2.5,
-        fearDistance: 12,      //distance of player/camera from fear entity
+        resize: 3.5,
+        fearDistance: 10,      //distance of player/camera from fear entity
         distanceCutOff: 0.75,
         scaleDestroyCuttOff: 0.5,
         dialogue: 'none',
@@ -254,10 +254,23 @@
               var mesh = theFear.getObject3D('mesh');
               console.log("~MESH~");
               console.log(mesh);
-              console.log("~GEOMETRY~");
-              console.log(mesh.geometry);
-              console.log("~MATERIAL~");
-              console.log(mesh.material);
+
+              console.log("~traverse mesh~");
+              const object = theFear.getObject3D('mesh');
+           //   const material = this.material;
+              if (object) {
+                object.traverse(function (node) {
+                  if (node.isMesh){
+                    console.log(node.material);
+                    //node.material = material;
+                    if(node.name == 'Floor__0'){
+                      console.log("hiding floor"); //hide anoying base of model
+                      node.visible = false;
+
+                    }
+                  } 
+                });
+              }
 
 
 
