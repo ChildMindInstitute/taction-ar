@@ -26,14 +26,10 @@
         score: 0,
         type: 'dog',       //search, dog or bee - search is default
         fearIsActive: false,  //can player interact with/destroy the fear entity
-        fearInRange: true,
-        initialDistance: 0,
         resize: 30,
         fearDistance: 18,      //distance of player/camera from fear entity
-        distanceCutOff: 0.75,
-        scaleDestroyCuttOff: 0.5,
         dialogue: 'none',
-        fearImageSRC: ["", "", "", "", ""],
+        heartImageSRC: ["./images/hearts_0_of_5.png", "./images/hearts_1_of_5.png", "./images/hearts_2_of_5.png", "./images/hearts_3_of_5.png", "./images/hearts_4_of_5.png", "./images/hearts_5_of_5.png"],
         fearModelSRC: ["./assets/models/dog-lowpoly-pitbull-model.glb", "", ""],
         fearSoundSRC: ["./assets/audio/dog-small-sound.mp3", "./assets/audio/dog-growling-sound.mp3", "./assets/audio/dog-evil-sound.mp3"],
         animations: ["walk", "Trot", "Gallop", "run", "WalkSniff", "IdleSniff", "IdleDig", "idle", "IdleMouthClosed", "IdleLong", 
@@ -87,6 +83,20 @@
       }
       #score-message{
         top: 92%;
+      }
+
+      #heart-bar{
+	    position: fixed;
+	    top: 0;
+	    width: 96%;
+	    height: 10%;
+	    z-index: 999;
+	    opacity: 0.5;
+	    margin: 2%;
+      	display: block;
+      	background: url(./images/hearts_0_of_5.png);
+		background-repeat: no-repeat;
+		background-size: contain;
       }
 
       #quiz-container{
@@ -250,6 +260,12 @@
               	var mesh = handEntity.getObject3D('mesh');
               	console.log("~HAND MESH~");
               	console.log(mesh);
+
+                //fix animation duration
+                var sumDurations = 0;
+                for(var i = 0; i < mesh.animations.length; i++){
+                    mesh.animations[i].duration = 0.3;
+                }
             })
         }
     })
@@ -669,6 +685,9 @@
     </div>
     <!-- Content -->
 
+    <!-- top of screen heart progress bar -->
+    <div id="heart-bar"></div>
+
     <!-- in game text message display -->
     <div id="game-message"></div>
     <div id="score-message"></div>
@@ -725,7 +744,7 @@
         scale="0.2 0.2 0.2" 
         position="0 0 5"
         gltf-model="#hand-model"
-        animation-mixer="loop: pingpong; clip: *"
+        animation-mixer="loop: pingpong"
         visible="true"
         hand-pet></a-entity>
 
