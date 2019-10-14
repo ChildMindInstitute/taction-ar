@@ -237,7 +237,22 @@
     });
 
 
+  /*************************************************************
+  ***************** PETTING HAND COMPONENT *********************
+  *************************************************************/
+    AFRAME.registerComponent('hand-pet', {
+        init: function() {
+        	const handEntity = document.getElementById('hand-entity'); 
 
+        	//do stuff after model is loaded
+            handEntity.addEventListener('model-loaded', () => {
+            	//inspect hand model
+              	var mesh = handEntity.getObject3D('mesh');
+              	console.log("~HAND MESH~");
+              	console.log(mesh);
+            })
+        }
+    })
 
         
 
@@ -260,7 +275,7 @@
               //model diagnostics
               console.log("~~~~~MODEL DIAGNOSTICS~~~~~");
               var mesh = theFear.getObject3D('mesh');
-              console.log("~MESH~");
+              console.log("~FEAR MESH~");
               console.log(mesh);
               console.log("~animations~");
               console.log(mesh.animations)
@@ -268,8 +283,6 @@
               console.log(mesh.animations[4].duration);
 
               console.log("~traverse mesh~");
-           //   const object = theFear.getObject3D('mesh');
-
               //hide anoying base of model
               if (mesh) {
                 mesh.traverse(function (node) {
@@ -300,22 +313,21 @@
 
                   for(var k = 0; k < mesh.animations[i].tracks[j].times.length; k++){
 
-                      if(i == 17 && j == 3){
-                        console.log("~animation 18 time change details");
-                        console.log("old time: " + mesh.animations[i].tracks[j].times[k]);
-                      }
+                   //   if(i == 17 && j == 3){
+                    //    console.log("~animation 18 time change details");
+                    //    console.log("old time: " + mesh.animations[i].tracks[j].times[k]);
+                   //   }
 
                       //mesh.animations[i].tracks[k].times[m] = mesh.animations[i].tracks[k].times[m] - sumDurations;
                       if(mesh.animations[i].tracks[j].times[k] != 0 ){
                         mesh.animations[i].tracks[j].times[k] = mesh.animations[i].tracks[j].times[k] - offSetSkipFirst;
+                        if(mesh.animations[i].tracks[j].times[k] < 0) mesh.animations[i].tracks[j].times[k] = 0;
                       }
                       
 
-                      
-
-                      if(i == 17 && j == 3){
-                        console.log("new time: " + mesh.animations[i].tracks[j].times[k]);
-                      }
+                //      if(i == 17 && j == 3){
+                //        console.log("new time: " + mesh.animations[i].tracks[j].times[k]);
+                 //     }
                   }
                 }
 
@@ -673,15 +685,11 @@
     xrextras-runtime-error
     photo-mode style="z-index: 0;">
 
-    <!-- DEBUGGING STATISTICS UI -->
-   <!-- <a-scene stats></a-scene> -->
     
         <a-assets id="assets">
-          <!--  <a-asset-item id="water-glb" src="./assets/models/water-rise-trans5.glb"></a-asset-item> --> 
-        <!--  <a-asset-item id="fear-model-1" src="./assets/models/low_poly_dog_model.glb"></a-asset-item> -->
             <a-asset-item id="fear-model-1" src="./assets/models/dog-lowpoly-pitbull-model.glb"></a-asset-item> 
-          <audio id="fear-sound-1" src="./assets/audio/dog-small-sound.mp3">
-
+            <a-asset-item id="hand-model" src="./assets/models/hand-model.glb"></a-asset-item> 
+            <audio id="fear-sound-1" src="./assets/audio/dog-small-sound.mp3">
         </a-assets>
 
         <a-camera id="camera" position="0 8 8"></a-camera>
@@ -696,7 +704,7 @@
         position="0 0 5"
         cursor-listener
         gltf-model="#fear-model-1"
-        animation-mixer="clip: walk"
+        animation-mixer="clip: AggressiveBarking AggressiveAttack AggressiveAttack2; crossFadeDuration: 0.5"
         tap-animate-gamelogic></a-entity>
 
 <!--
@@ -711,13 +719,16 @@
     -->
 
 
-<!--
-                <a-entity 
-        id="explode-graphic" 
-        geometry="primitive:plane;width:12;height:12;" 
-        visible="false" 
-        look-at="#camera"></a-entity>
-    -->
+
+        <a-entity 
+        id="hand-entity" 
+        scale="0.2 0.2 0.2" 
+        position="0 0 5"
+        gltf-model="#hand-model"
+        animation-mixer="loop: pingpong; clip: *"
+        visible="true"
+        hand-pet></a-entity>
+
       
         <a-entity
         id="ground"
