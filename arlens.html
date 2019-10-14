@@ -497,12 +497,22 @@
 
         // Set up the tick throttling. Will check if marker is active every 250ms
         this.tick = AFRAME.utils.throttleTick(this.tick, 250, this);
+
+        //loop animation clips
+        var clipLoopIndex = 1;
+        this.el.addEventListener('animation-finished', function _listener() {
+        	fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[clipLoopIndex], loop: "pingpong", repetitions: 1});
+
+        	clipLoopIndex++;
+        	if(clipLoopIndex > 2) clipLoopIndex = 0;
+	    },{once:false});
+
       },
       tick: function() {
         //ticker stuff
 
         //repeat animation clip sequence
-        if(AFPS.gameState.repeatClipSequence == true){
+    /*    if(AFPS.gameState.repeatClipSequence == true){
         	//don't mess with sequence until it is finished
         	AFPS.gameState.repeatClipSequence = false;
 
@@ -528,7 +538,7 @@
 	        		},{once:true});
         		},{once:true});
 			},{once:true});
-        }
+        } */
 
         /**************** MEASURE PROXIMITY OF PLAYER TO FEAR ENTITY SO WE CAN DETERMINE IF THEY ARE IN RANGE **************/
      /*   if( AFPS.gameState.fearIsActive == true ){
