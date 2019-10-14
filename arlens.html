@@ -93,7 +93,7 @@
 	    z-index: 999;
 	    opacity: 0.5;
 	    margin: 2%;
-      	display: block;
+      	display: none;
       	background: url(./images/hearts_0_of_5.png);
 		background-repeat: no-repeat;
 		background-size: contain;
@@ -440,6 +440,9 @@
               setTimeout(function(){ 
                 AFPS.gameState.fearIsActive = true;
                 console.log("AFPS.gameState.fearIsActive = true;");
+
+                //display heart progress bar
+                $("#heart-bar").css("display", "block");
               }, 3000);
 
               //DELAYED GENERATION AND LOADING OF FUTURE ASSETS
