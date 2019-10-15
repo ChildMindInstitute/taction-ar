@@ -483,30 +483,28 @@
       AFRAME.registerComponent('tap-animate-gamelogic', {
       init: function() {
         console.log("init tap-animate-gamelogic");
+        const fearEntity = document.getElementById('fear-entity');
 
         this.handleEvent = this.handleEvent.bind(this);
     //    this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
         this.el.addEventListener('click', this.handleEvent);
 
-//TEST!!!!!!!!
-            const ground = document.getElementById('ground')
-            ground.addEventListener('click', event => {
-              // Create new entity for the new object
-              console.log("test ground click");
-            })
+        //test user message
+        document.getElementById("game-message").innerHTML = "<H2>Tap the dog to calm it down.</H2>";
 
-        // Set up the tick throttling. Will check if marker is active every 250ms
-        this.tick = AFRAME.utils.throttleTick(this.tick, 250, this);
-
-        //loop animation clips
+        //LOOP ANIMATION CLIPS
         var clipLoopIndex = 1;
-        this.el.addEventListener('animation-finished', function _listener() {
-        	fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[clipLoopIndex], loop: "pingpong", repetitions: 1});
+        setInterval(function(){ 
+            console.log("change animation to: " + AFPS.gameState.activeClips[clipLoopIndex]);
+            fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[clipLoopIndex], loop: "pingpong"});
 
-        	clipLoopIndex++;
+            clipLoopIndex++;
         	if(clipLoopIndex > 2) clipLoopIndex = 0;
-	    },{once:false});
+        }, 2500); 
 
+
+	     // Set up the tick throttling. Will check if marker is active every 250ms
+        this.tick = AFRAME.utils.throttleTick(this.tick, 250, this);
       },
       tick: function() {
         //ticker stuff
@@ -606,8 +604,8 @@
         	AFPS.gameState.fearIntensityState = 'second';
         	$('#heart-bar').css('background-image','url(./images/hearts_1_of_5.png)');
         	//change animation clips
-        	AFPS.gameState.activeClips[0] = "idleBarking"; 
-        	AFPS.gameState.activeClips[1] = "idleBarkingLong";
+        	AFPS.gameState.activeClips[0] = "IdleBarking"; 
+        	AFPS.gameState.activeClips[1] = "IdleBarkingLong";
         	AFPS.gameState.activeClips[2] = "jump";
 
         } else if(AFPS.gameState.interactionPoints >= 28 && AFPS.gameState.interactionPoints < 46 &&  AFPS.gameState.fearIntensityState != 'third'){
@@ -616,22 +614,22 @@
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "Trot"; 
         	AFPS.gameState.activeClips[1] = "AggressiveIdle";
-        	AFPS.gameState.activeClips[2] = "idleDig";
+        	AFPS.gameState.activeClips[2] = "IdleDig";
         	
         } else if(AFPS.gameState.interactionPoints >= 46 && AFPS.gameState.interactionPoints < 64 &&  AFPS.gameState.fearIntensityState != 'fourth'){
         	AFPS.gameState.fearIntensityState = 'fourth';
         	$('#heart-bar').css('background-image','url(./images/hearts_3_of_5.png)');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "Drink"; 
-        	AFPS.gameState.activeClips[1] = "idleMouthClosed";
-        	AFPS.gameState.activeClips[2] = "idleLong";
+        	AFPS.gameState.activeClips[1] = "IdleMouthClosed";
+        	AFPS.gameState.activeClips[2] = "IdleLong";
         	
         } else if(AFPS.gameState.interactionPoints >= 64 && AFPS.gameState.interactionPoints < 82 &&  AFPS.gameState.fearIntensityState != 'fifth'){
         	AFPS.gameState.fearIntensityState = 'fifth';
         	$('#heart-bar').css('background-image','url(./images/hearts_4_of_5.png)');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "SitIdleLong"; 
-        	AFPS.gameState.activeClips[1] =  "SitScratch";
+        	AFPS.gameState.activeClips[1] = "SitScratch";
         	AFPS.gameState.activeClips[2] = "WipeAss";
         	
         } else if(AFPS.gameState.interactionPoints >= 82  &&  AFPS.gameState.fearIntensityState != 'sixth'){
@@ -645,6 +643,19 @@
 
         //loop for testing
         if(AFPS.gameState.interactionPoints > 100) AFPS.gameState.interactionPoints = 0;
+
+        //display interaction points
+        document.getElementById("score-message").innerHTML = "<h2>SCORE: " + AFPS.gameState.interactionPoints + "%</h2>";
+
+        //place hand model over fear entity for timed display
+        const handEntity = document.getElementById('hand-entity'); 
+        const touchPoint = event.detail.intersection.point;
+        handEntity.setAttribute('position', touchPoint)
+        handEntity.setAttribute('visible', 'true');
+        //display hand for brief moment
+        setTimeout(()=> {
+        	handEntity.setAttribute('visible', 'false');
+        }, 1000);
 
 
 
@@ -693,48 +704,6 @@
               //  explodeGraphic.components.sound.stopSound();
 
                 document.getElementById("game-message").innerHTML = "<H2>LOOK AROUND TO FACE MORE FEAR...</H2>";
-
-                //SWITCH AUDIO AND VISUAL FOR LEVEL CHANGE
-                switch (newScore - 1)
-                {
-                    case 0:
-                    //    fearEntity.setAttribute('sound', 'src', '#fear-sound-2'); 
-                    //    fearEntity.setAttribute('gltf-model', '#fear-model-2');
-
-                        //load additional assets between levels
-                        break;
-                    case 1:
-                    //    fearEntity.setAttribute('sound', 'src', '#fear-sound-3'); 
-                    //    fearEntity.setAttribute('gltf-model', '#fear-model-3');
-
-                        break;
-                    case 2:
-                      //do stuff
-                        break;
-                    case 3:
-                      //do stuff
-                        break;
-                    case 4:
-                      //do stuff
-                        break;
-                    case 5:
-                      //do stuff
-                        break;
-                    case 6:
-                      //do stuff
-                        break;
-                    case 7:
-                      //do stuff
-                        break;
-                    case 8:
-                      //do stuff
-                        break;
-                    case 9:
-                      //do stuff
-                        break;
-                    default:
-                      //do stuff
-                    }
 
                 //RESET FOR NEXT FEAR ENTITY
                 setTimeout(()=> {
@@ -818,7 +787,7 @@
         position="0 0 5"
         cursor-listener
         gltf-model="#fear-model-1"
-        animation-mixer="clip: AggressiveBarking; crossFadeDuration: 0.5; repetitions: 2"
+        animation-mixer="clip: AggressiveAttack2; crossFadeDuration: 0.5;"
         tap-animate-gamelogic></a-entity>
 
 <!--
@@ -839,7 +808,7 @@
         scale="0.2 0.2 0.2" 
         position="0 0 5"
         animation-mixer="loop: pingpong"
-        visible="true"
+        visible="false"
         hand-pet></a-entity>
 
       
