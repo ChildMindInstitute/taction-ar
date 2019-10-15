@@ -28,8 +28,9 @@
         fearIntensityState: 'none',
         type: 'dog',       //search, dog or bee - search is default
         fearIsActive: false,  //can player interact with/destroy the fear entity
+        handIsActive: false,
         resize: 30,
-        fearDistance: 18,      //distance of player/camera from fear entity
+        fearDistance: 12,      //distance of player/camera from fear entity
         dialogue: 'none',
         fearModelSRC: ["./assets/models/dog-lowpoly-pitbull-model.glb", "", ""],
         fearSoundSRC: ["./assets/audio/dog-1evil-sound.mp3", "./assets/audio/dog-2growling-sound.mp3", "./assets/audio/dog-3barking-close-sound.mp3", "./assets/audio/dog-4barking-slow-sound.mp3", "./assets/audio/dog-5bark-mild-sound.mp3", "./assets/audio/dog-6yelping-sound.mp3"],
@@ -260,8 +261,8 @@
         	//do stuff after model is loaded
             handEntity.addEventListener('model-loaded', () => {
             	//inspect hand model
-           /*   	var mesh = handEntity.getObject3D('mesh');
-              	console.log("~HAND MESH~");
+              	var mesh = handEntity.getObject3D('mesh');
+           /*   	console.log("~HAND MESH~");
               	console.log(mesh); */
 
                 //fix animation duration
@@ -386,6 +387,7 @@
 
             //start playing key sound effect
             theFear.components.sound.playSound();
+            theFear.setAttribute('sound', 'autoplay', 'true');
 
             //enable game mode once everything is ready
             setTimeout(function(){ 
@@ -444,7 +446,7 @@
       AFRAME.registerComponent('tap-animate-gamelogic', {
       init: function() {
         console.log("init tap-animate-gamelogic");
-        const fearEntity = document.getElementById('fear-entity');
+     //   const fearEntity = document.getElementById('fear-entity');
 
         this.handleEvent = this.handleEvent.bind(this);
     //    this.el.sceneEl.addEventListener('twofingermove', this.handleEvent)
@@ -453,22 +455,33 @@
         //test user message
         document.getElementById("game-message").innerHTML = "<H2>Tap the dog to calm it down.</H2>";
 
-        //LOOP ANIMATION CLIPS
-        var clipLoopIndex = 1;
-        setInterval(function(){ 
-            console.log("change animation to: " + AFPS.gameState.activeClips[clipLoopIndex]);
-            fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[clipLoopIndex], loop: "pingpong"});
+        //animation clip change var
+        this.clipLoopIndex = 0;
+        this.lastClipChangeTime = 0;
+     /*   setInterval(function(){ 
+            console.log("change animation to: " + AFPS.gameState.activeClips[this.clipLoopIndex]);
+            fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[this.clipLoopIndex], loop: "pingpong"});
 
-            clipLoopIndex++;
-        	if(clipLoopIndex > 2) clipLoopIndex = 0;
-        }, 2500); 
+            this.clipLoopIndex++;
+        	if(this.clipLoopIndex > 2) this.clipLoopIndex = 0;
+        }, 2500); */
 
 
 	     // Set up the tick throttling. Will check if marker is active every 250ms
         this.tick = AFRAME.utils.throttleTick(this.tick, 250, this);
       },
-      tick: function() {
+      tick: function(time, timeDelta) {
         //ticker stuff
+
+        //LOOP ANIMATION CLIPS
+        if( (time - this.lastClipChangeTime) > 3000 && AFPS.gameState.fearIsActive == true){
+        	console.log("change animation to: " + AFPS.gameState.activeClips[this.clipLoopIndex]);
+            this.el.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[this.clipLoopIndex]});
+
+            this.clipLoopIndex++;
+        	if(this.clipLoopIndex > 2) this.clipLoopIndex = 0;
+        	this.lastClipChangeTime = time;
+        }
 
         //repeat animation clip sequence
     /*    if(AFPS.gameState.repeatClipSequence == true){
@@ -510,32 +523,7 @@
             let currentDistance = camPos.distanceTo(targetPos);
             let relativeDistance = currentDistance / initialDistance;
 
-            //log every now and then, don't swamp console
-       //     if((Math.random() * 10) < 2){  console.log("(currentdistance / initialdistance): " + currentDistance + " / " + initialDistance + " = " + relativeDistance ); }
 
-
-            if(relativeDistance > AFPS.gameState.distanceCutOff ){
-
-                if(AFPS.gameState.dialogue != 'closer'){
-                  document.getElementById("game-message").innerHTML = "<H2>GET CLOSER!</H2>";
-                  console.log("AFPS.gameState.fearInRange = false;");
-                }
-                AFPS.gameState.dialogue = 'closer';
-
-                //flag disable pinch fear entity
-                AFPS.gameState.fearInRange = false;
-            } 
-            else {
-
-                if(AFPS.gameState.dialogue != 'pinch'){
-                  document.getElementById("game-message").innerHTML = "<H2>PINCH YOUR FEAR AWAY!</H2>";
-                  console.log("AFPS.gameState.fearInRange = true;");
-                }
-                AFPS.gameState.dialogue = 'pinch';
-
-                //flag can now pinch fear entity
-                AFPS.gameState.fearInRange = true;
-            } 
         } */
       },
       remove: function() {
@@ -607,99 +595,39 @@
         	AFPS.gameState.activeClips[0] = "LayIdle"; 
         	AFPS.gameState.activeClips[1] = "LayIdleLong";
         	AFPS.gameState.activeClips[2] = "LayRest";
-        }
+        } else if(AFPS.gameState.interactionPoints > 100) AFPS.gameState.interactionPoints = 0; //loop for testing
 
-        //loop for testing
-        if(AFPS.gameState.interactionPoints > 100) AFPS.gameState.interactionPoints = 0;
+        
+        
 
         //display interaction points
         document.getElementById("score-message").innerHTML = "<h2>SCORE: " + AFPS.gameState.interactionPoints + "%</h2>";
 
         //place hand model over fear entity for timed display
-        const handEntity = document.getElementById('hand-entity'); 
-        const touchPoint = event.detail.intersection.point;
-        handEntity.setAttribute('position', touchPoint)
-        handEntity.setAttribute('visible', 'true');
+        if(AFPS.gameState.handIsActive == false){ //don't run if already visible
+        	AFPS.gameState.handIsActive = true;
+	        const handEntity = document.getElementById('hand-entity'); 
+	        const touchPoint = event.detail.intersection.point;
+	        handEntity.object3D.position.set( (touchPoint.x - 3), (touchPoint.y - 1), (touchPoint.z + 1)); //correct hand model with offset
+	       // handEntity.setAttribute('position', touchPoint)
+
+	        //start the animation by appending the animation-mixer
+	        handEntity.setAttribute('animation-mixer', {clip: "*", loop: "pingpong", repetitions: 6});
+	        handEntity.setAttribute('visible', 'true');
+
+	        handEntity.addEventListener('animation-finished', function() {
+			    handEntity.setAttribute('visible', 'false');
+			    handEntity.removeAttribute('animation-mixer');
+			    AFPS.gameState.handIsActive = false;
+			},{once:true});
+	    }
+
+
         //display hand for brief moment
-        setTimeout(()=> {
-        	handEntity.setAttribute('visible', 'false');
-        }, 1000);
+      //  setTimeout(()=> {
+      //  	handEntity.setAttribute('visible', 'false');
+     //   }, 1000);
 
-
-
-        //only make small if user approaches fear entity + game is active
-        if(AFPS.gameState.fearInRange == true && AFPS.gameState.fearIsActive == true){
-          const fearEntity = document.getElementById('fear-entity');
-
-
-
-          /*********** HANDLE USER DESTRUCTION ON FEAR ENTITY BY SUFFICIENT PINCHING *************/
-          if(9999999999 < AFPS.gameState.scaleDestroyCuttOff){
-
-            AFPS.gameState.fearIsActive = false;
-            console.log("fear entity destroyed - AFPS.gameState.fearIsActive = false;");
-
-            //increase score and set fear entitity as not active
-            let newScore = AFPS.gameState.score + 1;
-            console.log("new score: " + newScore);
-            AFPS.gameState.score = newScore;
-
-            //set explode graphic position to fear entity position
-        /*    let thePosition = fearEntity.getAttribute('position');
-            console.log("current position of fear element: "); 
-            console.log(thePosition);
-            explodeGraphic.setAttribute('position', thePosition);
-
-            console.log("current position of explode element:");
-            console.log( explodeGraphic.getAttribute('position') ); */
-
-            //stop fear entity sound and play explode sound
-            fearEntity.components.sound.stopSound();
-        //    explodeGraphic.components.sound.playSound();
-
-            //hide 'destroyed' fear graphic and show explosion graphic
-            fearEntity.setAttribute('visible', false);
-        //    explodeGraphic.setAttribute('visible', true);
-
-            //update in game text messages
-            document.getElementById("game-message").innerHTML = "<h2>SILLY FEAR!</h2>";
-            document.getElementById("score-message").innerHTML = "<h2>SCORE: " + AFPS.gameState.score + "</h2>";
-
-
-            //stop explosion graphics and hide everything after a few seconds
-            setTimeout(()=> {
-              //  explodeGraphic.setAttribute('visible', false);
-              //  explodeGraphic.components.sound.stopSound();
-
-                document.getElementById("game-message").innerHTML = "<H2>LOOK AROUND TO FACE MORE FEAR...</H2>";
-
-                //RESET FOR NEXT FEAR ENTITY
-                setTimeout(()=> {
-                    fearEntity.components.sound.playSound();
-
-                    //make fear entity visible again
-                    fearEntity.setAttribute('visible', true);
-
-                    //get new initial distance of camera/player from fear entity
-                    //need to wait for position to update
-                    setTimeout(()=> {
-                    /*    let camPos = camera.object3D.position;
-                        let targetPos = fearEntity.object3D.position;
-                        AFPS.gameState.initialDistance = camPos.distanceTo(targetPos);
-
-                        console.log("recaclulated initial distance:" + AFPS.gameState.initialDistance); */
-
-                        //allow user interaction with fear entity
-                        AFPS.gameState.fearIsActive = true;
-                    }, 500);
-
-                }, 6000);
-
-            }, 3000);
-
-          }
-
-        }
       }
     })
     </script>
@@ -752,10 +680,10 @@
         id="fear-entity" 
         class="cantap"
         scale="0.2 0.2 0.2" 
-        position="0 0 5"
+        position="0 0 3"
         cursor-listener
         gltf-model="#fear-model-1"
-        animation-mixer="clip: AggressiveAttack2; crossFadeDuration: 0.5; timeScale: 2;" 
+        animation-mixer="clip: AggressiveAttack2; crossFadeDuration: 0.5; timeScale: 1.2;" 
         tap-animate-gamelogic></a-entity>
 
 <!--
@@ -775,7 +703,6 @@
         id="hand-entity" 
         scale="0.2 0.2 0.2" 
         position="0 0 5"
-        animation-mixer="loop: pingpong"
         visible="false"
         hand-pet></a-entity>
 
