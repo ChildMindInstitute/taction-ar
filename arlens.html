@@ -25,14 +25,14 @@
         quizActive: true,
         score: 0,
         interactionPoints: 0,
-        fearIntensityState: 'first',
+        fearIntensityState: 'none',
         type: 'dog',       //search, dog or bee - search is default
         fearIsActive: false,  //can player interact with/destroy the fear entity
         resize: 30,
         fearDistance: 18,      //distance of player/camera from fear entity
         dialogue: 'none',
         fearModelSRC: ["./assets/models/dog-lowpoly-pitbull-model.glb", "", ""],
-        fearSoundSRC: ["./assets/audio/dog-small-sound.mp3", "./assets/audio/dog-growling-sound.mp3", "./assets/audio/dog-evil-sound.mp3"],
+        fearSoundSRC: ["./assets/audio/dog-1evil-sound.mp3", "./assets/audio/dog-2growling-sound.mp3", "./assets/audio/dog-3barking-close-sound.mp3", "./assets/audio/dog-4barking-slow-sound.mp3", "./assets/audio/dog-5bark-mild-sound.mp3", "./assets/audio/dog-6yelping-sound.mp3"],
         activeClips: ["AggressiveAttack2", "AggressiveAttack", "AggressiveBarking"],
         repeatClipSequence: true,
         animations: ["walk", "Trot", "Gallop", "run", "WalkSniff", "IdleSniff", "IdleDig", "idle", "IdleMouthClosed", "IdleLong", 
@@ -260,9 +260,9 @@
         	//do stuff after model is loaded
             handEntity.addEventListener('model-loaded', () => {
             	//inspect hand model
-              	var mesh = handEntity.getObject3D('mesh');
+           /*   	var mesh = handEntity.getObject3D('mesh');
               	console.log("~HAND MESH~");
-              	console.log(mesh);
+              	console.log(mesh); */
 
                 //fix animation duration
                 var sumDurations = 0;
@@ -291,74 +291,58 @@
           //do stuff after model is loaded
             theFear.addEventListener('model-loaded', () => {
 
-              //model diagnostics
-              console.log("~~~~~MODEL DIAGNOSTICS~~~~~");
-              var mesh = theFear.getObject3D('mesh');
-              console.log("~FEAR MESH~");
-              console.log(mesh);
-              console.log("~animations~");
-              console.log(mesh.animations)
-              console.log("~duration model 5");
-              console.log(mesh.animations[4].duration);
+	            //model diagnostics
+	            console.log("~~~~~MODEL DIAGNOSTICS~~~~~");
+	            var mesh = theFear.getObject3D('mesh');
+	        /*    console.log("~FEAR MESH~");
+	            console.log(mesh);
+	            console.log("~animations~");
+	            console.log(mesh.animations)
+	            console.log("~duration model 5");
+	            console.log(mesh.animations[4].duration); */
 
-              console.log("~traverse mesh~");
-              //hide anoying base of model
-              if (mesh) {
-                mesh.traverse(function (node) {
-                  if (node.isMesh){
-                    console.log(node.material);
-                    if(node.name == 'Floor__0'){
-                      console.log("hiding floor"); 
-                      node.visible = false;
+	            console.log("~traverse mesh~");
+	            //hide anoying base of model
+	            if (mesh) {
+	                mesh.traverse(function (node) {
+	                  if (node.isMesh){
+	                    console.log(node.material);
+	                    if(node.name == 'Floor__0'){
+	                      console.log("hiding floor"); 
+	                      node.visible = false;
 
-                    }
-                  } 
-                });
-              } 
+	                    }
+	                  } 
+	                });
+	            } 
 
-              //fix animation duration (model durations are sum of past durations in array)
-              var sumDurations = 0;
-              for(var i = 0; i < mesh.animations.length; i++){
-                //fix top level animation clip duration
-                mesh.animations[i].duration = mesh.animations[i].duration - sumDurations;
-                //fix frame component duration for all frames in clip
-                //mesh(object) --> animations(array) --> tracks(array) --> times(array)
-                for(var j = 0; j < mesh.animations[i].tracks.length; j++){
-                  //frame rate ie difference in time between frames
-                  var frameTime = mesh.animations[i].tracks[j].times[2] - mesh.animations[i].tracks[j].times[1];
-                  var offSetSkipFirst =  mesh.animations[i].tracks[j].times[1] - frameTime;
-                  for(var k = 0; k < mesh.animations[i].tracks[j].times.length; k++){
+                //fix animation duration (model durations are sum of past durations in array)
+                var sumDurations = 0;
+                for(var i = 0; i < mesh.animations.length; i++){
+	                //fix top level animation clip duration
+	                mesh.animations[i].duration = mesh.animations[i].duration - sumDurations;
+	                //fix frame component duration for all frames in clip
+	                //mesh(object) --> animations(array) --> tracks(array) --> times(array)
+	                for(var j = 0; j < mesh.animations[i].tracks.length; j++){
+	                  //frame rate ie difference in time between frames
+	                  var frameTime = mesh.animations[i].tracks[j].times[2] - mesh.animations[i].tracks[j].times[1];
+	                  var offSetSkipFirst =  mesh.animations[i].tracks[j].times[1] - frameTime;
+	                  for(var k = 0; k < mesh.animations[i].tracks[j].times.length; k++){
 
-                      if(mesh.animations[i].tracks[j].times[k] != 0 ){
-                        mesh.animations[i].tracks[j].times[k] = mesh.animations[i].tracks[j].times[k] - offSetSkipFirst;
-                        if(mesh.animations[i].tracks[j].times[k] < 0) mesh.animations[i].tracks[j].times[k] = 0;
-                      }
-                  }
-                }
+	                      if(mesh.animations[i].tracks[j].times[k] != 0 ){
+	                        mesh.animations[i].tracks[j].times[k] = mesh.animations[i].tracks[j].times[k] - offSetSkipFirst;
+	                        if(mesh.animations[i].tracks[j].times[k] < 0) mesh.animations[i].tracks[j].times[k] = 0;
+	                      }
+	                  }
+	                }
 
-                sumDurations = sumDurations + mesh.animations[i].duration;
+	                sumDurations = sumDurations + mesh.animations[i].duration;
 
-              //  console.log("~sum duration~"); console.log(sumDurations);
-             //   console.log("~animation " + i + " duration~"); onsole.log(mesh.animations[i].duration);
+	              //  console.log("~sum duration~"); console.log(sumDurations);
+	             //   console.log("~animation " + i + " duration~"); onsole.log(mesh.animations[i].duration);
                 
-              }
-          //    console.log("~duration model 5"); console.log(mesh.animations[4].duration);
-              console.log("~~ MODIFIED MESH OBJECT ~~");
-              console.log(mesh);
-
-            //  theFear.setAttribute('animation-mixer', 'loop', 'repeat');
-            //  theFear.setAttribute("animation-mixer", "crossFadeDuration", "0"); 
-            //  theFear.setAttribute("animation-mixer", "timeScale", "1"); 
-
-         /*     var animateIntervalIndex = 0;
-              setInterval(function(){ 
-                console.log("change animation to: " + AFPS.gameState.animations[animateIntervalIndex]);
-
-                theFear.setAttribute("animation-mixer", "clip", AFPS.gameState.animations[animateIntervalIndex]); 
-
-                animateIntervalIndex++;
-                if (animateIntervalIndex > 38) animateIntervalIndex = 0;
-              }, 10000); */
+               }
+           //   console.log("~~ MODIFIED MESH OBJECT ~~"); console.log(mesh);
 
                //load hand model into assets
                 const handModelElement = document.createElement('a-asset-item');
@@ -368,7 +352,7 @@
                 const handEntity = document.getElementById('hand-entity'); 
                 handEntity.setAttribute('gltf-model', '#hand-model')
 
-              theFear.setAttribute('visible', 'true');
+              	theFear.setAttribute('visible', 'true');
             }) //end model loaded
 
 
@@ -379,8 +363,7 @@
 
             //set init model specs
             theFear.setAttribute('visible', 'false');
-          //  theFear.setAttribute('scale', '1.5 1.5 1.5');
-         //   theFear.setAttribute('gltf-model', '#fear-model-1');
+
 
             //AFTER AUGMENTED REALITY CAMERA FEED ACTIVE
           //do stuff when device camera feed becomes visible (don't want asset loading to slow startup)
@@ -398,80 +381,58 @@
             theFear.setAttribute('position', pos);
             console.log("initial-events set pos:"); console.log(pos); 
 
-
-
             //turn off quiz jquery
             AFPS.gameState.quizActive = false;
 
             //start playing key sound effect
             theFear.components.sound.playSound();
 
+            //enable game mode once everything is ready
+            setTimeout(function(){ 
+	            AFPS.gameState.fearIsActive = true;
+	            console.log("AFPS.gameState.fearIsActive = true;");
 
-       /*       //load future assets after reality loads
-              const explodeAudioElement = document.createElement('audio');
-              explodeAudioElement.setAttribute('id', 'explode-sound');
-              explodeAudioElement.setAttribute('src', AFPS.gameState.explodeSoundSRC[0]);
-              assets.appendChild(explodeAudioElement);
+	            //display heart progress bar
+	            $("#heart-bar").css("display", "block");
+            }, 2000);
 
-              const explodeGraphicElement1 = document.createElement('img');
-              explodeGraphicElement1.setAttribute('id', 'explode-gif1');
-              explodeGraphicElement1.setAttribute('src', AFPS.gameState.explodeImageSRC[0]); 
-              assets.appendChild(explodeGraphicElement1); 
 
-              //add sound & image to explode element
-              explode.setAttribute('sound', 'src', '#explode-sound');
-              explode.setAttribute('sound', 'autoplay', 'false');
-              explode.setAttribute('sound', 'loop', 'true');
-              explode.setAttribute('material', 'shader', 'gif'); 
-              explode.setAttribute('material', 'alphaTest', '0.5');
-              explode.setAttribute('material', 'src', '#explode-gif1');  */
-
-              //enable game mode once everything is ready
-              setTimeout(function(){ 
-                AFPS.gameState.fearIsActive = true;
-                console.log("AFPS.gameState.fearIsActive = true;");
-
-                //display heart progress bar
-                $("#heart-bar").css("display", "block");
-              }, 2000);
+            const fearSound2Element = document.createElement('audio');
+            fearSound2Element.setAttribute('id', 'fear-sound-2');
+            fearSound2Element.setAttribute('src', AFPS.gameState.fearSoundSRC[1]);
+            assets.appendChild(fearSound2Element);
 
               //DELAYED GENERATION AND LOADING OF FUTURE ASSETS
-              //enable game mode once everything is ready
-              setTimeout(function(){ 
-           /*     const fearModel2Element = document.createElement('a-asset-item');
-                fearModel2Element.setAttribute('id', 'fear-model-2');
-                fearModel2Element.setAttribute('src', AFPS.gameState.fearModelSRC[1]);
-                assets.appendChild(fearModel2Element); */
+            setTimeout(function(){ 
 
-                const fearSound2Element = document.createElement('audio');
-                fearSound2Element.setAttribute('id', 'fear-sound-2');
-                fearSound2Element.setAttribute('src', AFPS.gameState.fearSoundSRC[1]);
-                assets.appendChild(fearSound2Element);
+               	const fearSound3Element = document.createElement('audio');
+	            fearSound3Element.setAttribute('id', 'fear-sound-3');
+	            fearSound3Element.setAttribute('src', AFPS.gameState.fearSoundSRC[2]);
+	            assets.appendChild(fearSound3Element);
 
-        /*      const explodeGraphicElement2 = document.createElement('img');
-              explodeGraphicElement2.setAttribute('id', 'explode-gif2');
-              explodeGraphicElement2.setAttribute('src', AFPS.gameState.explodeImageSRC[1]); 
-              assets.appendChild(explodeGraphicElement2); */
-                
                 console.log("Level 2 assets appended to loader");
 
                 setTimeout(function(){ 
-              /*    const fearModel3Element = document.createElement('a-asset-item');
-                  fearModel3Element.setAttribute('id', 'fear-model-3');
-                  fearModel3Element.setAttribute('src', AFPS.gameState.fearModelSRC[2]);
-                  assets.appendChild(fearModel3Element); */
 
-                  const fearSound3Element = document.createElement('audio');
-                  fearSound3Element.setAttribute('id', 'fear-sound-3');
-                  fearSound3Element.setAttribute('src', AFPS.gameState.fearSoundSRC[2]);
-                  assets.appendChild(fearSound3Element);
+	                const fearSound4Element = document.createElement('audio');
+	                fearSound4Element.setAttribute('id', 'fear-sound-4');
+	                fearSound4Element.setAttribute('src', AFPS.gameState.fearSoundSRC[3]);
+	                assets.appendChild(fearSound4Element);
 
-                  
-                  console.log("Level 3 assets appended to loader");
-                }, 8000);
-              }, 3000);
+	                const fearSound5Element = document.createElement('audio');
+	                fearSound5Element.setAttribute('id', 'fear-sound-5');
+	                fearSound5Element.setAttribute('src', AFPS.gameState.fearSoundSRC[4]);
+	                assets.appendChild(fearSound5Element);
+
+	                const fearSound6Element = document.createElement('audio');
+	                fearSound6Element.setAttribute('id', 'fear-sound-6');
+	                fearSound6Element.setAttribute('src', AFPS.gameState.fearSoundSRC[5]);
+	                assets.appendChild(fearSound6Element);
+	                  
+	                console.log("Level 3 assets appended to loader");
+                }, 5000);
+            }, 3000);
               
-
           })
 
         }
@@ -594,6 +555,8 @@
         if(AFPS.gameState.interactionPoints >= 0 && AFPS.gameState.interactionPoints < 10 &&  AFPS.gameState.fearIntensityState != 'first'){
         	AFPS.gameState.fearIntensityState = 'first';
         	$('#heart-bar').css('background-image','url(./images/hearts_0_of_5.png)'); //update interaction progress bar
+        	fearEntity.setAttribute("animation-mixer", "timeScale", "1"); 
+        	fearEntity.setAttribute('sound', 'src', '#fear-sound-1');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "AggressiveAttack2"; 
         	AFPS.gameState.activeClips[1] = "AggressiveAttack";
@@ -603,6 +566,7 @@
         } else if(AFPS.gameState.interactionPoints >= 10 && AFPS.gameState.interactionPoints < 28 &&  AFPS.gameState.fearIntensityState != 'second'){
         	AFPS.gameState.fearIntensityState = 'second';
         	$('#heart-bar').css('background-image','url(./images/hearts_1_of_5.png)');
+        	fearEntity.setAttribute('sound', 'src', '#fear-sound-2');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "IdleBarking"; 
         	AFPS.gameState.activeClips[1] = "IdleBarkingLong";
@@ -611,6 +575,7 @@
         } else if(AFPS.gameState.interactionPoints >= 28 && AFPS.gameState.interactionPoints < 46 &&  AFPS.gameState.fearIntensityState != 'third'){
         	AFPS.gameState.fearIntensityState = 'third';
         	$('#heart-bar').css('background-image','url(./images/hearts_2_of_5.png)');
+        	fearEntity.setAttribute('sound', 'src', '#fear-sound-3');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "Trot"; 
         	AFPS.gameState.activeClips[1] = "AggressiveIdle";
@@ -619,6 +584,7 @@
         } else if(AFPS.gameState.interactionPoints >= 46 && AFPS.gameState.interactionPoints < 64 &&  AFPS.gameState.fearIntensityState != 'fourth'){
         	AFPS.gameState.fearIntensityState = 'fourth';
         	$('#heart-bar').css('background-image','url(./images/hearts_3_of_5.png)');
+        	fearEntity.setAttribute('sound', 'src', '#fear-sound-4');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "Drink"; 
         	AFPS.gameState.activeClips[1] = "IdleMouthClosed";
@@ -627,6 +593,7 @@
         } else if(AFPS.gameState.interactionPoints >= 64 && AFPS.gameState.interactionPoints < 82 &&  AFPS.gameState.fearIntensityState != 'fifth'){
         	AFPS.gameState.fearIntensityState = 'fifth';
         	$('#heart-bar').css('background-image','url(./images/hearts_4_of_5.png)');
+        	fearEntity.setAttribute('sound', 'src', '#fear-sound-5');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "SitIdleLong"; 
         	AFPS.gameState.activeClips[1] = "SitScratch";
@@ -635,6 +602,7 @@
         } else if(AFPS.gameState.interactionPoints >= 82  &&  AFPS.gameState.fearIntensityState != 'sixth'){
         	AFPS.gameState.fearIntensityState = 'sixth';
         	$('#heart-bar').css('background-image','url(./images/hearts_5_of_5.png)');
+        	fearEntity.setAttribute('sound', 'src', '#fear-sound-6');
         	//change animation clips
         	AFPS.gameState.activeClips[0] = "LayIdle"; 
         	AFPS.gameState.activeClips[1] = "LayIdleLong";
@@ -767,7 +735,7 @@
         <a-assets id="assets">
             <a-asset-item id="fear-model-1" src="./assets/models/dog-lowpoly-pitbull-model.glb"></a-asset-item> 
          <!--   <a-asset-item id="hand-model" src="./assets/models/hand-model.glb"></a-asset-item> -->
-            <audio id="fear-sound-1" src="./assets/audio/dog-small-sound.mp3">
+            <audio id="fear-sound-1" src="./assets/audio/dog-1evil-sound.mp3">
         </a-assets>
 
         <a-camera 
@@ -787,7 +755,7 @@
         position="0 0 5"
         cursor-listener
         gltf-model="#fear-model-1"
-        animation-mixer="clip: AggressiveAttack2; crossFadeDuration: 0.5;"
+        animation-mixer="clip: AggressiveAttack2; crossFadeDuration: 0.5; timeScale: 2;" 
         tap-animate-gamelogic></a-entity>
 
 <!--
