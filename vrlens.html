@@ -50,7 +50,7 @@
  <!-- <script src="//cdn.8thwall.com/web/aframe/8frame-0.8.2.min.js"></script> -->
  <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.0.1/dist/aframe-extras.min.js"></script>
- <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script>
+<!-- <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script> -->
  <script src="./assets/js/aframe-look-at-component.min.js"></script>
 
     <script src="./assets/json/silly-trivia.js" ></script>
@@ -376,7 +376,7 @@
             console.log("initial-events component -->  realityready");
             
             //set init position
-            var angle = camera.getAttribute('rotation');
+        /*    var angle = camera.getAttribute('rotation');
             var x = 1 * Math.cos(angle.y * Math.PI / 180);
             var y = 1 * Math.sin(angle.y * Math.PI / 180);
             var pos = camera.getAttribute('position');
@@ -384,7 +384,7 @@
             pos.z -= x* AFPS.gameState.fearDistance;
             pos.y = 0;
             theFear.setAttribute('position', pos);
-            console.log("initial-events set pos:"); console.log(pos); 
+            console.log("initial-events set pos:"); console.log(pos); */
 
             //turn off quiz jquery
             AFPS.gameState.quizActive = false;
@@ -667,9 +667,9 @@
 
         <a-camera 
         id="camera" 
-        position="0 8 8"
+        position="0 8 0"
         raycaster="objects: .cantap"
-        cursor="fuse: false; rayOrigin: mouse;"></a-camera>
+        cursor="fuse: false; rayOrigin: mouse;"></a-camera> 
 
         <a-entity 
         light="type: ambient; intensity: 2;" 
@@ -679,7 +679,7 @@
         id="fear-entity" 
         class="cantap"
         scale="0.2 0.2 0.2" 
-        position="0 0 3"
+        position="0 -2 -12"
         cursor-listener
         gltf-model="#fear-model-1"
         animation-mixer="clip: AggressiveAttack2; crossFadeDuration: 0.5; timeScale: 1.2;" 
@@ -701,7 +701,7 @@
         <a-entity 
         id="hand-entity" 
         scale="0.2 0.2 0.2" 
-        position="0 0 5"
+        position="0 0 -12"
         visible="false"
         hand-pet></a-entity>
 
