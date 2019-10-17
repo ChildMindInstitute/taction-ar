@@ -489,6 +489,12 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 			<script>
 				$( document ).ready(function() {
+
+					//page reload sometimes has input autofilled without correct class
+					if ( $("#format-toggle-container input").prop('checked') ) {
+						$("#format-toggle-container").removeClass("ar");
+					}
+
 					$("#format-toggle-container input").click(function() {
 
 						if( $("#format-toggle-container").hasClass("ar") ){
