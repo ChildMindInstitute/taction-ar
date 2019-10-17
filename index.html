@@ -101,7 +101,7 @@
 										<li><a href="vrlens.html"><span class="icon"><img src="images/jellyfish.svg" alt="" style="width: 70px !important;"/><span class="label">Jellyfish</span></span></a></li>
 									</ul>
 
-									<div id="format-toggle-container">
+									<div id="format-toggle-container" class="ar">
 										<p class="models">AR</p><input type="checkbox" id="switch" name="some-switch"><label for="switch"></label><p class="images">VR</p>
 									</div>
 
@@ -116,7 +116,6 @@
 									<img src="images/01.png" alt="" />
 								</div>
 							</section>
-
 
 						<!-- Panel (Spotlight) -->
 							<section class="panel spotlight large left">
@@ -487,6 +486,22 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/main.js"></script>
+
+			<script>
+				$( document ).ready(function() {
+					$("#format-toggle-container input").click(function() {
+
+						if( $("#format-toggle-container").hasClass("ar") ){
+							$("a[href='arlens.html']").attr('href', 'vrlens.html');
+							$("#format-toggle-container").removeClass("ar");
+						} else {
+							$("a[href='vrlens.html']").attr('href', 'arlens.html');
+							$("#format-toggle-container").addClass("ar");
+						}
+
+					});
+				});
+			</script>
 
 	</body>
 </html>
