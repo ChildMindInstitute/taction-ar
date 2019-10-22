@@ -32,7 +32,7 @@
         resize: 30,
         fearDistance: 12,      //distance of player/camera from fear entity
         dialogue: 'none',
-        fearModelSRC: ["./assets/models/dog-lowpoly-pitbull-model.glb", "", ""],
+        fearModelSRC: ["./assets/models/dog-pointer-model.glb", "", ""],
         fearSoundSRC: ["./assets/audio/dog-1evil-sound.mp3", "./assets/audio/dog-2growling-sound.mp3", "./assets/audio/dog-3barking-close-sound.mp3", "./assets/audio/dog-4barking-slow-sound.mp3", "./assets/audio/dog-5bark-mild-sound.mp3", "./assets/audio/dog-6yelping-sound.mp3"],
         activeClips: ["AggressiveAttack2", "AggressiveAttack", "AggressiveBarking"],
         repeatClipSequence: true,
@@ -295,12 +295,12 @@
 	            //model diagnostics
 	            console.log("~~~~~MODEL DIAGNOSTICS~~~~~");
 	            var mesh = theFear.getObject3D('mesh');
-	        /*    console.log("~FEAR MESH~");
+	            console.log("~FEAR MESH~");
 	            console.log(mesh);
 	            console.log("~animations~");
 	            console.log(mesh.animations)
 	            console.log("~duration model 5");
-	            console.log(mesh.animations[4].duration); */
+	            console.log(mesh.animations[4].duration); 
 
 	            console.log("~traverse mesh~");
 	            //hide anoying base of model
@@ -661,7 +661,7 @@
 
     
         <a-assets id="assets">
-            <a-asset-item id="fear-model-1" src="./assets/models/dog-lowpoly-pitbull-model.glb"></a-asset-item> 
+            <a-asset-item id="fear-model-1" src="./assets/models/dog-pointer-model.glb"></a-asset-item> 
          <!--   <a-asset-item id="hand-model" src="./assets/models/hand-model.glb"></a-asset-item> -->
             <audio id="fear-sound-1" src="./assets/audio/dog-1evil-sound.mp3">
         </a-assets>
