@@ -297,10 +297,10 @@
 	            var mesh = theFear.getObject3D('mesh');
 	            console.log("~FEAR MESH~");
 	            console.log(mesh);
-	            console.log("~animations~");
+	        /*    console.log("~animations~");
 	            console.log(mesh.animations)
 	            console.log("~duration model 5");
-	            console.log(mesh.animations[4].duration); 
+	            console.log(mesh.animations[4].duration); */
 
 	            console.log("~traverse mesh~");
 	            //hide anoying base of model
@@ -318,7 +318,7 @@
 	            } 
 
                 //fix animation duration (model durations are sum of past durations in array)
-                var sumDurations = 0;
+       /*         var sumDurations = 0;
                 for(var i = 0; i < mesh.animations.length; i++){
 	                //fix top level animation clip duration
 	                mesh.animations[i].duration = mesh.animations[i].duration - sumDurations;
@@ -342,7 +342,7 @@
 	              //  console.log("~sum duration~"); console.log(sumDurations);
 	             //   console.log("~animation " + i + " duration~"); onsole.log(mesh.animations[i].duration);
                 
-               }
+               } */
            //   console.log("~~ MODIFIED MESH OBJECT ~~"); console.log(mesh);
 
                //load hand model into assets
@@ -475,8 +475,8 @@
 
         //LOOP ANIMATION CLIPS
         if( (time - this.lastClipChangeTime) > 3000 && AFPS.gameState.fearIsActive == true){
-        	console.log("change animation to: " + AFPS.gameState.activeClips[this.clipLoopIndex]);
-            this.el.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[this.clipLoopIndex]});
+   /*     	console.log("change animation to: " + AFPS.gameState.activeClips[this.clipLoopIndex]);
+            this.el.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[this.clipLoopIndex]}); */
 
             this.clipLoopIndex++;
         	if(this.clipLoopIndex > 2) this.clipLoopIndex = 0;
@@ -679,7 +679,7 @@
         <a-entity 
         id="fear-entity" 
         class="cantap"
-        scale="0.2 0.2 0.2" 
+        scale="15.0 15.0 15.0" 
         position="0 0 3"
         cursor-listener
         gltf-model="#fear-model-1"
