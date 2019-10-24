@@ -15,22 +15,22 @@
 			}
 
 			/* style for toggle switch */
-			#format-toggle-container{
+			#format-toggle-container, #model-toggle-container{
 				width: 100%;
 			}
-			#format-toggle-container input {
+			#format-toggle-container input, #model-toggle-container input  {
 			    display: none;
 			}
-			#format-toggle-container p{
+			#format-toggle-container p, #model-toggle-container p{
 				display: inline-block;
 			}
-			#format-toggle-container p.images{
+			#format-toggle-container p.images, #model-toggle-container p.images{
 				color: #9ed7f4;
 			}
-			#format-toggle-container p.models{
+			#format-toggle-container p.models, #model-toggle-container p.models{
 				color: #9ef4d7;
 			}
-			#format-toggle-container label {
+			#format-toggle-container label, #model-toggle-container label  {
 			    cursor: pointer;
 			    display: inline-block;
 			    border: 1px solid #9ef4d7;
@@ -45,7 +45,7 @@
 			    position: relative;
 			    transition: all 0.2s;
 			}
-			#format-toggle-container label:after {
+			#format-toggle-container label:after, #model-toggle-container label:after {
 			    content: '';
 			    background-color: #FFF;
 			    border: 1px solid #9ef4d7;
@@ -57,14 +57,14 @@
 			    left: 0;
 			    transition: all 0.2s;
 			}
-			#format-toggle-container label:before {
+			#format-toggle-container label:before, #model-toggle-container label:before {
 				display:none;
 			}
-			#format-toggle-container input:checked + label {
+			#format-toggle-container input:checked + label , #model-toggle-container input:checked + label {
 			    background-color: #9ed7f4;
 			    border-color: #9ed7f4;
 			}
-			#format-toggle-container input:checked + label:after {
+			#format-toggle-container input:checked + label:after, #model-toggle-container input:checked + label:after  {
 			    left: 20px;
 			    border-color: #9ed7f4;
 			}
@@ -103,6 +103,10 @@
 
 									<div id="format-toggle-container" class="ar">
 										<p class="models">AR</p><input type="checkbox" id="switch" name="some-switch"><label for="switch"></label><p class="images">VR</p>
+									</div>
+
+									<div id="model-toggle-container" class="pointer">
+										<p class="models">Pointer</p><input type="checkbox" id="switch2" name="some-switch"><label for="switch2"></label><p class="images">Bulldog</p>
 									</div>
 
 									<h2 class="major">The Game</h2>
@@ -490,22 +494,51 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script>
 				$( document ).ready(function() {
 
+					$("#format-toggle-container input").prop( "checked", false );
+					$("#model-toggle-container input").prop( "checked", false );
+
 					//page reload sometimes has input autofilled without correct class
 					if ( $("#format-toggle-container input").prop('checked') ) {
 						$("#format-toggle-container").removeClass("ar");
 					}
 
+					//handle format toggle action
 					$("#format-toggle-container input").click(function() {
 
 						if( $("#format-toggle-container").hasClass("ar") ){
 							$("a[href='arlens.html']").attr('href', 'vrlens.html');
+							$("a[href='arlens2.html']").attr('href', 'vrlens.html');
 							$("#format-toggle-container").removeClass("ar");
 						} else {
-							$("a[href='vrlens.html']").attr('href', 'arlens.html');
+
+							if($("#model-toggle-container").hasClass("pointer")){
+								$("a[href='vrlens.html']").attr('href', 'arlens.html');
+							} else {
+								$("a[href='vrlens.html']").attr('href', 'arlens2.html');
+							}
+							
 							$("#format-toggle-container").addClass("ar");
 						}
-
 					});
+
+					//handle model toggle action
+					$("#model-toggle-container input").click(function() {
+
+						if( $("#format-toggle-container").hasClass("ar") ){
+
+							if( $("#model-toggle-container").hasClass("pointer") ){
+								$("a[href='arlens.html']").attr('href', 'arlens2.html');
+								$("#model-toggle-container").removeClass("pointer");
+							} else {
+								$("a[href='arlens2.html']").attr('href', 'arlens.html');
+								$("#model-toggle-container").addClass("pointer");
+							}
+						} else {
+							//no pointer VR yet
+							$("#model-toggle-container input").prop( "checked", false );
+						}
+					});
+
 				});
 			</script>
 
