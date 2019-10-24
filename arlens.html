@@ -304,7 +304,7 @@
 
 	            console.log("~traverse mesh~");
 	            //hide anoying base of model
-	            if (mesh) {
+	         /*   if (mesh) {
 	                mesh.traverse(function (node) {
 	                  if (node.isMesh){
 	                    console.log(node.material);
@@ -315,7 +315,7 @@
 	                    }
 	                  } 
 	                });
-	            } 
+	            } */
 
                 //fix animation duration (model durations are sum of past durations in array)
        /*         var sumDurations = 0;
@@ -465,6 +465,9 @@
             this.clipLoopIndex++;
         	if(this.clipLoopIndex > 2) this.clipLoopIndex = 0;
         }, 2500); */
+
+        this.el.setAttribute('animation-mixer',{clip: "*", loop: "pingpong"});
+
 
 
 	     // Set up the tick throttling. Will check if marker is active every 250ms
@@ -683,8 +686,9 @@
         position="0 0 3"
         cursor-listener
         gltf-model="#fear-model-1"
-        animation-mixer="clip: AggressiveAttack2; crossFadeDuration: 0.5; timeScale: 1.2;" 
+        animation-mixer
         tap-animate-gamelogic></a-entity>
+        <!--  animation-mixer="clip: *; crossFadeDuration: 0.5; timeScale: 1.2;"  -->
 
 <!--
                 <a-entity 
