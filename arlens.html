@@ -35,20 +35,20 @@
         fearModelSRC: ["./assets/models/dog-pointer-model.glb", "", ""],
         fearSoundSRC: ["./assets/audio/dog-1evil-sound.mp3", "./assets/audio/dog-2growling-sound.mp3", "./assets/audio/dog-3barking-close-sound.mp3", "./assets/audio/dog-4barking-slow-sound.mp3", "./assets/audio/dog-5bark-mild-sound.mp3", "./assets/audio/dog-6yelping-sound.mp3"],
         repeatClipSequence: true,
-        animations: [ 	stand:{name: "stand", offset: 0.0, duration: 5.5}, 
-        				lookside:{name: "lookside", offset: 5.5, duration: 8.0},
-        				lookup:{name: "lookup", offset: 13.5, duration: 10.5},
-        				lookdown:{name: "lookdown", offset: 24.0, duration: 6.0},
-        				walk:{name: "walk", offset: 30.0, duration: 3.8},
-        				run:{name: "run", offset: 33.8, duration: 1.2},
-        				moveside:{name: "moveside", offset: 35.0, duration: 4.0},
-        				liedown:{name: "liedown", offset: 39.0, duration: 2.8},
-        				bark:{name: "bark", offset: 41.8, duration: 7.2},
-        				headdown:{name: "headdown", offset: 49.0, duration: 3.5},
-        				shakehead:{name: "shakehead", offset: 52.5, duration: 4.5},
-        				sleep:{name: "sleep", offset: 57.0, duration: 3.5},
-        				wander:{name: "wander", offset: 60.5, duration: 9.5},
-        				sniffground:{name: "sniffground", offset: 70.0, duration: 4.6}]
+        animations: { 	stand:{offset: 0.0, duration: 5.5}, 
+        				lookside:{offset: 5.5, duration: 8.0},
+        				lookup:{offset: 13.5, duration: 10.5},
+        				lookdown:{offset: 24.0, duration: 6.0},
+        				walk:{offset: 30.0, duration: 3.8},
+        				run:{offset: 33.8, duration: 1.2},
+        				moveside:{offset: 35.0, duration: 4.0},
+        				liedown:{offset: 39.0, duration: 2.8},
+        				bark:{offset: 41.8, duration: 7.2},
+        				headdown:{offset: 49.0, duration: 3.5},
+        				shakehead:{offset: 52.5, duration: 4.5},
+        				sleep:{offset: 57.0, duration: 3.5},
+        				wander:{offset: 60.5, duration: 9.5},
+        				sniffground:{offset: 70.0, duration: 4.6}}
       }
     };
     </script>
@@ -314,29 +314,21 @@
         var mesh = theFear.getObject3D('mesh');
         AFPS.gameState.animationTimingData = new Array(mesh.animations[0].tracks.length); 
 
-        for(var i = 0; i < mesh.animations[0].tracks.length; i++){
 
-        	AFPS.gameState.animationTimingData[i] = new Array(mesh.animations[0].tracks[i].times.length);
-
-        	for(var k = 0; k < mesh.animations[0].tracks[i].times.length; k++){
-        		AFPS.gameState.animationTimingData[i][k] = mesh.animations[0].tracks[i].times[k];
-        	//	AFPS.gameState.animationTimingData[i][k] = 0;
-        	}
-        }
-        AFPS.gameState.animationTimingData.defaultDuration = mesh.animations[0].duration;
 
      //   console.log("backup of model animation timing data: " + AFPS.gameState.animationTimingData);
 
         //TEST MODIFY TIMES AND DURATION
-        mesh.animations[0].duration = 4.999;
         AFPS.gameState.animationTimingOffset = 0.0;
-        var newAnimationOffset = 35.01;
+
+        mesh.animations[0].duration = AFPS.gameState.animations.bark.duration;
+        var newAnimationOffset = AFPS.gameState.animations.bark.offset;
+
         for(var m = 0; m < mesh.animations[0].tracks.length; m++){
           for(var n = 0; n < mesh.animations[0].tracks[m].times.length; n++){
-              mesh.animations[0].tracks[m].times[n] = mesh.animations[0].tracks[m].times[n] - AFPS.gameState.animationTimingOffset - newAnimationOffset;
+              mesh.animations[0].tracks[m].times[n] = mesh.animations[0].tracks[m].times[n] + AFPS.gameState.animationTimingOffset - newAnimationOffset;
           }
         } 
-
         AFPS.gameState.animationTimingOffset = newAnimationOffset;
 
         console.log("MESH WITH TEST ANIMATION MODIFICATIONS:");
@@ -576,56 +568,49 @@
         	$('#heart-bar').css('background-image','url(./images/hearts_0_of_5.png)'); //update interaction progress bar
         	fearEntity.setAttribute("animation-mixer", "timeScale", "1"); 
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-1');
+
         	//change animation clips
-        	AFPS.gameState.activeClips[0] = "AggressiveAttack2"; 
-        	AFPS.gameState.activeClips[1] = "AggressiveAttack";
-        	AFPS.gameState.activeClips[2] = "AggressiveBarking";
+        	changeAnimation(AFPS.gameState.animations.bark);
 
 
         } else if(AFPS.gameState.interactionPoints >= 10 && AFPS.gameState.interactionPoints < 28 &&  AFPS.gameState.fearIntensityState != 'second'){
         	AFPS.gameState.fearIntensityState = 'second';
         	$('#heart-bar').css('background-image','url(./images/hearts_1_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-2');
+
         	//change animation clips
-        	AFPS.gameState.activeClips[0] = "IdleBarking"; 
-        	AFPS.gameState.activeClips[1] = "IdleBarkingLong";
-        	AFPS.gameState.activeClips[2] = "jump";
+        	changeAnimation(AFPS.gameState.animations.shakehead);
 
         } else if(AFPS.gameState.interactionPoints >= 28 && AFPS.gameState.interactionPoints < 46 &&  AFPS.gameState.fearIntensityState != 'third'){
         	AFPS.gameState.fearIntensityState = 'third';
         	$('#heart-bar').css('background-image','url(./images/hearts_2_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-3');
+
         	//change animation clips
-        	AFPS.gameState.activeClips[0] = "Trot"; 
-        	AFPS.gameState.activeClips[1] = "AggressiveIdle";
-        	AFPS.gameState.activeClips[2] = "IdleDig";
+        	changeAnimation(AFPS.gameState.animations.moveside);
         	
         } else if(AFPS.gameState.interactionPoints >= 46 && AFPS.gameState.interactionPoints < 64 &&  AFPS.gameState.fearIntensityState != 'fourth'){
         	AFPS.gameState.fearIntensityState = 'fourth';
         	$('#heart-bar').css('background-image','url(./images/hearts_3_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-4');
+
         	//change animation clips
-        	AFPS.gameState.activeClips[0] = "Drink"; 
-        	AFPS.gameState.activeClips[1] = "IdleMouthClosed";
-        	AFPS.gameState.activeClips[2] = "IdleLong";
+        	changeAnimation(AFPS.gameState.animations.lookdown);
         	
         } else if(AFPS.gameState.interactionPoints >= 64 && AFPS.gameState.interactionPoints < 82 &&  AFPS.gameState.fearIntensityState != 'fifth'){
         	AFPS.gameState.fearIntensityState = 'fifth';
         	$('#heart-bar').css('background-image','url(./images/hearts_4_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-5');
         	//change animation clips
-        	AFPS.gameState.activeClips[0] = "SitIdleLong"; 
-        	AFPS.gameState.activeClips[1] = "SitScratch";
-        	AFPS.gameState.activeClips[2] = "WipeAss";
+        	changeAnimation(AFPS.gameState.animations.headdown);
         	
         } else if(AFPS.gameState.interactionPoints >= 82  &&  AFPS.gameState.fearIntensityState != 'sixth'){
         	AFPS.gameState.fearIntensityState = 'sixth';
         	$('#heart-bar').css('background-image','url(./images/hearts_5_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-6');
         	//change animation clips
-        	AFPS.gameState.activeClips[0] = "LayIdle"; 
-        	AFPS.gameState.activeClips[1] = "LayIdleLong";
-        	AFPS.gameState.activeClips[2] = "LayRest";
+        	changeAnimation(AFPS.gameState.animations.sleep);
+
         } else if(AFPS.gameState.interactionPoints > 100) AFPS.gameState.interactionPoints = 0; //loop for testing
 
         
@@ -661,8 +646,22 @@
 
       }
     })
-    </script>
 
+	function changeAnimation(animationObject){
+		var mesh = document.getElementById('fear-entity').getObject3D('mesh');
+		mesh.animations[0].duration = animationObject.duration;
+	    var newAnimationOffset = animationObject.offset;
+
+	    for(var m = 0; m < mesh.animations[0].tracks.length; m++){
+	        for(var n = 0; n < mesh.animations[0].tracks[m].times.length; n++){
+	            mesh.animations[0].tracks[m].times[n] = mesh.animations[0].tracks[m].times[n] + AFPS.gameState.animationTimingOffset - newAnimationOffset;
+	        }
+	    } 
+	    AFPS.gameState.animationTimingOffset = newAnimationOffset;
+	   
+	}
+
+ </script>
 </head>
 <body class="no_padd">
     <header class="fixed"></header>
