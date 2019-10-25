@@ -321,7 +321,7 @@
         //TEST MODIFY TIMES AND DURATION
         mesh.animations[0].duration = 4.999;
         AFPS.gameState.animationTimingOffset = 0.0;
-        var newAnimationOffset = 5.01;
+        var newAnimationOffset = 35.01;
         for(var m = 0; m < mesh.animations[0].tracks.length; m++){
           for(var n = 0; n < mesh.animations[0].tracks[m].times.length; n++){
               mesh.animations[0].tracks[m].times[n] = mesh.animations[0].tracks[m].times[n] - AFPS.gameState.animationTimingOffset - newAnimationOffset;
