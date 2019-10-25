@@ -35,11 +35,20 @@
         fearModelSRC: ["./assets/models/dog-pointer-model.glb", "", ""],
         fearSoundSRC: ["./assets/audio/dog-1evil-sound.mp3", "./assets/audio/dog-2growling-sound.mp3", "./assets/audio/dog-3barking-close-sound.mp3", "./assets/audio/dog-4barking-slow-sound.mp3", "./assets/audio/dog-5bark-mild-sound.mp3", "./assets/audio/dog-6yelping-sound.mp3"],
         repeatClipSequence: true,
-        animations: ["walk", "Trot", "Gallop", "run", "WalkSniff", "IdleSniff", "IdleDig", "idle", "IdleMouthClosed", "IdleLong", 
-              "IdleBarking", "IdleBarkingLong", "jump", "IdleToSit", "SitIdle", "SitIdleLong", "SitScratch", "SitToLay", "LayIdle", "LayIdleLong", 
-              "LayRest", "LayToIdle", "Piss", "Poop", "IdleToConsume", "Eat", "Drink", "ConsumeToIdle", "IdleToAggressive", "AggressiveIdle", 
-              "AggressiveBarking", "AggressiveAttack", "AggressiveAttack2", "AggressiveBeingHit", "AggressiveBeingHit2", "AggressiveBeingHit3", "AggressiveToIdle", "IdleToLay", "LayToSit", "WipeAss", 
-              "SitToIdle", "Death"]
+        animations: [ 	stand:{name: "stand", offset: 0.0, duration: 5.5}, 
+        				lookside:{name: "lookside", offset: 5.5, duration: 8.0},
+        				lookup:{name: "lookup", offset: 13.5, duration: 10.5},
+        				lookdown:{name: "lookdown", offset: 24.0, duration: 6.0},
+        				walk:{name: "walk", offset: 30.0, duration: 3.8},
+        				run:{name: "run", offset: 33.8, duration: 1.2},
+        				moveside:{name: "moveside", offset: 35.0, duration: 4.0},
+        				liedown:{name: "liedown", offset: 39.0, duration: 2.8},
+        				bark:{name: "bark", offset: 41.8, duration: 7.2},
+        				headdown:{name: "headdown", offset: 49.0, duration: 3.5},
+        				shakehead:{name: "shakehead", offset: 52.5, duration: 4.5},
+        				sleep:{name: "sleep", offset: 57.0, duration: 3.5},
+        				wander:{name: "wander", offset: 60.5, duration: 9.5},
+        				sniffground:{name: "sniffground", offset: 70.0, duration: 4.6}]
       }
     };
     </script>
