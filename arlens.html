@@ -34,7 +34,6 @@
         dialogue: 'none',
         fearModelSRC: ["./assets/models/dog-pointer-model.glb", "", ""],
         fearSoundSRC: ["./assets/audio/dog-1evil-sound.mp3", "./assets/audio/dog-2growling-sound.mp3", "./assets/audio/dog-3barking-close-sound.mp3", "./assets/audio/dog-4barking-slow-sound.mp3", "./assets/audio/dog-5bark-mild-sound.mp3", "./assets/audio/dog-6yelping-sound.mp3"],
-        activeClips: ["AggressiveAttack2", "AggressiveAttack", "AggressiveBarking"],
         repeatClipSequence: true,
         animations: ["walk", "Trot", "Gallop", "run", "WalkSniff", "IdleSniff", "IdleDig", "idle", "IdleMouthClosed", "IdleLong", 
               "IdleBarking", "IdleBarkingLong", "jump", "IdleToSit", "SitIdle", "SitIdleLong", "SitScratch", "SitToLay", "LayIdle", "LayIdleLong", 
@@ -302,20 +301,38 @@
 	            console.log("~duration model 5");
 	            console.log(mesh.animations[4].duration); */
 
-	            console.log("~traverse mesh~");
-	            //hide anoying base of model
-	         /*   if (mesh) {
-	                mesh.traverse(function (node) {
-	                  if (node.isMesh){
-	                    console.log(node.material);
-	                    if(node.name == 'Floor__0'){
-	                      console.log("hiding floor"); 
-	                      node.visible = false;
+	    //STORE MASTER COPY OF ANIMATION TIMING DATA
+        var mesh = theFear.getObject3D('mesh');
+        AFPS.gameState.animationTimingData = new Array(mesh.animations[0].tracks.length); 
 
-	                    }
-	                  } 
-	                });
-	            } */
+        for(var i = 0; i < mesh.animations[0].tracks.length; i++){
+
+        	AFPS.gameState.animationTimingData[i] = new Array(mesh.animations[0].tracks[i].times.length);
+
+        	for(var k = 0; k < mesh.animations[0].tracks[i].times.length; k++){
+        		AFPS.gameState.animationTimingData[i][k] = mesh.animations[0].tracks[i].times[k];
+        	//	AFPS.gameState.animationTimingData[i][k] = 0;
+        	}
+        }
+        AFPS.gameState.animationTimingData.defaultDuration = mesh.animations[0].duration;
+
+     //   console.log("backup of model animation timing data: " + AFPS.gameState.animationTimingData);
+
+        //TEST MODIFY TIMES AND DURATION
+        mesh.animations[0].duration = 4.999;
+        AFPS.gameState.animationTimingOffset = 0.0;
+        var newAnimationOffset = 5.01;
+        for(var m = 0; m < mesh.animations[0].tracks.length; m++){
+          for(var n = 0; n < mesh.animations[0].tracks[m].times.length; n++){
+              mesh.animations[0].tracks[m].times[n] = mesh.animations[0].tracks[m].times[n] - AFPS.gameState.animationTimingOffset - newAnimationOffset;
+          }
+        } 
+
+        AFPS.gameState.animationTimingOffset = newAnimationOffset;
+
+        console.log("MESH WITH TEST ANIMATION MODIFICATIONS:");
+        console.log(mesh);
+
 
                 //fix animation duration (model durations are sum of past durations in array)
        /*         var sumDurations = 0;
@@ -467,6 +484,8 @@
         }, 2500); */
 
         this.el.setAttribute('animation-mixer',{clip: "*", loop: "pingpong"});
+
+
 
 
 
