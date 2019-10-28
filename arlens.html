@@ -506,7 +506,7 @@
         if(AFPS.gameState.interactionPoints >= 0 && AFPS.gameState.interactionPoints < 10 &&  AFPS.gameState.fearIntensityState != 'first'){
         	AFPS.gameState.fearIntensityState = 'first';
         	$('#heart-bar').css('background-image','url(./images/hearts_0_of_5.png)'); //update interaction progress bar
-        	fearEntity.setAttribute("animation-mixer", "timeScale", "1"); 
+        	fearEntity.setAttribute("animation-mixer", "timeScale", "1.5"); 
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-1');
 
         	//change animation clips
@@ -517,6 +517,7 @@
         	AFPS.gameState.fearIntensityState = 'second';
         	$('#heart-bar').css('background-image','url(./images/hearts_1_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-2');
+          fearEntity.setAttribute("animation-mixer", "timeScale", "1.5");
 
         	//change animation clips
         	changeAnimation(AFPS.gameState.animations.shakehead);
@@ -525,6 +526,7 @@
         	AFPS.gameState.fearIntensityState = 'third';
         	$('#heart-bar').css('background-image','url(./images/hearts_2_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-3');
+          fearEntity.setAttribute("animation-mixer", "timeScale", "1.0");
 
         	//change animation clips
         	changeAnimation(AFPS.gameState.animations.moveside);
@@ -533,6 +535,7 @@
         	AFPS.gameState.fearIntensityState = 'fourth';
         	$('#heart-bar').css('background-image','url(./images/hearts_3_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-4');
+          fearEntity.setAttribute("animation-mixer", "timeScale", "0.8");
 
         	//change animation clips
         	changeAnimation(AFPS.gameState.animations.lookdown);
@@ -541,6 +544,7 @@
         	AFPS.gameState.fearIntensityState = 'fifth';
         	$('#heart-bar').css('background-image','url(./images/hearts_4_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-5');
+          fearEntity.setAttribute("animation-mixer", "timeScale", "0.7");
         	//change animation clips
         	changeAnimation(AFPS.gameState.animations.sniffground);
         	
@@ -548,6 +552,7 @@
         	AFPS.gameState.fearIntensityState = 'sixth';
         	$('#heart-bar').css('background-image','url(./images/hearts_5_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-6');
+          fearEntity.setAttribute("animation-mixer", "timeScale", "0.6");
         	//change animation clips
         	changeAnimation(AFPS.gameState.animations.sleep);
 
