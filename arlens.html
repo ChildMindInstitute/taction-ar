@@ -45,9 +45,9 @@
         				liedown:{offset: 39.0, duration: 2.8},
         				bark:{offset: 41.8, duration: 7.2},
         				headdown:{offset: 49.0, duration: 3.5},
-        				shakehead:{offset: 52.5, duration: 4.5},
-        				sleep:{offset: 57.0, duration: 3.5},
-        				wander:{offset: 60.5, duration: 9.5},
+        				shakehead:{offset: 52.5, duration: 4.25},
+        				sleep:{offset: 56.0, duration: 4.25},
+        				wander:{offset: 60.25, duration: 9.75},
         				sniffground:{offset: 70.0, duration: 4.6}}
       }
     };
@@ -542,7 +542,7 @@
         	$('#heart-bar').css('background-image','url(./images/hearts_4_of_5.png)');
         	fearEntity.setAttribute('sound', 'src', '#fear-sound-5');
         	//change animation clips
-        	changeAnimation(AFPS.gameState.animations.headdown);
+        	changeAnimation(AFPS.gameState.animations.sniffground);
         	
         } else if(AFPS.gameState.interactionPoints >= 82  &&  AFPS.gameState.fearIntensityState != 'sixth'){
         	AFPS.gameState.fearIntensityState = 'sixth';
@@ -649,7 +649,7 @@
         <a-entity 
         id="fear-entity" 
         class="cantap"
-        scale="15.0 15.0 15.0" 
+        scale="14.0 14.0 14.0" 
         position="0 0 3"
         cursor-listener
         gltf-model="#fear-model-1"
