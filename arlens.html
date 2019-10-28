@@ -305,63 +305,32 @@
 	            var mesh = theFear.getObject3D('mesh');
 	            console.log("~FEAR MESH~");
 	            console.log(mesh);
-	        /*    console.log("~animations~");
-	            console.log(mesh.animations)
-	            console.log("~duration model 5");
-	            console.log(mesh.animations[4].duration); */
 
-	    //STORE MASTER COPY OF ANIMATION TIMING DATA
-        var mesh = theFear.getObject3D('mesh');
-        AFPS.gameState.animationTimingData = new Array(mesh.animations[0].tracks.length); 
+
+  	    //STORE MASTER COPY OF ANIMATION TIMING DATA
+              var mesh = theFear.getObject3D('mesh');
+              AFPS.gameState.animationTimingData = new Array(mesh.animations[0].tracks.length); 
 
 
 
      //   console.log("backup of model animation timing data: " + AFPS.gameState.animationTimingData);
 
-        //TEST MODIFY TIMES AND DURATION
-        AFPS.gameState.animationTimingOffset = 0.0;
+            //TEST MODIFY TIMES AND DURATION
+              AFPS.gameState.animationTimingOffset = 0.0;
 
-        mesh.animations[0].duration = AFPS.gameState.animations.bark.duration;
-        var newAnimationOffset = AFPS.gameState.animations.bark.offset;
+            mesh.animations[0].duration = AFPS.gameState.animations.bark.duration;
+            var newAnimationOffset = AFPS.gameState.animations.bark.offset;
 
-        for(var m = 0; m < mesh.animations[0].tracks.length; m++){
-          for(var n = 0; n < mesh.animations[0].tracks[m].times.length; n++){
-              mesh.animations[0].tracks[m].times[n] = mesh.animations[0].tracks[m].times[n] + AFPS.gameState.animationTimingOffset - newAnimationOffset;
-          }
-        } 
-        AFPS.gameState.animationTimingOffset = newAnimationOffset;
+            for(var m = 0; m < mesh.animations[0].tracks.length; m++){
+                for(var n = 0; n < mesh.animations[0].tracks[m].times.length; n++){
+                    mesh.animations[0].tracks[m].times[n] = mesh.animations[0].tracks[m].times[n] + AFPS.gameState.animationTimingOffset - newAnimationOffset;
+                }
+            } 
+            AFPS.gameState.animationTimingOffset = newAnimationOffset;
 
-        console.log("MESH WITH TEST ANIMATION MODIFICATIONS:");
-        console.log(mesh);
+            console.log("MESH WITH TEST ANIMATION MODIFICATIONS:");
+            console.log(mesh);
 
-
-                //fix animation duration (model durations are sum of past durations in array)
-       /*         var sumDurations = 0;
-                for(var i = 0; i < mesh.animations.length; i++){
-	                //fix top level animation clip duration
-	                mesh.animations[i].duration = mesh.animations[i].duration - sumDurations;
-	                //fix frame component duration for all frames in clip
-	                //mesh(object) --> animations(array) --> tracks(array) --> times(array)
-	                for(var j = 0; j < mesh.animations[i].tracks.length; j++){
-	                  //frame rate ie difference in time between frames
-	                  var frameTime = mesh.animations[i].tracks[j].times[2] - mesh.animations[i].tracks[j].times[1];
-	                  var offSetSkipFirst =  mesh.animations[i].tracks[j].times[1] - frameTime;
-	                  for(var k = 0; k < mesh.animations[i].tracks[j].times.length; k++){
-
-	                      if(mesh.animations[i].tracks[j].times[k] != 0 ){
-	                        mesh.animations[i].tracks[j].times[k] = mesh.animations[i].tracks[j].times[k] - offSetSkipFirst;
-	                        if(mesh.animations[i].tracks[j].times[k] < 0) mesh.animations[i].tracks[j].times[k] = 0;
-	                      }
-	                  }
-	                }
-
-	                sumDurations = sumDurations + mesh.animations[i].duration;
-
-	              //  console.log("~sum duration~"); console.log(sumDurations);
-	             //   console.log("~animation " + i + " duration~"); onsole.log(mesh.animations[i].duration);
-                
-               } */
-           //   console.log("~~ MODIFIED MESH OBJECT ~~"); console.log(mesh);
 
                //load hand model into assets
                 const handModelElement = document.createElement('a-asset-item');
@@ -505,35 +474,6 @@
         	if(this.clipLoopIndex > 2) this.clipLoopIndex = 0;
         	this.lastClipChangeTime = time;
         }
-
-        //repeat animation clip sequence
-    /*    if(AFPS.gameState.repeatClipSequence == true){
-        	//don't mess with sequence until it is finished
-        	AFPS.gameState.repeatClipSequence = false;
-
-        	const fearEntity = document.getElementById('fear-entity');
-        	//begin first clip
-        	fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[0], loop: "pingpong", repetitions: 1});
-        	//**after first clip
-        	fearEntity.addEventListener('animation-finished', function _listener1() {
-        		removeEventListener('animation-finished', _listener1, {once:true});
-        		//begin second clip
-        		fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[1], loop: "pingpong", repetitions: 1});
-        		//**after second clip
-        		fearEntity.addEventListener('animation-finished', function _listener2() {
-        			removeEventListener('animation-finished', _listener2, {once:true});
-        			//begin third clip
-        			fearEntity.setAttribute('animation-mixer',{clip: AFPS.gameState.activeClips[2], loop: "pingpong", repetitions: 1});
-        			//**after third clip
-        			fearEntity.addEventListener('animation-finished', function _listener3() {
-	        			removeEventListener('animation-finished', _listener3, {once:true});
-
-	        			//ready to begin again
-	        			AFPS.gameState.repeatClipSequence = true;
-	        		},{once:true});
-        		},{once:true});
-			},{once:true});
-        } */
 
         /**************** MEASURE PROXIMITY OF PLAYER TO FEAR ENTITY SO WE CAN DETERMINE IF THEY ARE IN RANGE **************/
      /*   if( AFPS.gameState.fearIsActive == true ){
